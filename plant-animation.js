@@ -4,6 +4,9 @@ const initialBud = document.getElementById('initialBud');
 const wateringContainer = document.querySelector('.watering-container');
 const waterDrops = document.querySelector('.water-drops');
 
+// Ensure initialBud has full opacity at the start
+initialBud.style.opacity = '1';
+
 // Add a class with slower transition when needed
 function addSlowerTransition() {
     wateringContainer.style.transition = 'transform 2.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 1s ease';
@@ -82,6 +85,10 @@ wateringContainer.addEventListener('click', () => {
             setTimeout(() => {
                 // Add fade-out class to the watering can
                 wateringContainer.classList.add('fade-out');
+                
+                // Add a smooth transition for the initialBud
+                initialBud.style.transition = 'opacity 1.5s ease-in-out';
+                initialBud.style.opacity = '0';
                 
                 // Wait for fade-out to complete before hiding
                 setTimeout(() => {
