@@ -18,28 +18,12 @@ function resizeCanvas() {
 }
 
 resizeCanvas();
+let baseSize = { width: canvas.width, height: canvas.height };
 window.addEventListener('resize', () => {
-    const oldWidth = canvas.width;
-    const oldHeight = canvas.height;
-    
     resizeCanvas();
-    
-    // Scale factor for repositioning elements
-    const scaleX = canvas.width / oldWidth;
-    const scaleY = canvas.height / oldHeight;
-    
-    // Adjust positions of existing branches
-    branches.forEach(branch => {
-        branch.startX *= scaleX;
-        branch.grown *= scaleX;
-        branch.startY *= scaleY;
-    });
-    
-    // Adjust positions of existing seeds
-    seeds.forEach(seed => {
-        seed.x *= scaleX;
-        seed.y *= scaleY;
-    });
+    if (!animationStarted) {
+        baseSize = { width: canvas.width, height: canvas.height };
+    }
 });
 
 let branches = [];
