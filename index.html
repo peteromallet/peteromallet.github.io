@@ -33,6 +33,29 @@
             padding-top: 0; /* Remove padding-top since we don't have a border anymore */
         }
         
+        /* Add styles for progressive loading */
+        .loading-element {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+        
+        .loading-element.loaded {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Stagger the transitions for a cascade effect */
+        .loading-element:nth-child(1) { transition-delay: 0.1s; }
+        .loading-element:nth-child(2) { transition-delay: 0.2s; }
+        .loading-element:nth-child(3) { transition-delay: 0.3s; }
+        .loading-element:nth-child(4) { transition-delay: 0.4s; }
+        .loading-element:nth-child(5) { transition-delay: 0.5s; }
+        .loading-element:nth-child(6) { transition-delay: 0.6s; }
+        .loading-element:nth-child(7) { transition-delay: 0.7s; }
+        .loading-element:nth-child(8) { transition-delay: 0.8s; }
+        .loading-element:nth-child(9) { transition-delay: 0.9s; }
+        
         .watering-container {
             position: absolute;
             top: calc(100% + 0rem);
@@ -328,40 +351,40 @@
         }
     </style>
 </head>
-<body>
+<body style="opacity: 0; transition: opacity 0.5s ease-in-out;">
     <canvas id="plantCanvas"></canvas>
     <!-- POM Border -->
     <div class="inner-border"></div>
     <div class="pom-border-top">
         <div>
-            <span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span>
+            <span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span>
         </div>
     </div>
     <div class="pom-border-bottom">
         <div>
-            <span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span>
+            <span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span>
         </div>
     </div>
     
     <div class="container">
         <!-- Square Images Section -->
         <div class="square-images-wrapper">
-            <div class="large-letters" id="pom-letters">
+            <div class="large-letters loading-element" id="pom-letters">
                 <div class="letter">P</div>
                 <div class="letter">O</div>
                 <div class="letter">M</div>
                 <div class="name-reveal">Peter O'Malley</div>
             </div>
             <div class="square-images">
-                <div class="square-image-container">
+                <div class="square-image-container loading-element">
                     <img src="https://banodoco.s3.us-east-1.amazonaws.com/5309F225-9B7B-4293-870E-444F2E168738.jpeg" alt="Square image 2" class="square-image">
                     <div class="image-hover-text">How my wife sees me</div>
                 </div>
-                <div class="square-image-container">
+                <div class="square-image-container loading-element">
                     <img src="https://banodoco.s3.us-east-1.amazonaws.com/cGh6S8rc_400x400+(1).jpg" alt="Square image 1" class="square-image">
                     <div class="image-hover-text">How I see me</div>
                 </div>
-                <div class="square-image-container">
+                <div class="square-image-container loading-element">
                     <img src="https://banodoco.s3.us-east-1.amazonaws.com/Black_White_Modern_Handwritten_Square_Studio_Logo_9+(1).png" alt="Square image 3" class="square-image">
                     <div class="image-hover-text">How my dog sees me</div>
                 </div>
@@ -370,7 +393,7 @@
 
         <div class="dashboard">
             <!-- Story Tiles -->
-            <div class="card story-tile" data-category="story" data-position="7">
+            <div class="card story-tile loading-element" data-category="story" data-position="7">
                 <div class="image-container">
                     <img src="https://www.schlupfloch.xyz/content/images/size/w2000/2022/10/Copy-of-Kopie-von-Wei--Danksagungskarte-Perso-nlich-Gru-karte.png" alt="Story visual">
                 </div>
@@ -385,7 +408,7 @@
                 </div>
             </div>
 
-            <div class="card story-tile" data-category="story" data-position="3">
+            <div class="card story-tile loading-element" data-category="story" data-position="3">
                 <div class="image-container">
                     <img src="https://banodoco.s3.us-east-1.amazonaws.com/Group+4+(4).png" alt="Story visual">
                 </div>
@@ -399,7 +422,7 @@
             </div>
 
             <!-- Life Tiles -->
-            <div class="card life-tile video-card" data-category="life" data-position="1">
+            <div class="card life-tile video-card loading-element" data-category="life" data-position="1">
                 <div class="video-container">
                     <img src="https://banodoco.s3.us-east-1.amazonaws.com/Screenshot+2025-02-28+at+22.22.45.png" alt="Video thumbnail" class="video-thumbnail">
                     <div class="video-overlay">
@@ -423,7 +446,7 @@
             </div>
 
             <!-- Steerable Motion Project Card -->
-            <div class="card project-tile" data-category="projects" data-position="2">
+            <div class="card project-tile loading-element" data-category="projects" data-position="2">
                 <div class="image-container">
                     <img src="https://banodoco.s3.us-east-1.amazonaws.com/Untitled+(1152+x+512+px).png" alt="Steerable Motion visual">
                     <!-- Add a hover-only GIF that will appear on hover -->
@@ -444,7 +467,7 @@
             </div>
 
             <!-- 2nd Renaissance Card -->
-            <div class="card story-tile" data-category="story" data-position="4">
+            <div class="card story-tile loading-element" data-category="story" data-position="4">
                 <div class="image-container">
                     <img src="https://banodoco.s3.us-east-1.amazonaws.com/Group-2--14--4c552dc74e6827a2+1.png" alt="Renaissance visual">
                 </div>
@@ -460,7 +483,7 @@
             </div>
             
             <!-- A Plan to accelerate the 2nd Renaissance Card -->
-            <div class="card story-tile" data-category="story" data-position="6">
+            <div class="card story-tile loading-element" data-category="story" data-position="6">
                 <div class="image-container">
                     <img src="https://banodoco.s3.us-east-1.amazonaws.com/2nd-renaissance+1.png" alt="Renaissance plan visual">
                 </div>
@@ -476,7 +499,7 @@
             </div>
             
             <!-- Training data for AI Card -->
-            <div class="card story-tile" data-category="story" data-position="5">
+            <div class="card story-tile loading-element" data-category="story" data-position="5">
                 <div class="image-container">
                     <img src="https://www.schlupfloch.xyz/content/images/size/w2000/2023/01/1574746253_Beautiful_painting_of_a_hand_reaching_from_a_magical_box__highly_detailed__magical_realism.png" alt="AI training data visual">
                 </div>
@@ -492,7 +515,7 @@
             </div>
             
             <!-- Family Pub Card -->
-            <div class="card life-tile" data-category="life" data-position="8">
+            <div class="card life-tile loading-element" data-category="life" data-position="8">
                 <div class="image-container">
                     <img src="https://banodoco.s3.us-east-1.amazonaws.com/WhatsApp+Image+2025-02-28+at+22.28.35.jpeg" alt="Irish pub visual">
                 </div>
@@ -508,7 +531,7 @@
             </div>
             
             <!-- Memes I enjoy Card -->
-            <div class="card life-tile meme-card" data-category="life" data-position="9">
+            <div class="card life-tile meme-card loading-element" data-category="life" data-position="9">
                 <div class="image-container">
                     <img src="https://banodoco.s3.us-east-1.amazonaws.com/Untitled+design+(33)+copy.png" alt="Meme placeholder" class="main-image">
                 </div>
@@ -639,5 +662,71 @@
         });
     </script>
     <!-- End video-container playback script -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Set body to visible when DOM is ready
+        document.body.style.opacity = '1';
+        
+        // Function to mark an element as loaded
+        function markAsLoaded(element) {
+          if (element) {
+            element.classList.add('loaded');
+          }
+        }
+        
+        // Process all loading elements
+        const loadingElements = document.querySelectorAll('.loading-element');
+        
+        loadingElements.forEach(function(element) {
+          // Find images within the element
+          const images = element.querySelectorAll('img');
+          
+          if (images.length > 0) {
+            let loadedImagesCount = 0;
+            const totalImages = images.length;
+            
+            // For each image in the element
+            images.forEach(function(img) {
+              // If image is already loaded or has no src
+              if (img.complete || !img.src) {
+                loadedImagesCount++;
+                // If all images are loaded, mark the element as loaded
+                if (loadedImagesCount === totalImages) {
+                  markAsLoaded(element);
+                }
+              } else {
+                // Add load event listener
+                img.addEventListener('load', function() {
+                  loadedImagesCount++;
+                  // If all images are loaded, mark the element as loaded
+                  if (loadedImagesCount === totalImages) {
+                    markAsLoaded(element);
+                  }
+                });
+                
+                // Add error event listener to handle failed loads
+                img.addEventListener('error', function() {
+                  loadedImagesCount++;
+                  // If all images are loaded (or failed), mark the element as loaded
+                  if (loadedImagesCount === totalImages) {
+                    markAsLoaded(element);
+                  }
+                });
+              }
+            });
+          } else {
+            // If no images, mark as loaded immediately
+            markAsLoaded(element);
+          }
+        });
+        
+        // Set a timeout to ensure all elements appear even if some images fail to load
+        setTimeout(function() {
+          loadingElements.forEach(function(element) {
+            markAsLoaded(element);
+          });
+        }, 5000); // 5 second fallback
+      });
+    </script>
 </body>
 </html> 
