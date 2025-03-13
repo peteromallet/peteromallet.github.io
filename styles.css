@@ -1266,9 +1266,30 @@ body::before, body::after {
     display: flex;
     justify-content: center;
     gap: 1.5rem;
-    margin: 2rem 0 4rem; /* Increased bottom margin to add more space below watering can and plant */
+    margin: 2rem 0 4rem;
     padding-top: 2rem;
     border-top: 1px solid #eaeaea;
+}
+
+/* Github suggestion text styles */
+.github-suggestion {
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #555;
+    font-size: 0.9rem;
+}
+
+.github-suggestion a {
+    color: #333;
+    text-decoration: none;
+    border-bottom: 1px solid #999;
+    padding-bottom: 1px;
+    transition: all 0.2s ease;
+}
+
+.github-suggestion a:hover {
+    color: #000;
+    border-bottom-color: #333;
 }
 
 .social-link {
@@ -1736,4 +1757,37 @@ body::before, body::after {
 
 .large-letters .letter:nth-child(2) {
     margin-left: -0.1rem;
+}
+
+/* Add at the end of the file */
+.github-suggestion-footer {
+    position: fixed;
+    bottom: 10px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 0.75rem;
+    color: #888;
+    padding: 0 20px;
+    z-index: 999;
+}
+
+.github-suggestion-footer a {
+    color: #666;
+    text-decoration: none;
+    border-bottom: 1px solid #999;
+    padding-bottom: 1px;
+    transition: all 0.2s ease;
+}
+
+.github-suggestion-footer a:hover {
+    color: #333;
+    border-bottom-color: #666;
+}
+
+@media (max-width: 768px) {
+    .github-suggestion-footer {
+        font-size: 0.7rem;
+        bottom: 5px;
+    }
 }
