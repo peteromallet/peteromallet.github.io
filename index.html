@@ -349,6 +349,45 @@
                 display: block !important;
             }
         }
+
+        .github-suggestion-footer {
+            position: fixed;
+            bottom: 3px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            text-align: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 100;
+            pointer-events: none;
+            margin-bottom: 10px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .github-suggestion-footer.visible {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .github-suggestion-footer a {
+            color: inherit;
+            text-decoration: none;
+            border-bottom: 1px solid #666;
+        }
+
+        .github-suggestion-footer a:hover {
+            border-bottom-color: transparent;
+        }
+
+        @media (max-width: 768px) {
+            .github-suggestion-footer {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body style="opacity: 0; transition: opacity 0.5s ease-in-out;">
@@ -357,12 +396,12 @@
     <div class="inner-border"></div>
     <div class="pom-border-top">
         <div>
-            <span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span>
+            <span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span>
         </div>
     </div>
     <div class="pom-border-bottom">
         <div>
-            <span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span>
+            <span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span><span class="letter-p">P</span><span class="letter-o">O</span><span class="letter-m">M</span>
         </div>
     </div>
     
@@ -402,9 +441,9 @@
                     <p>I spent 4.5 years of my life building a startup that ultimately went nowhere. It was a bruising but educational experience. I have many thoughts on the motivations behind the startups of generically ambitious people - which is what I was - but I'll save those for another time.</p>
                 </div>
                 <div class="link" style="border: none;">
-                    <a href="https://www.schlupfloch.xyz/explaining-advisables-failure/" class="year-link">Explaining a dead startup</a> 
+                    <a href="https://www.schlupfloch.xyz/explaining-advisables-failure/" target="_blank" class="year-link">Explaining a dead startup</a> 
                     <span style="display: inline-block; margin: 0 0.25rem; color: #ccc;">|</span> 
-                    <a href="https://www.schlupfloch.xyz/grieving-for-a-dead-startup/" class="year-link">Grieving for a dead startup</a>
+                    <a href="https://www.schlupfloch.xyz/grieving-for-a-dead-startup/" target="_blank" class="year-link">Grieving for a dead startup</a>
                 </div>
             </div>
 
@@ -417,7 +456,7 @@
                     <p>I spent the past two years building a community that aims to represent the best of the open source AI art ecosystem. I believe it's probably the best place in the world to be if you want to be on the cutting edge of the tools that are shaping the future of art.</p>
                 </div>
                 <div class="link" style="border: none;">
-                    <a href="https://discord.gg/acg8aNBTxd" class="year-link">Check it out</a>
+                    <a href="https://discord.gg/acg8aNBTxd" target="_blank" class="year-link">Check it out</a>
                 </div>
             </div>
 
@@ -436,11 +475,11 @@
                 <p>Every year since 2022, I create a video based on the poem Nirvana by Charles Bukowski using the latest AI models. Over the decades, my goal is to create a bookmark of both the technology and my own artistic skills.</p>
                 <div class="link">
                     <span>
-                        <a href="https://www.youtube.com/watch?v=4AgXLXE5QIo" class="year-link">2024</a> 
+                        <a href="https://www.youtube.com/watch?v=4AgXLXE5QIo" target="_blank" class="year-link">2024</a> 
                         <span style="display: inline-block; margin: 0 0.25rem; color: #ccc;">|</span> 
-                        <a href="https://www.youtube.com/watch?v=7NkNjkP63Ko" class="year-link">2023</a> 
+                        <a href="https://www.youtube.com/watch?v=7NkNjkP63Ko" target="_blank" class="year-link">2023</a> 
                         <span style="display: inline-block; margin: 0 0.25rem; color: #ccc;">|</span> 
-                        <a href="https://www.youtube.com/watch?v=X_BLuno7C84&" class="year-link">2022</a>
+                        <a href="https://www.youtube.com/watch?v=X_BLuno7C84&" target="_blank" class="year-link">2022</a>
                     </span>
                 </div>
             </div>
@@ -455,13 +494,13 @@
                     </div>
                 </div>
                 <h3>Steerable Motion</h3>
-                <p>I created the first streamlined method for controlling video diffusion models using key frames. It was built on top of the work of <a href="https://github.com/cubiq/ComfyUI_IPAdapter_plus">Matt3o</a>, <a href="https://github.com/Kosinkadink/ComfyUI-AnimateDiff-Evolved">Kosinkadink</a>, and the Animatediff and Stable Diffusion 1.5 ecosystems. <a href="https://github.com/IDGallagher">Ian Gallagher</a> also helped get it working far more VRAM-efficiently.
+                <p>I created the first streamlined method for controlling video diffusion models using key frames. It was built on top of the work of <a href="https://github.com/cubiq/ComfyUI_IPAdapter_plus" target="_blank">Matt3o</a>, <a href="https://github.com/Kosinkadink/ComfyUI-AnimateDiff-Evolved" target="_blank">Kosinkadink</a>, and the Animatediff and Stable Diffusion 1.5 ecosystems. <a href="https://github.com/IDGallagher" target="_blank">Ian Gallagher</a> also helped get it working far more VRAM-efficiently.
                 <br>
                 <br>
-                Though people made <a href="https://banodoco.ai/Dough">many beautiful videos</a> with it, it was limited by the resolution and motion of AnimateDiff. I have a plan for a next-level version that will provide far greater control over both the visuals and motion. Coming mid-2025.</p>
+                Though people made <a href="https://banodoco.ai/Dough" target="_blank">many beautiful videos</a> with it, it was limited by the resolution and motion of AnimateDiff. I have a plan for a next-level version that will provide far greater control over both the visuals and motion. Coming mid-2025.</p>
                 <div class="link">
                     <span>
-                        <a href="https://github.com/peteromallet/steerable-motion" class="year-link">View on GitHub</a>
+                        <a href="https://github.com/peteromallet/steerable-motion" target="_blank" class="year-link">View on GitHub</a>
                     </span>
                 </div>
             </div>
@@ -477,7 +516,7 @@
                 </div>
                 <div class="link">
                     <span>
-                        <a href="https://www.schlupfloch.xyz/consider-pretending-that-the-2nd-renaissance-is-about-to-start-and-that-you-can-be-a-part-of-it/" class="year-link">Read an article about this</a>
+                        <a href="https://www.schlupfloch.xyz/consider-pretending-that-the-2nd-renaissance-is-about-to-start-and-that-you-can-be-a-part-of-it/" target="_blank" class="year-link">Read an article about this</a>
                     </span>
                 </div>
             </div>
@@ -493,7 +532,7 @@
                 </div>
                 <div class="link">
                     <span>
-                        <a href="https://banodoco.ai/Plan" class="year-link">Understand the plan</a>
+                        <a href="https://banodoco.ai/Plan" target="_blank" class="year-link">Understand the plan</a>
                     </span>
                 </div>
             </div>
@@ -509,7 +548,7 @@
                 </div>
                 <div class="link">
                     <span>
-                        <a href="https://www.schlupfloch.xyz/" class="year-link">Visit blog</a>
+                        <a href="https://www.schlupfloch.xyz/" target="_blank" class="year-link">Visit blog</a>
                     </span>
                 </div>
             </div>
@@ -525,7 +564,7 @@
                 </div>
                 <div class="link">
                     <span>
-                        <a href="https://g.co/kgs/YHTTdfi" class="year-link">Check out our Google Maps</a>
+                        <a href="https://g.co/kgs/YHTTdfi" target="_blank" class="year-link">Check out our Google Maps</a>
                     </span>
                 </div>
             </div>
@@ -585,7 +624,7 @@
     
     <!-- Github suggestion text below border -->
     <div class="github-suggestion-footer">
-        Do you feel as though I've inaccurately represented myself? <a href="https://github.com/peteromallet/peteromallet.github.io">Suggest changes to this website on Github</a>.
+        Do you feel as though I've inaccurately represented myself? <a href="https://github.com/peteromallet/peteromallet.github.io" target="_blank">Suggest changes to this website on Github</a>.
     </div>
     
     <script src="script.js"></script>
@@ -725,6 +764,71 @@
           });
         }, 5000);
       });
+    </script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const footer = document.querySelector('.github-suggestion-footer');
+      if (footer) {
+        let scrollTimeout;
+        let lastKnownScrollPosition = 0;
+        let ticking = false;
+        
+        function updateFooterVisibility() {
+          // Get the current viewport height
+          const viewportHeight = window.innerHeight;
+          // Get the current scroll position
+          const scrollPosition = window.pageYOffset;
+          // Get the total scrollable height (including dynamic content)
+          const totalHeight = document.documentElement.scrollHeight;
+          // Calculate distance from bottom (with a 50px threshold)
+          const distanceFromBottom = totalHeight - (scrollPosition + viewportHeight);
+          
+          if (distanceFromBottom <= 50) {
+            footer.classList.add('visible');
+          } else {
+            footer.classList.remove('visible');
+          }
+        }
+
+        // Handle scroll events with requestAnimationFrame for better performance
+        window.addEventListener('scroll', function() {
+          lastKnownScrollPosition = window.pageYOffset;
+          
+          if (!ticking) {
+            window.requestAnimationFrame(function() {
+              updateFooterVisibility();
+              ticking = false;
+            });
+            ticking = true;
+          }
+        });
+
+        // Also update on resize to handle dynamic content changes
+        window.addEventListener('resize', function() {
+          if (scrollTimeout) {
+            clearTimeout(scrollTimeout);
+          }
+          
+          scrollTimeout = setTimeout(updateFooterVisibility, 100);
+        });
+
+        // Add mutation observer to handle dynamic content changes
+        const observer = new MutationObserver(function(mutations) {
+          if (scrollTimeout) {
+            clearTimeout(scrollTimeout);
+          }
+          scrollTimeout = setTimeout(updateFooterVisibility, 100);
+        });
+
+        // Observe changes to the document body
+        observer.observe(document.body, {
+          childList: true,
+          subtree: true,
+          attributes: true,
+          characterData: true
+        });
+      }
+    });
     </script>
 </body>
 </html> 

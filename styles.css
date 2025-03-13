@@ -1434,31 +1434,38 @@ body::before, body::after {
 
 /* Style for links within paragraphs */
 .card p a {
-    color: #555; /* Match the paragraph text color */
-    text-decoration: none; /* Remove default underline */
-    border-bottom: 1px solid #999; /* Darker underline by default */
+    color: #555;
+    text-decoration: none;
+    position: relative;
     padding-bottom: 1px;
     transition: all 0.2s ease;
+    border-bottom: none !important;
+}
+
+.card p a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 1px;
+    background-color: #999;
+    transition: all 0.2s ease;
+    transform: scaleX(1);
 }
 
 .card p a:hover {
-    color: #333; /* Slightly darker on hover */
-    border-bottom: 1px solid #333; /* Even darker underline on hover */
-    padding-bottom: 0px; /* Slightly raise the text on hover */
+    color: #333;
 }
 
-/* Ensure links in the Steerable Motion section are properly underlined */
-.card[data-position="2"] p a {
-    border-bottom: 1px solid #999 !important; /* Force underline for Steerable Motion links */
-}
-
-.card[data-position="2"] p a:hover {
-    border-bottom: 1px solid #333 !important; /* Force darker underline on hover */
+.card p a:hover::after {
+    background-color: #333;
+    transform: scaleX(0.7);
 }
 
 /* Ensure all cards have consistent hover behavior */
 .card:hover p {
-    -webkit-line-clamp: unset; /* Remove line clamp on hover for all card types */
+    -webkit-line-clamp: unset;
     color: #333;
 }
 
@@ -1767,22 +1774,39 @@ body::before, body::after {
     width: 100%;
     text-align: center;
     font-size: 0.75rem;
-    color: #888;
+    color: #aaa;  /* Changed from #888 to #aaa for more faded look */
     padding: 0 20px;
     z-index: 999;
 }
 
 .github-suggestion-footer a {
-    color: #666;
+    color: #999;  /* Changed from #666 to #999 to match the faded look */
     text-decoration: none;
-    border-bottom: 1px solid #999;
+    position: relative;
     padding-bottom: 1px;
     transition: all 0.2s ease;
+    border-bottom: none;
+}
+
+.github-suggestion-footer a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 1px;
+    background-color: #aaa;  /* Changed from #999 to #aaa */
+    transition: all 0.2s ease;
+    transform: scaleX(1);
 }
 
 .github-suggestion-footer a:hover {
-    color: #333;
-    border-bottom-color: #666;
+    color: #666;  /* Changed from #333 to #666 */
+}
+
+.github-suggestion-footer a:hover::after {
+    background-color: #888;  /* Changed from #666 to #888 */
+    transform: scaleX(0.7);
 }
 
 @media (max-width: 768px) {
