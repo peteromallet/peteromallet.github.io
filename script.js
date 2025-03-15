@@ -1,8 +1,5 @@
 // Wait for the DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize Feather icons
-    feather.replace();
-
     // Preload the Steerable Motion GIF
     const steerableMotionGifUrl = 'https://banodoco.s3.us-east-1.amazonaws.com/Untitled+(1152+x+512+px)+(1).gif';
     const preloadGif = new Image();
