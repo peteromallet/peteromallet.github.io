@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Capabilities to Tooling to Art Flow</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+      background-color: #ffffff;
+      font-family: sans-serif;
+    }
+    #animation-container {
+      width: 100%;
+      height: 100%;
+    }
+    .label {
+      position: absolute;
+      background-color: #ffffff;
+      padding: 8px 16px;
+      border-radius: 5px;
+      font-weight: bold;
+      text-align: center;
+      transform: translate(-50%, -50%);
+      font-size: 18px;
+      user-select: none;
+      pointer-events: none;
+      white-space: nowrap;
+      z-index: 10;
+    }
+  </style>
+</head>
+<body>
+  <div id="animation-container"></div>
+
+  <script type="module">
+    import * as THREE from 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.module.js';
+
+    // Setup
+    const container = document.getElementById('animation-container');
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0xffffff);
+    
+    const camera = new THREE.OrthographicCamera(
+      window.innerWidth / -2, 
+      window.innerWidth / 2, 
+      window.innerHeight / 2, 
+      window.innerHeight / -2, 
+      0.1, 
+      1000
+    );
+    camera.position.z = 10;
+    
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    container.appendChild(renderer.domElement);
+    
+    // Resize handler
+    window.addEventListener('resize', () => {
+      camera.left = window.innerWidth / -2;
+      camera.right = window.innerWidth / 2;
+      camera.top = window.innerHeight / 2;
+      camera.bottom = window.innerHeight / -2;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      
+      updateScene();
+    });
+    
+    // Create boxes
+    function createBox(x, y, width, height, borderColor, label) {
+      const boxGeometry = new THREE.BoxGeometry(width, height, 1);
+      const boxMaterial = new THREE.MeshBasicMaterial({ 
+        color: 0xffffff,
+        transparent: true,
+        opacity: 0.5
+      });
+      const boxBorderMaterial = new THREE.LineBasicMaterial({ color: borderColor, linewidth: 2 });
+      
+      // Create main box
+      const box = new THREE.Mesh(boxGeometry, boxMaterial);
+      box.position.set(x, y, 0);
+      
+      // Create border
+      const edges = new THREE.EdgesGeometry(boxGeometry);
+      const border = new THREE.LineSegments(edges, boxBorderMaterial);
+      border.position.set(x, y, 0);
+      
+      scene.add(box);
+      scene.add(border);
+
+      // Create label
+      const labelDiv = document.createElement('div');
+      labelDiv.className = 'label';
+      labelDiv.textContent = label;
+      labelDiv.style.left = `${(x / window.innerWidth) * window.innerWidth + window.innerWidth/2}px`;
+      labelDiv.style.top = `${(-y / window.innerHeight) * window.innerHeight + window.innerHeight/2}px`;
+      container.appendChild(labelDiv);
+      
+      return { box, border, labelDiv, width, height };
+    }
+    
+    // Variables for scene layout
+    let centerBox, capabilitiesBox, artBox;
+    let lineMeshes = [];
+    const lines = [];
+    const pulses = [];
+    
+    // At top of the script, add a global time variable
+    let globalTime = 0;
+    
+    function updateScene() {
+      // Clear previous elements
+      lineMeshes.forEach(mesh => scene.remove(mesh));
+      lineMeshes = [];
+      
+      // Remove previous labels
+      document.querySelectorAll('.label').forEach(el => el.remove());
+      
+      // Create boxes - dimensions adapted for aspect ratio
+      const boxSize = Math.min(window.innerWidth, window.innerHeight) * 0.15;
+      
+      // Create central "Tooling" box with border
+      centerBox = createBox(0, 0, boxSize, boxSize, 0x000000, 'Tooling');
+      
+      // Side boxes dimensions
+      const sideBoxDistance = window.innerWidth * 0.28;
+      
+      // Create labels for Capabilities and Art without boxes
+      const capabilitiesLabel = document.createElement('div');
+      capabilitiesLabel.className = 'label';
+      capabilitiesLabel.textContent = 'Capabilities';
+      capabilitiesLabel.style.left = `${(-sideBoxDistance) + window.innerWidth/2}px`;
+      capabilitiesLabel.style.top = `${window.innerHeight/2}px`;
+      container.appendChild(capabilitiesLabel);
+      
+      const artLabel = document.createElement('div');
+      artLabel.className = 'label';
+      artLabel.textContent = 'Art';
+      artLabel.style.left = `${sideBoxDistance + window.innerWidth/2}px`;
+      artLabel.style.top = `${window.innerHeight/2}px`;
+      container.appendChild(artLabel);
+      
+      // Create lines radiating to/from center
+      createAllLines();
+    }
+    
+    // Create all the lines connecting the boxes
+    function createAllLines() {
+      // Clear lines array
+      lines.length = 0;
+      
+      // Define angle ranges for capabilities (left) and art (right)
+      const capabilitiesStartAngle = Math.PI * 0.7;  // About 126 degrees
+      const capabilitiesEndAngle = Math.PI * 1.3;    // About 234 degrees
+      
+      const artStartAngle = -Math.PI * 0.3;  // About -54 degrees
+      const artEndAngle = Math.PI * 0.3;     // About 54 degrees
+      
+      const angleStep = Math.PI / 60;  // Smaller step for more lines
+      const radius = Math.min(window.innerWidth, window.innerHeight) * 0.4;
+      const centerX = 0;
+      const centerY = 0;
+      
+      // Calculate box boundaries
+      const toolingBoxHalfWidth = centerBox.width / 2;
+      const toolingBoxHalfHeight = centerBox.height / 2;
+      
+      // Create lines for capabilities side (left wedge)
+      for (let angle = capabilitiesStartAngle; angle <= capabilitiesEndAngle; angle += angleStep) {
+        const endX = centerX + Math.cos(angle) * radius;
+        const endY = centerY + Math.sin(angle) * radius;
+        
+        let startX, startY;
+        if (Math.abs(Math.cos(angle)) > Math.abs(Math.sin(angle))) {
+          startX = Math.sign(Math.cos(angle)) * toolingBoxHalfWidth;
+          startY = Math.tan(angle) * startX;
+          if (Math.abs(startY) > toolingBoxHalfHeight) {
+            startY = Math.sign(startY) * toolingBoxHalfHeight;
+            startX = startY / Math.tan(angle);
+          }
+        } else {
+          startY = Math.sign(Math.sin(angle)) * toolingBoxHalfHeight;
+          startX = startY / Math.tan(angle);
+          if (Math.abs(startX) > toolingBoxHalfWidth) {
+            startX = Math.sign(startX) * toolingBoxHalfWidth;
+            startY = Math.tan(angle) * startX;
+          }
+        }
+        
+        // Create a squiggly line using multiple points
+        const numPoints = 20;
+        const positions = new Float32Array(numPoints * 3);
+        for (let i = 0; i < numPoints; i++) {
+          let t = i / (numPoints - 1);
+          const baseX = startX + t * (endX - startX);
+          const baseY = startY + t * (endY - startY);
+          positions[i * 3] = baseX;
+          positions[i * 3 + 1] = baseY;
+          positions[i * 3 + 2] = 0;
+        }
+        const geometry = new THREE.BufferGeometry();
+        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        
+        const lineColor = 0x4285F4; // Blue for capabilities
+        const lineType = 'capabilities';
+        const material = new THREE.LineBasicMaterial({ 
+          color: lineColor,
+          transparent: true,
+          opacity: 0.3
+        });
+        
+        const line = new THREE.Line(geometry, material);
+        // Attach squiggly parameters
+        line.userData.squigglyData = {
+          startX, startY, endX, endY,
+          wiggleAmplitude: 5 + Math.random() * 5, // amplitude between 5 and 10
+          wiggleFrequency: 1 + Math.random() * 2,  // freq between 1 and 3
+          wigglePhase: Math.random() * Math.PI * 2,
+          numPoints: numPoints
+        };
+        scene.add(line);
+        lineMeshes.push(line);
+        
+        // Store line data for pulses
+        lines.push({
+          startX, startY, endX, endY,
+          type: lineType,
+          color: lineColor,
+          wiggleAmplitude: line.userData.squigglyData.wiggleAmplitude,
+          wiggleFrequency: line.userData.squigglyData.wiggleFrequency,
+          wigglePhase: line.userData.squigglyData.wigglePhase
+        });
+      }
+      
+      // Create lines for art side (right wedge)
+      for (let angle = artStartAngle; angle <= artEndAngle; angle += angleStep) {
+        const endX = centerX + Math.cos(angle) * radius;
+        const endY = centerY + Math.sin(angle) * radius;
+        
+        let startX, startY;
+        if (Math.abs(Math.cos(angle)) > Math.abs(Math.sin(angle))) {
+          startX = Math.sign(Math.cos(angle)) * toolingBoxHalfWidth;
+          startY = Math.tan(angle) * startX;
+          if (Math.abs(startY) > toolingBoxHalfHeight) {
+            startY = Math.sign(startY) * toolingBoxHalfHeight;
+            startX = startY / Math.tan(angle);
+          }
+        } else {
+          startY = Math.sign(Math.sin(angle)) * toolingBoxHalfHeight;
+          startX = startY / Math.tan(angle);
+          if (Math.abs(startX) > toolingBoxHalfWidth) {
+            startX = Math.sign(startX) * toolingBoxHalfWidth;
+            startY = Math.tan(angle) * startX;
+          }
+        }
+        
+        const numPoints = 20;
+        const positions = new Float32Array(numPoints * 3);
+        for (let i = 0; i < numPoints; i++) {
+          let t = i / (numPoints - 1);
+          const baseX = startX + t * (endX - startX);
+          const baseY = startY + t * (endY - startY);
+          positions[i * 3] = baseX;
+          positions[i * 3 + 1] = baseY;
+          positions[i * 3 + 2] = 0;
+        }
+        const geometry = new THREE.BufferGeometry();
+        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        
+        const lineColor = 0xFF9800; // Orange for art
+        const lineType = 'art';
+        const material = new THREE.LineBasicMaterial({ 
+          color: lineColor,
+          transparent: true,
+          opacity: 0.3
+        });
+        
+        const line = new THREE.Line(geometry, material);
+        line.userData.squigglyData = {
+          startX, startY, endX, endY,
+          wiggleAmplitude: 5 + Math.random() * 5,
+          wiggleFrequency: 1 + Math.random() * 2,
+          wigglePhase: Math.random() * Math.PI * 2,
+          numPoints: numPoints
+        };
+        scene.add(line);
+        lineMeshes.push(line);
+        
+        lines.push({
+          startX, startY, endX, endY,
+          type: lineType,
+          color: lineColor,
+          wiggleAmplitude: line.userData.squigglyData.wiggleAmplitude,
+          wiggleFrequency: line.userData.squigglyData.wiggleFrequency,
+          wigglePhase: line.userData.squigglyData.wigglePhase
+        });
+      }
+    }
+    
+    // Pulse class for animating line segments
+    class Pulse {
+      constructor(lineData, speed, direction) {
+        this.lineData = lineData;
+        this.speed = speed;
+        this.direction = direction;
+        this.t = (direction === 'inward') ? 1 : 0;
+        this.lineLength = 0.1; // Length as a fraction of the total path (0.1 = 10% of path length)
+        this.lineWidth = 2 + Math.random() * 2;
+        this.color = lineData.color;
+        this.mesh = null;
+        this.opacity = 0;
+        this.completed = false;
+        this.numPulsePoints = 10; // Number of points to create the curved pulse
+        this.createMesh();
+      }
+      
+      computePosition(t, currentTime) {
+        const { startX, startY, endX, endY, wiggleAmplitude, wiggleFrequency, wigglePhase } = this.lineData;
+        const baseX = startX + t * (endX - startX);
+        const baseY = startY + t * (endY - startY);
+        const dx = endX - startX;
+        const dy = endY - startY;
+        const len = Math.sqrt(dx * dx + dy * dy);
+        const perpX = -dy / len;
+        const perpY = dx / len;
+        const offset = wiggleAmplitude * Math.sin(2 * Math.PI * wiggleFrequency * t + currentTime + wigglePhase) * Math.sin(Math.PI * t);
+        return { 
+          x: baseX + perpX * offset, 
+          y: baseY + perpY * offset,
+          perpX: perpX,
+          perpY: perpY
+        };
+      }
+      
+      createMesh() {
+        const vertices = [];
+        const triangles = [];
+        
+        // Create a curved strip of triangles following the path
+        const headT = this.t;
+        const tailT = this.t - (this.direction === 'inward' ? this.lineLength : -this.lineLength);
+        
+        // Generate points along the pulse length
+        const points = [];
+        for (let i = 0; i < this.numPulsePoints; i++) {
+          const t = tailT + (headT - tailT) * (i / (this.numPulsePoints - 1));
+          if (t >= 0 && t <= 1) {
+            points.push(this.computePosition(t, globalTime));
+          }
+        }
+        
+        // Create triangle strip from points
+        if (points.length >= 2) {
+          const halfWidth = this.lineWidth / 2;
+          
+          // Create vertices for triangle strip
+          for (let i = 0; i < points.length; i++) {
+            const p = points[i];
+            const w = halfWidth * (1 - Math.abs(2 * i / (points.length - 1) - 1)); // Width varies along length
+            
+            // Add top and bottom vertices
+            vertices.push(
+              p.x + p.perpX * w, p.y + p.perpY * w, 0,
+              p.x - p.perpX * w, p.y - p.perpY * w, 0
+            );
+            
+            // Create triangles (except for last point)
+            if (i < points.length - 1) {
+              const baseIndex = i * 2;
+              triangles.push(
+                baseIndex, baseIndex + 1, baseIndex + 2,
+                baseIndex + 1, baseIndex + 3, baseIndex + 2
+              );
+            }
+          }
+        }
+        
+        if (vertices.length > 0 && triangles.length > 0) {
+          const geometry = new THREE.BufferGeometry();
+          geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+          geometry.setIndex(triangles);
+          
+          const material = new THREE.MeshBasicMaterial({
+            color: this.color,
+            transparent: true,
+            opacity: this.opacity,
+            side: THREE.DoubleSide
+          });
+          
+          if (this.mesh) {
+            scene.remove(this.mesh);
+            this.mesh.geometry.dispose();
+            this.mesh.material.dispose();
+          }
+          
+          this.mesh = new THREE.Mesh(geometry, material);
+          scene.add(this.mesh);
+        }
+      }
+      
+      update() {
+        const dt = this.speed * 0.005;
+        if (this.direction === 'inward') {
+          this.t = Math.max(0, this.t - dt);
+        } else {
+          this.t = Math.min(1, this.t + dt);
+        }
+
+        // Update opacity based on progress along the curve
+        const progress = (this.direction === 'inward') ? (1 - this.t) : this.t;
+        if (progress < 0.2) {
+          this.opacity = Math.min(1, progress * 5);
+        } else if (progress > (this.direction === 'inward' ? 0.7 : 0.8)) {
+          this.opacity = Math.max(0, 1 - ((progress - (this.direction === 'inward' ? 0.7 : 0.8)) * (this.direction === 'inward' ? 3.33 : 5)));
+        } else {
+          this.opacity = 1;
+        }
+
+        this.createMesh();
+
+        if ((this.direction === 'inward' && this.t <= 0) || 
+            (this.direction === 'outward' && this.t >= 1) || 
+            this.opacity <= 0) {
+          this.completed = true;
+        }
+        return this.completed;
+      }
+      
+      remove() {
+        if (this.mesh) {
+          scene.remove(this.mesh);
+          this.mesh.geometry.dispose();
+          this.mesh.material.dispose();
+          this.mesh = null;
+        }
+      }
+    }
+    
+    // Spawn pulse functions
+    function spawnInwardPulse() {
+      const capabilitiesLines = lines.filter(line => line.type === 'capabilities');
+      if (capabilitiesLines.length === 0) return;
+      const line = capabilitiesLines[Math.floor(Math.random() * capabilitiesLines.length)];
+      const pulse = new Pulse(line, 1 + Math.random() * 2, 'inward');
+      pulses.push(pulse);
+    }
+    
+    function spawnOutwardPulse() {
+      const artLines = lines.filter(line => line.type === 'art');
+      if (artLines.length === 0) return;
+      const line = artLines[Math.floor(Math.random() * artLines.length)];
+      const pulse = new Pulse(line, 1 + Math.random() * 2, 'outward');
+      pulses.push(pulse);
+    }
+    
+    // Animation loop
+    function animate() {
+      requestAnimationFrame(animate);
+      globalTime = performance.now() * 0.001;
+
+      // Update all squiggly lines
+      lineMeshes.forEach(lineMesh => {
+        const sd = lineMesh.userData.squigglyData;
+        const positions = lineMesh.geometry.attributes.position.array;
+        const dx = sd.endX - sd.startX;
+        const dy = sd.endY - sd.startY;
+        const len = Math.sqrt(dx * dx + dy * dy);
+        const perpX = -dy / len;
+        const perpY = dx / len;
+        for (let i = 0; i < sd.numPoints; i++) {
+          let t = i / (sd.numPoints - 1);
+          let baseX = sd.startX + t * dx;
+          let baseY = sd.startY + t * dy;
+          let offset = sd.wiggleAmplitude * Math.sin(2 * Math.PI * sd.wiggleFrequency * t + globalTime + sd.wigglePhase) * Math.sin(Math.PI * t);
+          positions[i * 3] = baseX + perpX * offset;
+          positions[i * 3 + 1] = baseY + perpY * offset;
+          positions[i * 3 + 2] = 0;
+        }
+        lineMesh.geometry.attributes.position.needsUpdate = true;
+      });
+
+      // Update pulses
+      for (let i = pulses.length - 1; i >= 0; i--) {
+        const completed = pulses[i].update();
+        if (completed) {
+          pulses[i].remove();
+          pulses.splice(i, 1);
+        }
+      }
+
+      // Randomly spawn new pulses
+      if (Math.random() < 0.06) {
+        spawnInwardPulse();
+      }
+
+      if (Math.random() < 0.05) {
+        spawnOutwardPulse();
+      }
+
+      renderer.render(scene, camera);
+    }
+    
+    // Start the animation
+    updateScene();
+    animate();
+    
+    // Initial pulses - create fewer since they're longer
+    for (let i = 0; i < 10; i++) {
+      if (i % 2 === 0) {
+        spawnInwardPulse();
+      } else {
+        spawnOutwardPulse();
+      }
+    }
+  </script>
+</body>
+</html>
