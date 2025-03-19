@@ -349,23 +349,30 @@ body::before, body::after {
     bottom: 0;
     left: 0;
     right: 0;
-    height: 5em; /* Maintain the height for gradual fade */
+    height: 4em; /* Increased for an even more gradual fade */
     background: linear-gradient(to top, 
-                rgba(255,255,255,1) 0%, 
-                rgba(255,255,255,1) 15%, 
-                rgba(255,255,255,1) 25%,
-                rgba(255,255,255,0.98) 35%,
-                rgba(255,255,255,0.95) 45%,
-                rgba(255,255,255,0.9) 55%,
-                rgba(255,255,255,0.7) 65%, 
-                rgba(255,255,255,0.5) 75%,
-                rgba(255,255,255,0.3) 85%,
-                rgba(255,255,255,0.1) 95%,
+                rgba(255,255,255,1) 10%, 
+                rgba(255,255,255,0.98) 15%,
+                rgba(255,255,255,0.96) 20%,
+                rgba(255,255,255,0.94) 25%,
+                rgba(255,255,255,0.92) 30%,
+                rgba(255,255,255,0.9) 35%,
+                rgba(255,255,255,0.85) 40%,
+                rgba(255,255,255,0.8) 45%,
+                rgba(255,255,255,0.75) 50%,
+                rgba(255,255,255,0.7) 55%, 
+                rgba(255,255,255,0.65) 60%,
+                rgba(255,255,255,0.6) 65%,
+                rgba(255,255,255,0.5) 70%,
+                rgba(255,255,255,0.4) 75%,
+                rgba(255,255,255,0.3) 80%,
+                rgba(255,255,255,0.2) 85%,
+                rgba(255,255,255,0.1) 90%,
+                rgba(255,255,255,0.05) 95%,
                 rgba(255,255,255,0) 100%);
     pointer-events: none;
-    z-index: 10;
-    transform: translateY(0); /* No offset to ensure full coverage at bottom */
-    backdrop-filter: none;
+    z-index: 200; /* Increased to be higher than the link z-index of 100 */
+    transform: translateY(1em); /* Push the gradient down even more */
 }
 
 /* Strengthen the solid white layer at the bottom */
@@ -438,11 +445,48 @@ body::before, body::after {
 .card *::before,
 .card *::after {
     border-bottom: none;
+    display: block; /* Changed from 'none' to ensure pseudo-elements display */
 }
 
 /* Ensure the bottom of the card is clean */
 .card::after {
     content: none;
+}
+
+/* Ultimate link underline fix - for all cards */
+.card p a::after {
+    content: '' !important;
+    position: absolute !important;
+    display: block !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: -1px !important;
+    height: 1.5px !important; /* Slightly thicker */
+    background-color: #888 !important; /* Slightly darker for better visibility */
+    opacity: 1 !important;
+    visibility: visible !important;
+    z-index: 10 !important; /* Lower z-index to go under gradient */
+    transform: scaleX(1) !important;
+    transition: all 0.2s ease !important;
+}
+
+.card p a:hover::after {
+    transform: scaleX(0.7) !important;
+    background-color: #333 !important;
+}
+
+/* Update the z-index for links to be lower */
+.card p a {
+    position: relative !important;
+    display: inline-block !important;
+    color: #555 !important;
+    text-decoration: none !important;
+    transition: all 0.2s ease !important;
+    z-index: 10 !important; /* Lower z-index so it goes under the gradient */
+}
+
+.card p a:hover {
+    color: #333 !important;
 }
 
 /* Add a subtle accent line to the top of cards */
@@ -637,6 +681,29 @@ body::before, body::after {
 /* Make the static image disappear when hovering */
 .project-tile:hover .image-container img.static-image {
     opacity: 0;
+}
+
+/* Specifically target links in the Steerable Motion card */
+.card[data-position="2"] p a[href="https://github.com/IDGallagher"]::after,
+.card[data-position="2"] p a[href="https://banodoco.ai/Dough"]::after {
+    content: '' !important;
+    position: absolute !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: -1px !important;
+    height: 1px !important;
+    background-color: #999 !important;
+    transform: scaleX(1) !important;
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    z-index: 100 !important;
+}
+
+.card[data-position="2"] p a[href="https://github.com/IDGallagher"]:hover::after,
+.card[data-position="2"] p a[href="https://banodoco.ai/Dough"]:hover::after {
+    background-color: #333 !important;
+    transform: scaleX(0.7) !important;
 }
 
 /* Specific style for Steerable Motion card */
@@ -1435,7 +1502,7 @@ body::before, body::after {
 /* Style for links within paragraphs */
 .card p a {
     color: #555;
-    text-decoration: none;
+    text-decoration: none !important;
     position: relative;
     padding-bottom: 1px;
     transition: all 0.2s ease;
@@ -1452,6 +1519,9 @@ body::before, body::after {
     background-color: #999;
     transition: all 0.2s ease;
     transform: scaleX(1);
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
 }
 
 .card p a:hover {
@@ -1459,6 +1529,31 @@ body::before, body::after {
 }
 
 .card p a:hover::after {
+    background-color: #333;
+    transform: scaleX(0.7);
+}
+
+/* Force underlines for all links in paragraphs regardless of other styles that might be interfering */
+.card p a {
+    position: relative !important;
+    display: inline-block !important;
+}
+
+/* Additional selector to specifically target all links within the Steerable Motion card's paragraph */
+.card[data-position="2"] p a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 1px;
+    background-color: #999;
+    transition: all 0.2s ease;
+    transform: scaleX(1);
+    display: block !important; /* Ensure display */
+}
+
+.card[data-position="2"] p a:hover::after {
     background-color: #333;
     transform: scaleX(0.7);
 }
@@ -1660,7 +1755,7 @@ body::before, body::after {
                 rgba(255,255,255,0.05) 95%,
                 rgba(255,255,255,0) 100%);
     pointer-events: none;
-    z-index: 5;
+    z-index: 200; /* Increased to be higher than the link z-index of 100 */
     transform: translateY(1em); /* Push the gradient down even more */
 }
 
@@ -1703,11 +1798,6 @@ body::before, body::after {
 }
 
 /* Fix for the "Consider attempting to accelerate the 2nd Renaissance" card */
-.card[data-position="4"]:not(.expanded) {
-    position: relative;
-    overflow: hidden;
-}
-
 .card[data-position="4"]:not(.expanded)::after {
     content: '';
     position: absolute;
@@ -1736,7 +1826,7 @@ body::before, body::after {
                 rgba(255,255,255,0.05) 90%,
                 rgba(255,255,255,0) 100%);
     pointer-events: none;
-    z-index: 10; /* Higher z-index to ensure it appears above other elements */
+    z-index: 200; /* Increased to be higher than the link z-index of 100 */
     transform: translateY(1em); /* Push the gradient down to start fading out later */
 }
 
