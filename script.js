@@ -700,17 +700,27 @@ document.addEventListener('DOMContentLoaded', () => {
             // Get the expanded dimensions
             const expandedRect = card.getBoundingClientRect();
             
-            // Calculate the center of the viewport
-            const viewportHeight = window.innerHeight;
-            const viewportCenterY = viewportHeight / 2;
+            // Calculate scroll behavior based on device type
+            const isMobile = window.innerWidth <= 768;
+            let scrollOffset;
             
-            // Calculate where the center of the card is relative to the viewport
-            const cardCenterY = expandedRect.top + (expandedRect.height / 2);
+            if (isMobile) {
+                // For mobile: scroll to the top of the card with a small offset
+                scrollOffset = expandedRect.top - 10; // 10px offset from top
+            } else {
+                // For desktop: center the card vertically (original behavior)
+                // Calculate the center of the viewport
+                const viewportHeight = window.innerHeight;
+                const viewportCenterY = viewportHeight / 2;
+                
+                // Calculate where the center of the card is relative to the viewport
+                const cardCenterY = expandedRect.top + (expandedRect.height / 2);
+                
+                // Calculate how much we need to scroll to center the card
+                scrollOffset = cardCenterY - viewportCenterY;
+            }
             
-            // Calculate how much we need to scroll to center the card
-            const scrollOffset = cardCenterY - viewportCenterY;
-            
-            // Only scroll if the card isn't already centered (with some tolerance)
+            // Only scroll if adjustment is needed (with some tolerance)
             if (Math.abs(scrollOffset) > 20) {
                 // Calculate the new scroll position
                 const newScrollTop = scrollTop + scrollOffset;
@@ -728,7 +738,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const maxScrollTop = documentHeight - window.innerHeight;
                 const targetScrollTop = Math.max(0, Math.min(newScrollTop, maxScrollTop));
                 
-                // Scroll to center the card vertically
+                // Scroll to the calculated position
                 window.scrollTo({
                     top: targetScrollTop,
                     behavior: 'smooth'

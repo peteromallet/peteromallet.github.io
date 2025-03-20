@@ -349,7 +349,7 @@ body::before, body::after {
     bottom: 0;
     left: 0;
     right: 0;
-    height: 4em; /* Increased for an even more gradual fade */
+    height: 5em; /* Increased height for better fade effect */
     background: linear-gradient(to top, 
                 rgba(255,255,255,1) 10%, 
                 rgba(255,255,255,0.98) 15%,
@@ -371,11 +371,11 @@ body::before, body::after {
                 rgba(255,255,255,0.05) 95%,
                 rgba(255,255,255,0) 100%);
     pointer-events: none;
-    z-index: 200; /* Increased to be higher than the link z-index of 100 */
-    transform: translateY(1em); /* Push the gradient down even more */
+    z-index: 500; /* Increased z-index to ensure it's above all content */
+    transform: translateY(0); /* Remove the transform to position it exactly at bottom */
 }
 
-/* Strengthen the solid white layer at the bottom */
+/* Strengthen the fade effect at the bottom of non-expanded cards */
 .card:not(.expanded)::before {
     content: '';
     position: absolute;
@@ -383,7 +383,7 @@ body::before, body::after {
     left: 0;
     right: 0;
     height: 2.5em; /* Increased height for more solid coverage */
-    background: white; /* Solid white at the bottom */
+    background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
     pointer-events: none;
     z-index: 9;
 }
@@ -571,9 +571,8 @@ body::before, body::after {
     max-width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
+    /* Removed clamping for fade-only cutoff */
+    display: block;
     transition: all 0.3s ease;
     border-bottom: none; /* Ensure no border */
 }
@@ -592,7 +591,7 @@ body::before, body::after {
     width: 100%;
     height: 0;
     padding-bottom: 50%;
-    margin-bottom: 1rem; /* reduced margin-bottom */
+    margin-bottom: 1.5rem; /* updated to match video-container */
     overflow: hidden;
     border-radius: 6px;
     background-color: #f5f5f5;
@@ -1717,143 +1716,67 @@ body::before, body::after {
     transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
-/* Fixed height for unexpanded cards */
+/* STANDARDIZE CARD HEIGHTS AND CLIPPING - FIX FOR POSITIONS 1 & 2 */
+
+/* Ensure all cards have the same fixed height */
 .card:not(.expanded) {
     min-height: 400px;
     max-height: 400px;
     height: 400px;
     overflow: hidden;
-    position: relative; /* Needed for the gradient overlay */
+    position: relative;
 }
 
-/* Create an extremely gradual blur overlay */
-.card:not(.expanded)::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 4em; /* Increased for an even more gradual fade */
-    background: linear-gradient(to top, 
-                rgba(255,255,255,1) 10%, 
-                rgba(255,255,255,0.98) 15%,
-                rgba(255,255,255,0.96) 20%,
-                rgba(255,255,255,0.94) 25%,
-                rgba(255,255,255,0.92) 30%,
-                rgba(255,255,255,0.9) 35%,
-                rgba(255,255,255,0.85) 40%,
-                rgba(255,255,255,0.8) 45%,
-                rgba(255,255,255,0.75) 50%,
-                rgba(255,255,255,0.7) 55%, 
-                rgba(255,255,255,0.65) 60%,
-                rgba(255,255,255,0.6) 65%,
-                rgba(255,255,255,0.5) 70%,
-                rgba(255,255,255,0.4) 75%,
-                rgba(255,255,255,0.3) 80%,
-                rgba(255,255,255,0.2) 85%,
-                rgba(255,255,255,0.1) 90%,
-                rgba(255,255,255,0.05) 95%,
-                rgba(255,255,255,0) 100%);
-    pointer-events: none;
-    z-index: 200; /* Increased to be higher than the link z-index of 100 */
-    transform: translateY(1em); /* Push the gradient down even more */
+/* Override any project-tile specific text-content height */
+.project-tile .text-content {
+    max-height: unset !important; /* Override the 4.5em max-height */
 }
 
-/* For expanded cards, ensure that no text clamping or truncation is applied */
-.card.expanded p,
-.card.expanded .text-content p {
+/* Create a consistent text content container with fixed height */
+.card:not(.expanded) .text-content {
+    max-height: 200px !important; /* Fixed height for all cards */
+    overflow: hidden !important;
+    /* Remove mask image which might be causing inconsistent fading */
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding-bottom: 0.5rem; /* Reduced padding */
+}
+
+/* Override video card specific spacing to ensure text aligns with fade */
+.video-card .video-container {
+    padding-bottom: 50% !important; /* Ensure consistent height */
+    margin-bottom: 1rem !important; /* Standardize margin */
+}
+
+/* Override any specific styles for position 2 and ensure fade works */
+.card[data-position="2"] p,
+.card[data-position="1"] p {
+    max-height: unset !important; 
     -webkit-line-clamp: unset !important;
-    max-height: none !important;
-    overflow: visible !important;
-    white-space: normal !important;
-    display: block !important;
 }
 
-/* Override text truncation for paragraphs directly under unexpanded cards */
-.card:not(.expanded) > p {
-    -webkit-line-clamp: unset !important;
-    max-height: none !important;
-    display: block !important;
-    overflow: visible !important;
-    white-space: normal !important;
-    -webkit-box-orient: unset !important;
-    -webkit-box: unset !important;
+/* Ensure consistent paragraph height for all cards */
+.life-tile p, .work-tile p, .project-tile p, .story-tile p, .card p {
+    max-height: unset !important; /* Let the container control height */
+    -webkit-line-clamp: unset !important; /* Remove line clamp */
+    overflow: visible !important; /* Ensure text flows naturally */
+    line-height: 1.5 !important; /* Standardize line height */
+    margin-bottom: 0.5rem !important; /* Standardize margin */
 }
 
-/* Override text truncation for text content paragraphs in unexpanded cards */
-.card:not(.expanded) .text-content p {
-    -webkit-line-clamp: unset !important;
-    max-height: none !important;
-    display: block !important;
-    overflow: visible !important;
-    white-space: normal !important;
-    -webkit-box-orient: unset !important;
-    -webkit-box: unset !important;
+/* Remove text-content masked gradient that conflicts with main fade */
+.card:not(.expanded) .text-content {
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
 }
 
-/* Remove the individual text content blur effects */
-.card:not(.expanded) > p::after,
-.card:not(.expanded) .text-content::after {
-    display: none !important;
-}
-
-/* Fix for the "Consider attempting to accelerate the 2nd Renaissance" card */
-.card[data-position="4"]:not(.expanded)::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 7em; /* Increased height for a more gradual fade */
-    background: linear-gradient(to top, 
-                rgba(255,255,255,1) 5%, 
-                rgba(255,255,255,0.98) 10%,
-                rgba(255,255,255,0.96) 15%,
-                rgba(255,255,255,0.94) 20%,
-                rgba(255,255,255,0.92) 25%,
-                rgba(255,255,255,0.9) 30%,
-                rgba(255,255,255,0.85) 35%,
-                rgba(255,255,255,0.8) 40%,
-                rgba(255,255,255,0.75) 45%,
-                rgba(255,255,255,0.7) 50%, 
-                rgba(255,255,255,0.65) 55%,
-                rgba(255,255,255,0.6) 60%,
-                rgba(255,255,255,0.5) 65%,
-                rgba(255,255,255,0.4) 70%,
-                rgba(255,255,255,0.3) 75%,
-                rgba(255,255,255,0.2) 80%,
-                rgba(255,255,255,0.1) 85%,
-                rgba(255,255,255,0.05) 90%,
-                rgba(255,255,255,0) 100%);
-    pointer-events: none;
-    z-index: 200; /* Increased to be higher than the link z-index of 100 */
-    transform: translateY(1em); /* Push the gradient down to start fading out later */
-}
-
-/* Ensure the text content in this specific card doesn't get clipped */
-.card[data-position="4"]:not(.expanded) .text-content {
-    max-height: none;
-    overflow: visible;
-}
-
-/* Additional override to prevent .image-container::after from appearing on hover */
-.card:hover .image-container::after {
-    display: none !important;
-}
-
-/* Adjust spacing between P and O specifically */
-.pom-border-top .letter-p + .letter-o,
-.pom-border-bottom .letter-p + .letter-o {
-    margin-left: -1px; /* Reduced from -2px to create slightly more space */
-}
-
-/* For the main title */
-.large-letters .letter:nth-child(1) {
-    margin-right: -0.1rem;
-}
-
-.large-letters .letter:nth-child(2) {
-    margin-left: -0.1rem;
+/* Add a text fade effect for non-expanded cards */
+.card:not(.expanded) .text-content {
+    -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
 }
 
 /* Add at the end of the file */
@@ -1904,4 +1827,60 @@ body::before, body::after {
         font-size: 0.7rem;
         bottom: 5px;
     }
+}
+
+/* Specific overrides for positions 1 and 2 */
+.card[data-position="1"]:not(.expanded)::after,
+.card[data-position="2"]:not(.expanded)::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: 0 !important;
+    height: 5em !important;
+    background: linear-gradient(to top, 
+                rgba(255,255,255,1) 10%, 
+                rgba(255,255,255,0.98) 15%,
+                rgba(255,255,255,0.96) 20%,
+                rgba(255,255,255,0.94) 25%,
+                rgba(255,255,255,0.92) 30%,
+                rgba(255,255,255,0.9) 35%,
+                rgba(255,255,255,0.85) 40%,
+                rgba(255,255,255,0.8) 45%,
+                rgba(255,255,255,0.75) 50%,
+                rgba(255,255,255,0.7) 55%, 
+                rgba(255,255,255,0.65) 60%,
+                rgba(255,255,255,0.6) 65%,
+                rgba(255,255,255,0.5) 70%,
+                rgba(255,255,255,0.4) 75%,
+                rgba(255,255,255,0.3) 80%,
+                rgba(255,255,255,0.2) 85%,
+                rgba(255,255,255,0.1) 90%,
+                rgba(255,255,255,0.05) 95%,
+                rgba(255,255,255,0) 100%) !important;
+    z-index: 999 !important; /* Extremely high z-index to ensure it's on top */
+    left: 0 !important;
+    right: 0 !important;
+    pointer-events: none !important;
+    transform: translateY(0) !important;
+}
+
+/* Force text content max height for positions 1 and 2 */
+.card[data-position="1"]:not(.expanded) .text-content,
+.card[data-position="2"]:not(.expanded) .text-content {
+    max-height: 200px !important;
+    overflow: hidden !important;
+}
+
+/* Standardize <br> tag spacing */
+.card p br {
+    line-height: 1.5 !important;
+    display: block !important;
+    content: "" !important; 
+    margin-top: 0.5rem !important;
+}
+
+/* Specifically address multi-paragraph content in positions 1 and 2 */
+.card[data-position="1"] p,
+.card[data-position="2"] p {
+    margin-bottom: 0.5rem !important;
+    padding-bottom: 0 !important;
 }
