@@ -1,5 +1,10 @@
 // Wait for the DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', () => {
+    // Initialize Feather icons
+    if (typeof feather !== 'undefined') {
+        feather.replace();
+    }
+
     // Preload the Steerable Motion GIF
     const steerableMotionGifUrl = 'https://banodoco.s3.us-east-1.amazonaws.com/Untitled+(1152+x+512+px)+(1).gif';
     const preloadGif = new Image();
@@ -705,8 +710,8 @@ document.addEventListener('DOMContentLoaded', () => {
             let scrollOffset;
             
             if (isMobile) {
-                // For mobile: scroll to the top of the card with a small offset
-                scrollOffset = expandedRect.top - 10; // 10px offset from top
+                // For mobile: scroll to the top of the card with a larger offset to position it lower
+                scrollOffset = expandedRect.top - 60; // Changed from -10 to -60
             } else {
                 // For desktop: center the card vertically (original behavior)
                 // Calculate the center of the viewport
@@ -1387,5 +1392,129 @@ document.addEventListener('DOMContentLoaded', () => {
                 }, 150);
             }, 1500); // Changed from 3000 to 1500 to match desktop behavior
         });
+    });
+
+    // Loading element handling
+    // Set body to visible when DOM is ready (already happens via CSS transition, but explicit set is okay)
+    document.body.style.opacity = '1';
+
+    // Function to mark an element as loaded
+    function markAsLoaded(element) {
+      if (element) {
+        element.classList.add('loaded');
+      }
+    }
+
+    // Process all loading elements
+    const loadingElements = document.querySelectorAll('.loading-element');
+
+    loadingElements.forEach(function(element) {
+      // Find images within the element, excluding those with class 'ignore-load'
+      const images = element.querySelectorAll('img:not(.ignore-load)');
+
+      if (images.length > 0) {
+        let loadedImagesCount = 0;
+        const totalImages = images.length;
+
+        // For each image in the element
+        images.forEach(function(img) {
+          if (img.complete || !img.src) {
+            loadedImagesCount++;
+            if (loadedImagesCount === totalImages) {
+              markAsLoaded(element);
+            }
+          } else {
+            img.addEventListener('load', function() {
+              loadedImagesCount++;
+              if (loadedImagesCount === totalImages) {
+                markAsLoaded(element);
+              }
+            });
+
+            img.addEventListener('error', function() { // Also mark as loaded on error
+              loadedImagesCount++;
+              if (loadedImagesCount === totalImages) {
+                markAsLoaded(element);
+              }
+            });
+          }
+        });
+      } else {
+        // If no images, mark as loaded immediately
+        markAsLoaded(element);
+      }
+    });
+
+    // Fallback timeout to ensure elements load visually even if image events fail
+    setTimeout(function() {
+      loadingElements.forEach(function(element) {
+        if (!element.classList.contains('loaded')) { // Only mark if not already loaded
+            markAsLoaded(element);
+        }
+      });
+    }, 5000); // 5 seconds timeout
+
+    // Footer visibility logic
+    const footer = document.querySelector('.github-suggestion-footer');
+    if (footer) {
+      let scrollTimeout;
+      let lastKnownScrollPosition = 0;
+      let ticking = false;
+
+      function updateFooterVisibility() {
+        const viewportHeight = window.innerHeight;
+        const scrollPosition = window.pageYOffset || document.documentElement.scrollTop; // Use pageYOffset for broader compatibility
+        const totalHeight = Math.max( // Use Math.max for more reliable document height calculation
+            document.body.scrollHeight, document.documentElement.scrollHeight,
+            document.body.offsetHeight, document.documentElement.offsetHeight,
+            document.body.clientHeight, document.documentElement.clientHeight
+        );
+        const distanceFromBottom = totalHeight - (scrollPosition + viewportHeight);
+
+        // Adjust threshold slightly if needed, 50px seems reasonable
+        if (distanceFromBottom <= 50) {
+          footer.classList.add('visible');
+        } else {
+          footer.classList.remove('visible');
+        }
+      }
+
+      // Initial check
+      updateFooterVisibility();
+
+      // Handle scroll events with requestAnimationFrame
+      window.addEventListener('scroll', function() {
+        lastKnownScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+
+        if (!ticking) {
+          window.requestAnimationFrame(function() {
+            updateFooterVisibility();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }, { passive: true }); // Use passive listener for scroll
+
+      // Debounced resize handler
+      const debouncedResizeHandler = debounce(updateFooterVisibility, 100); // Use existing debounce
+      window.addEventListener('resize', debouncedResizeHandler);
+
+      // Mutation observer for dynamic content changes
+      // Use the existing debounce function for the mutation observer callback
+      const observerCallback = debounce(updateFooterVisibility, 100);
+      const observer = new MutationObserver(observerCallback);
+
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true,
+        attributes: true // Keep attributes true, characterData might be overkill
+      });
+    }
+
+    // Added to fix black flicker on mobile when returning to the page (Outside DOMContentLoaded)
+    window.addEventListener('pageshow', function(event) {
+      // Ensure both opacity and background are set immediately on page show
+      document.body.style.opacity = '1';
+      document.body.style.backgroundColor = '#fbf8ef'; // Explicitly set background
     });
 }); 
