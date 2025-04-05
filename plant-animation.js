@@ -4,6 +4,9 @@ const initialBud = document.getElementById('initialBud');
 const wateringContainer = document.querySelector('.watering-container');
 const waterDrops = document.querySelector('.water-drops');
 
+// Get the device pixel ratio
+const dpr = window.devicePixelRatio || 1;
+
 // Ensure initialBud has full opacity at the start
 initialBud.style.opacity = '1';
 
@@ -13,16 +16,28 @@ function addSlowerTransition() {
 }
 
 function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    // Get the size of the canvas in CSS pixels
+    const rect = canvas.getBoundingClientRect();
+
+    // Set the canvas drawing buffer size in device pixels
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+
+    // Scale the context to ensure correct drawing size
+    ctx.scale(dpr, dpr);
+
+    // Optionally, ensure the canvas style size matches the layout size
+    // This might already be handled by CSS, but setting it explicitly can prevent issues
+    canvas.style.width = `${rect.width}px`;
+    canvas.style.height = `${rect.height}px`;
 }
 
 resizeCanvas();
-let baseSize = { width: canvas.width, height: canvas.height };
+let baseSize = { width: canvas.getBoundingClientRect().width, height: canvas.getBoundingClientRect().height }; // Use rect size
 window.addEventListener('resize', () => {
     resizeCanvas();
     if (!animationStarted) {
-        baseSize = { width: canvas.width, height: canvas.height };
+        baseSize = { width: canvas.getBoundingClientRect().width, height: canvas.getBoundingClientRect().height }; // Use rect size
     }
 });
 
@@ -101,11 +116,11 @@ wateringContainer.addEventListener('click', () => {
 
 class Branch {
     constructor(startX, startY, length, angle, branchWidth, depth) {
-        this.startX = startX;
-        this.startY = startY;
-        this.length = length;
+        this.startX = startX / dpr; // Scale initial positions
+        this.startY = startY / dpr; // Scale initial positions
+        this.length = length / dpr; // Scale length
         this.angle = angle;
-        this.branchWidth = branchWidth;
+        this.branchWidth = branchWidth; // Keep width relative to CSS pixels for visual consistency
         this.depth = depth;
         this.grown = 0;
         this.finished = false;
@@ -117,20 +132,24 @@ class Branch {
 
     update() {
         if (this.grown < this.length) {
-            this.grown += this.length / 150;
+            // Adjust growth speed based on scaled length
+            this.grown += (this.length / 150);
         } else if (!this.finished && this.depth > 0) {
             const branchesCount = Math.floor(Math.random() * 2) + 2;
             for (let i = 0; i < branchesCount; i++) {
-                setTimeout(() => {
-                    const newAngle = this.angle + (Math.random() * 60 - 30);
-                    const newLength = this.length * (0.9 + Math.random() * 0.2);
-                    const newWidth = this.branchWidth * 0.75;
-                    branches.push(new Branch(
-                        this.startX + Math.sin(this.angle * Math.PI / 180) * -this.length,
-                        this.startY + Math.cos(this.angle * Math.PI / 180) * -this.length,
-                        newLength, newAngle, newWidth, this.depth - 1
-                    ));
-                }, Math.random() * 600 + 200); // delay randomly between 200ms and 800ms
+                const newAngle = this.angle + (Math.random() * 60 - 30);
+                const newLength = this.length * (0.9 + Math.random() * 0.2) * dpr; // Scale new length back for constructor
+                const newWidth = this.branchWidth * 0.75;
+                // Calculate new start positions in scaled coordinates
+                const newStartX = (this.startX + Math.sin(this.angle * Math.PI / 180) * -this.length) * dpr;
+                const newStartY = (this.startY + Math.cos(this.angle * Math.PI / 180) * -this.length) * dpr;
+
+                branches.push(new Branch(
+                    newStartX,
+                    newStartY,
+                    newLength,
+                    newAngle, newWidth, this.depth - 1
+                ));
             }
             this.finished = true;
         }
@@ -149,18 +168,19 @@ class Branch {
             setTimeout(() => this.startFlowering(), 100);
         } else {
             setTimeout(() => {
-                // Use the flower position to determine where the seed comes from
-                const seedX = this.startX + Math.sin(this.angle * Math.PI / 180) * -this.length * this.flowerPosition;
-                const seedY = this.startY + Math.cos(this.angle * Math.PI / 180) * -this.length * this.flowerPosition;
+                // Calculate seed position in scaled coordinates
+                const seedX = (this.startX + Math.sin(this.angle * Math.PI / 180) * -this.length * this.flowerPosition) * dpr;
+                const seedY = (this.startY + Math.cos(this.angle * Math.PI / 180) * -this.length * this.flowerPosition) * dpr;
                 seeds.push(new Seed(seedX, seedY));
             }, 1000 + Math.random() * 5000);
         }
     }
 
     draw() {
-        ctx.lineWidth = this.branchWidth;
+        ctx.lineWidth = this.branchWidth; // Use original width
         ctx.strokeStyle = '#8fb996';
         ctx.beginPath();
+        // Draw in scaled coordinates
         ctx.moveTo(this.startX, this.startY);
         ctx.lineTo(
             this.startX + Math.sin(this.angle * Math.PI / 180) * -this.grown,
@@ -170,13 +190,13 @@ class Branch {
 
         // Only draw flowers when floweringProgress is greater than 0
         if (this.floweringProgress > 0) {
-            // Use the flower position to determine where the flower appears
+            // Calculate flower position in scaled coordinates
             const flowerX = this.startX + Math.sin(this.angle * Math.PI / 180) * -this.length * this.flowerPosition;
             const flowerY = this.startY + Math.cos(this.angle * Math.PI / 180) * -this.length * this.flowerPosition;
             ctx.fillStyle = this.flowerColor;
             ctx.beginPath();
-            
-            // Calculate flower size based on three stages
+
+            // Calculate flower size based on three stages - keep visual size consistent
             let flowerSize;
             if (this.floweringProgress < 0.33) {
                 flowerSize = 1.5 + (1.5 * (this.floweringProgress / 0.33));
@@ -185,7 +205,8 @@ class Branch {
             } else {
                 flowerSize = 4.5 + (1.5 * ((this.floweringProgress - 0.66) / 0.34));
             }
-            
+
+            // Draw flower arc in scaled coordinates but use visually consistent size
             ctx.arc(flowerX, flowerY, flowerSize, 0, Math.PI * 2);
             ctx.fill();
         }
@@ -194,23 +215,29 @@ class Branch {
 
 class Seed {
     constructor(x, y) {
-        this.x = x;
-        this.y = y;
-        this.vx = Math.random() * 2 - 1;
-        this.speed = Math.random() * 1 + 0.5;
+        this.x = x / dpr; // Scale initial position
+        this.y = y / dpr; // Scale initial position
+        this.vx = (Math.random() * 2 - 1); // Keep velocity relative to CSS pixels
+        this.speed = (Math.random() * 1 + 0.5); // Keep speed relative to CSS pixels
         this.planted = false;
         this.hasCheckedGrowth = false;
     }
 
     update() {
-        if (this.y < canvas.height - 5) {
+        // Check against scaled canvas height
+        if (this.y < canvas.getBoundingClientRect().height) {
             this.x += this.vx;
             this.y += this.speed;
         } else if (!this.planted && !this.hasCheckedGrowth) {
             this.hasCheckedGrowth = true;
             // Only create a new branch if we haven't reached the maximum number of trees
             if (Math.random() < 0.02 && treeCount < MAX_TREES) {
-                branches.push(new Branch(this.x, canvas.height, canvas.height / 6, 0, 8, 5));
+                // Provide coordinates in scaled values for the Branch constructor
+                const branchStartX = this.x * dpr;
+                const branchStartY = canvas.getBoundingClientRect().height * dpr; // Start at bottom in device pixels
+                const branchLength = (canvas.getBoundingClientRect().height / 6) * dpr; // Scale length
+
+                branches.push(new Branch(branchStartX, branchStartY, branchLength, 0, 8, 5));
                 treeCount++; // Increment the tree counter
             }
             this.planted = true;
@@ -221,36 +248,47 @@ class Seed {
     draw() {
         ctx.fillStyle = '#c9a07a';
         ctx.beginPath();
+        // Draw arc in scaled coordinates, use visually consistent size
         ctx.arc(this.x, this.y, 1.5, 0, Math.PI * 2);
         ctx.fill();
     }
 }
 
 function animate() {
-    // Instead of clearing the canvas to transparent which may default to black, fill it with a background color
+    // Save the current context state (including the scale)
+    ctx.save();
+    // Reset the transform to identity for clearing
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    // Clear the canvas with the background color
     ctx.fillStyle = '#fbf8ef'; // match the body background color
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+    // Restore the context state (including the scale)
+    ctx.restore();
+
+    // Update and draw branches and seeds (which use the scaled context)
     branches.forEach(branch => branch.update());
     seeds.forEach(seed => seed.update());
     requestAnimationFrame(animate);
 }
 
 function startGrowth(startX, startY) {
-    // Start the branch slightly behind the sapling position
-    // This creates the effect of the plant growing from behind the sapling
-    // instead of replacing it
-    
-    // Create the upward growing branch (reduced height by 40%)
-    branches.push(new Branch(startX, startY + 5, canvas.height / 7.5, 0, 10, 7));
+    // Scale the initial startX and startY for the Branch constructor
+    const scaledStartX = startX * dpr;
+    const scaledStartY = (startY + 5) * dpr;
+    const scaledCanvasHeight = canvas.getBoundingClientRect().height * dpr;
+
+    // Create the upward growing branch (scale length)
+    const upBranchLength = (canvas.getBoundingClientRect().height / 7.5) * dpr;
+    branches.push(new Branch(scaledStartX, scaledStartY, upBranchLength, 0, 10, 7));
     treeCount++; // Increment tree counter for the main upward branch
-    
-    // Create a downward growing branch (root) - extend all the way to the bottom
-    const rootBranch = new Branch(startX, startY + 5, (canvas.height - startY - 5), 180, 10, 0);
-    // Prevent the root from flowering by setting floweringProgress to -1
+
+    // Create a downward growing branch (root) - scale length
+    const rootBranchLength = (scaledCanvasHeight - scaledStartY);
+    const rootBranch = new Branch(scaledStartX, scaledStartY, rootBranchLength, 180, 10, 0);
+    // Prevent the root from flowering
     rootBranch.floweringProgress = -1;
-    rootBranch.flowered = true; // Mark as already flowered to prevent future flowering
+    rootBranch.flowered = true;
     branches.push(rootBranch);
-    // We don't count the root as a separate tree
-    
+
     animate();
 } 
