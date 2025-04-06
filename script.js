@@ -5,6 +5,39 @@ document.addEventListener('DOMContentLoaded', () => {
         feather.replace();
     }
 
+    // Generate POM border letters dynamically
+    const topBorderDiv = document.querySelector('.pom-border-top > div');
+    const bottomBorderDiv = document.querySelector('.pom-border-bottom > div');
+    const repetitions = 60; // Adjust as needed for desired width
+
+    if (topBorderDiv && bottomBorderDiv) {
+        // Use DocumentFragment for performance when adding many elements
+        const topFragment = document.createDocumentFragment();
+        const bottomFragment = document.createDocumentFragment();
+
+        for (let i = 0; i < repetitions; i++) {
+            const letters = ['P', 'O', 'M'];
+            const classes = ['letter-p', 'letter-o', 'letter-m'];
+
+            letters.forEach((letter, index) => {
+                // Create spans for top border
+                const topSpan = document.createElement('span');
+                topSpan.classList.add(classes[index]);
+                topSpan.textContent = letter;
+                topFragment.appendChild(topSpan);
+
+                // Create spans for bottom border
+                const bottomSpan = document.createElement('span');
+                bottomSpan.classList.add(classes[index]);
+                bottomSpan.textContent = letter;
+                bottomFragment.appendChild(bottomSpan);
+            });
+        }
+        // Append all spans at once
+        topBorderDiv.appendChild(topFragment);
+        bottomBorderDiv.appendChild(bottomFragment);
+    }
+
     // Preload the Steerable Motion GIF
     const steerableMotionGifUrl = 'https://banodoco.s3.us-east-1.amazonaws.com/Untitled+(1152+x+512+px)+(1).gif';
     const preloadGif = new Image();
