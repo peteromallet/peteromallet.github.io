@@ -4,6 +4,11 @@
     box-sizing: border-box;
 }
 
+/* Adjust spacing for large POM hero letters */
+#pom-letters .letter:nth-child(2) {
+  margin-left: -0.05em; /* Adjusted from -0.1em to add a bit more space */
+}
+
 html { background-color: #fff; }
 
 body {
@@ -1814,7 +1819,7 @@ body::before, body::after {
 /* Reduce space specifically before the 'O' in POM borders */
 .pom-border-top > div > span.letter-o,
 .pom-border-bottom > div > span.letter-o {
-  margin-left: -2px; /* Adjust this negative value as needed */
+  margin-left: -1px; /* Adjusted from -2px to add a bit more space */
 }
 
 /* Optional: Reset margin/padding for all border letters if needed */
