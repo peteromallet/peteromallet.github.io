@@ -2051,13 +2051,15 @@ body::before, body::after {
 /* Add at the end of the file */
 .github-suggestion-footer {
     position: fixed;
-    bottom: 10px;
+    bottom: 8px; /* Adjusted position */
     left: 0;
     width: 100%;
     text-align: center;
     font-size: 0.75rem;
     color: #aaa;  /* Changed from #888 to #aaa for more faded look */
-    padding: 0 20px;
+    padding: 5px 10px; /* Retained from previous edit */
+    background-color: rgba(251, 248, 239, 0.8); /* Retained from previous edit */
+    border-radius: 5px; /* Retained from previous edit */
     z-index: 999;
     opacity: 0; /* Start hidden */
     transition: opacity 0.5s ease-in-out; /* Smooth transition */
@@ -2085,7 +2087,7 @@ body::before, body::after {
     right: 0;
     bottom: -1px;
     height: 1px;
-    background-color: #aaa;  /* Changed from #999 to #aaa */
+    background-color: #999;  /* Changed from #666 to #999 */
     transition: all 0.2s ease;
 }
 
