@@ -1478,15 +1478,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Fallback timeout to ensure elements load visually even if image events fail
-    setTimeout(function() {
-      loadingElements.forEach(function(element) {
-        if (!element.classList.contains('loaded')) { // Only mark if not already loaded
-            markAsLoaded(element);
-        }
-      });
-    }, 5000); // 5 seconds timeout
-
     // Footer visibility logic
     const footer = document.querySelector('.github-suggestion-footer');
     if (footer) {
