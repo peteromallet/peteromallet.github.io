@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Preload the Steerable Motion GIF
-    const steerableMotionGifUrl = 'https://banodoco.s3.us-east-1.amazonaws.com/Untitled+(1152+x+512+px)+(1).gif';
+    const steerableMotionGifUrl = 'steerable-motion-animation.gif';
     const preloadGif = new Image();
     preloadGif.src = steerableMotionGifUrl;
     
