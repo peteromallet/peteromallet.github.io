@@ -652,12 +652,12 @@ body::before, body::after {
 
 /* Custom zoom effect for Steerable Motion card - zoom to the right */
 .card[data-position="2"] .hover-gif img {
-    transform-origin: 80% center; /* Shift the transform origin further to the right (was right center) */
+    /* transform-origin: 80% center; */ /* Shift the transform origin further to the right (was right center) */
     transition: transform 0.5s ease, opacity 0.5s ease;
 }
 
 .card[data-position="2"]:hover .hover-gif img {
-    transform: scale(1.6); /* Increase zoom level (was 1.3) */
+    /* transform: scale(1.6); */ /* Increase zoom level (was 1.3) */
 }
 
 /* Hover GIF styling */
