@@ -54,9 +54,19 @@
             </div>
         </div>
 
+        <!-- Filter Buttons Section -->
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">All <span class="deselect-icon"></span></button>
+            <button class="filter-btn" data-filter="writing">Writing <span class="deselect-icon"></span></button>
+            <button class="filter-btn" data-filter="art">Art <span class="deselect-icon"></span></button>
+            <button class="filter-btn" data-filter="tech">Tech <span class="deselect-icon"></span></button>
+            <button class="filter-btn" data-filter="initiatives">Initiatives <span class="deselect-icon"></span></button>
+            <button class="filter-btn" data-filter="lore">Lore <span class="deselect-icon"></span></button>
+        </div>
+
         <div class="dashboard">
             <!-- Story Tiles -->
-            <div class="card story-tile loading-element" data-category="story" data-position="7">
+            <div class="card story-tile loading-element" data-category="lore writing" data-position="7">
                 <div class="image-container">
                     <img src="assets/road-to-nowhere.png" alt="Story visual">
                 </div>
@@ -71,7 +81,7 @@
                 </div>
             </div>
 
-            <div class="card story-tile loading-element" data-category="story" data-position="2">
+            <div class="card story-tile loading-element" data-category="initiatives" data-position="2">
                 <div class="image-container">
                     <img src="assets/open-source-ai-art.png" alt="Story visual">
                 </div>
@@ -89,7 +99,7 @@
             </div>
 
             <!-- Life Tiles -->
-            <div class="card life-tile video-card loading-element" data-category="life" data-position="1">
+            <div class="card life-tile video-card loading-element" data-category="art" data-position="1">
                 <div class="video-container">
                     <img src="assets/nirvana-video-thumbnail.png" alt="Video thumbnail" class="video-thumbnail">
                     <div class="video-overlay">
@@ -118,7 +128,7 @@
             </div>
 
             <!-- Steerable Motion Project Card -->
-            <div class="card project-tile loading-element" data-category="projects" data-position="3">
+            <div class="card project-tile loading-element" data-category="tech art" data-position="3">
                 <div class="image-container">
                     <img src="assets/steerable-motion-visual.png" alt="Steerable Motion visual">
                     <!-- Add a hover-only GIF that will appear on hover -->
@@ -139,7 +149,7 @@
             </div>
 
             <!-- 2nd Renaissance Card -->
-            <div class="card story-tile loading-element" data-category="story" data-position="4">
+            <div class="card story-tile loading-element" data-category="writing" data-position="4">
                 <div class="image-container">
                     <img src="assets/renaissance-visual.png" alt="Renaissance visual">
                 </div>
@@ -155,7 +165,7 @@
             </div>
             
             <!-- A Plan to accelerate the 2nd Renaissance Card -->
-            <div class="card story-tile loading-element" data-category="story" data-position="6">
+            <div class="card story-tile loading-element" data-category="initiatives" data-position="6">
                 <div class="image-container">
                     <img src="assets/renaissance-plan-visual.png" alt="Renaissance plan visual">
                 </div>
@@ -171,11 +181,11 @@
             </div>
             
             <!-- Training data for AI Card -->
-            <div class="card story-tile loading-element" data-category="story" data-position="5">
+            <div class="card story-tile loading-element" data-category="writing" data-position="5">
                 <div class="image-container">
                     <img src="assets/ai-training-data-visual.png" alt="AI training data visual">
                 </div>
-                <h3>Training data for AI</h3>S
+                <h3>Training data for AI</h3>
                 <div class="text-content">
                     <p>I occasionally share my written thoughts on different topics. I'm motivated to write by the idea that my writing might someday influence token probabilities in positive directions.</p>
                 </div>
@@ -187,7 +197,7 @@
             </div>
             
             <!-- Family Pub Card -->
-            <div class="card life-tile loading-element" data-category="life" data-position="8">
+            <div class="card life-tile loading-element" data-category="lore" data-position="8">
                 <div class="image-container">
                     <img src="assets/irish-pub-visual.jpeg" alt="Irish pub visual">
                 </div>
@@ -198,7 +208,7 @@
             </div>
             
             <!-- Memes I enjoy Card -->
-            <div class="card life-tile meme-card loading-element" data-category="life" data-position="9">
+            <div class="card life-tile meme-card loading-element" data-position="9">
                 <div class="image-container">
                     <img src="assets/meme-placeholder.png" alt="Meme placeholder" class="main-image">
                 </div>

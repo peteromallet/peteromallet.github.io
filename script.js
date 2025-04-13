@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Preload the Steerable Motion GIF
-    const steerableMotionGifUrl = 'steerable-motion-animation.gif';
+    const steerableMotionGifUrl = 'assets/steerable-motion-animation.gif';
     const preloadGif = new Image();
     preloadGif.src = steerableMotionGifUrl;
     
@@ -1541,4 +1541,225 @@ document.addEventListener('DOMContentLoaded', () => {
       document.body.style.opacity = '1';
       document.body.style.backgroundColor = '#fbf8ef'; // Explicitly set background
     });
+
+    // --- Filter Logic --- //
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const dashboardCards = document.querySelectorAll('.dashboard .card');
+    const allButton = document.querySelector('.filter-btn[data-filter="all"]');
+
+    let activeFilters = new Set(['all']); // Start with 'all' active
+
+    filterButtons.forEach(button => {
+        const deselectIcon = button.querySelector('.deselect-icon');
+        if (deselectIcon) {
+            deselectIcon.textContent = '×'; // Set the 'x' symbol
+        }
+        
+        button.addEventListener('click', () => {
+            const filter = button.getAttribute('data-filter');
+
+            if (filter === 'all') {
+                // If 'all' is clicked
+                if (!activeFilters.has('all')) {
+                    // If 'all' wasn't active, activate it and deactivate others
+                    activeFilters.clear();
+                    activeFilters.add('all');
+                } 
+                // If 'all' was already active, clicking it again does nothing
+                
+            } else {
+                // If a category button is clicked
+                if (activeFilters.has('all')) {
+                    // If 'all' was active, deactivate it and activate the clicked category
+                    activeFilters.delete('all');
+                    activeFilters.add(filter);
+                } else {
+                    // If 'all' was not active
+                    if (activeFilters.has(filter)) {
+                        // If the clicked category was active, deactivate it
+                        activeFilters.delete(filter);
+                    } else {
+                        // If the clicked category wasn't active, activate it
+                        activeFilters.add(filter);
+                    }
+                    // If no category buttons are active, activate 'all'
+                    if (activeFilters.size === 0) {
+                        activeFilters.add('all');
+                    }
+                }
+            }
+
+            updateButtonStates();
+            filterCards();
+        });
+    });
+
+    function updateButtonStates() {
+        filterButtons.forEach(btn => {
+            const btnFilter = btn.getAttribute('data-filter');
+            if (activeFilters.has(btnFilter)) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+    }
+
+    function filterCards() {
+        const transitionDuration = 500; // ms, should match CSS transition
+
+        // 1. First: Get initial positions of all cards
+        const initialPositions = new Map();
+        dashboardCards.forEach(card => {
+            initialPositions.set(card, card.getBoundingClientRect());
+        });
+
+        // Identify cards to hide, show, or keep
+        const cardsToHide = [];
+        const cardsToShow = [];
+        const cardsToKeep = [];
+
+        dashboardCards.forEach(card => {
+            const categoryString = card.getAttribute('data-category'); // Get the attribute
+            const cardCategories = categoryString ? categoryString.split(' ') : []; // Split only if it exists
+
+            const isVisibleTarget = activeFilters.has('all') || cardCategories.some(category => activeFilters.has(category));
+            const isCurrentlyVisible = !card.classList.contains('hiding') && !card.classList.contains('removed');
+
+            if (isVisibleTarget && !isCurrentlyVisible) {
+                cardsToShow.push(card);
+            } else if (!isVisibleTarget && isCurrentlyVisible) {
+                cardsToHide.push(card);
+            } else if (isVisibleTarget && isCurrentlyVisible) {
+                cardsToKeep.push(card);
+            }
+            // Cards that are already hidden (!isVisibleTarget && !isCurrentlyVisible) are ignored for animation
+        });
+
+        // --- Get dashboard container rect for relative positioning --- 
+        const dashboardRect = document.querySelector('.dashboard')?.getBoundingClientRect();
+
+        // 2. Apply initial changes (hide cards, prepare cards to show)
+        cardsToHide.forEach(card => {
+            const initialPos = initialPositions.get(card);
+            if (!dashboardRect) return; // Skip if dashboard not found
+
+            // --- Log position for hiding card --- 
+            console.log('[HIDING] Card:', card.querySelector('h3')?.textContent.trim());
+            console.log('[HIDING] Initial Pos:', { top: initialPos.top, left: initialPos.left, width: initialPos.width });
+            // --- End Log ---
+            
+            // Keep position absolute during fade-out
+            card.style.position = 'absolute';
+            card.style.top = `${initialPos.top + window.scrollY}px`;
+            // --- Calculate left relative to the dashboard container --- 
+            const relativeLeft = initialPos.left - dashboardRect.left;
+            card.style.left = `${relativeLeft}px`; 
+            card.style.width = `${initialPos.width}px`;
+            card.style.height = `${initialPos.height}px`;
+            card.classList.add('hiding');
+            card.classList.remove('removed'); // Ensure it's not display:none during transition
+
+            // Optional: truly remove after transition
+            setTimeout(() => {
+                 // Only remove if it's still meant to be hidden
+                 const currentCategoryString = card.getAttribute('data-category');
+                 const currentCardCategories = currentCategoryString ? currentCategoryString.split(' ') : [];
+                 const stillShouldBeHidden = !activeFilters.has('all') && !currentCardCategories.some(category => activeFilters.has(category));
+                 
+                 if(stillShouldBeHidden) {
+                     card.classList.add('removed');
+                     // Reset styles needed for absolute positioning
+                     card.style.position = '';
+                     card.style.top = '';
+                     card.style.left = '';
+                     card.style.width = '';
+                     card.style.height = '';
+                 }
+            }, transitionDuration);
+        });
+
+        cardsToShow.forEach(card => {
+            card.classList.remove('hiding', 'removed');
+            card.style.position = ''; // Ensure it's back in the grid flow
+            card.style.top = '';
+            card.style.left = '';
+            card.style.width = '';
+            card.style.height = '';
+            card.classList.add('before-show'); // Make initially invisible
+        });
+
+        // --- Define cardsToAnimate earlier --- 
+        const cardsToAnimate = [...cardsToKeep, ...cardsToShow];
+
+        // 3. Last: Get final positions after layout reflow
+        // --- Remove explicit reflow --- 
+        // const dashboard = document.querySelector('.dashboard'); // Get the container
+        // if (dashboard) { 
+        //     void dashboard.offsetWidth; 
+        // }
+
+        // Measure final positions *after* initial hiding/showing styles are applied
+        const finalPositions = new Map();
+        cardsToAnimate.forEach(card => {
+            // Ensure card is not display:none when measuring
+            if (!card.classList.contains('removed')) { 
+                finalPositions.set(card, card.getBoundingClientRect());
+            }
+        });
+
+        // 4. Invert: Calculate deltas and apply initial transforms
+        cardsToAnimate.forEach(card => {
+            const initialPos = initialPositions.get(card);
+            const finalPos = finalPositions.get(card);
+            
+            if (!finalPos) return;
+
+            const deltaX = initialPos.left - finalPos.left;
+            const deltaY = initialPos.top - finalPos.top;
+
+            // --- Add console logging for debugging --- 
+            console.log('Card:', card.querySelector('h3')?.textContent.trim());
+            console.log('Initial:', { top: initialPos.top, left: initialPos.left });
+            console.log('Final:', { top: finalPos.top, left: finalPos.left });
+            console.log('Delta:', { deltaX, deltaY });
+            // --- End console logging --- 
+
+            // Only apply transform if position actually changed
+            if (Math.abs(deltaX) > 0.5 || Math.abs(deltaY) > 0.5 || card.classList.contains('before-show')) {
+                card.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+            } else {
+                card.style.transform = ''; // Ensure no lingering transform
+            }
+        });
+
+        // 5. Play: Remove transforms and fade in new cards in the next frame
+        requestAnimationFrame(() => {
+            cardsToAnimate.forEach(card => {
+                // Remove the initial transform to let it transition to (0,0)
+                card.style.transition = `transform ${transitionDuration}ms ease-out, opacity ${transitionDuration}ms ease-out`;
+                card.style.transform = ''; 
+                
+                // Remove before-show class to fade in
+                if (card.classList.contains('before-show')) {
+                    card.classList.remove('before-show');
+                }
+                 // Reset inline transition after animation is done
+                 setTimeout(() => {
+                     card.style.transition = ''; 
+                 }, transitionDuration);
+            });
+        });
+    }
+
+    // Initial state setup
+    updateButtonStates(); // Set initial button states based on activeFilters ('all')
+    // No need to call filterCards() initially if 'all' is default, as all cards are visible
+
+    // Ensure plant animation doesn't overlap footer after filtering might change height
+    const plantCanvas = document.getElementById('plantCanvas');
+    if (plantCanvas) {
+        // Re-calculate canvas height if needed after filtering
+        // This might need adjustment based on your plant animation logic
+    }
 }); 

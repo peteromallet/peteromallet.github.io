@@ -291,24 +291,32 @@ body::before, body::after {
 }
 
 .filter-btn {
-    background: none;
-    border: 1px solid #eaeaea;
-    border-radius: 20px;
-    padding: 0.5rem 1rem;
-    font-size: 0.9rem;
+    background-color: transparent; /* Changed from #eee */
+    color: #555; /* Changed from #333 */
+    border: 1px solid #ddd; /* Changed from #ccc */
+    padding: 8px 15px;
+    margin: 5px;
+    border-radius: 15px;
     cursor: pointer;
-    transition: all 0.2s ease;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9em;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s, font-weight 0.3s;
+    display: inline-flex; /* Align text and icon */
+    align-items: center;
+    font-weight: 400; /* Explicitly set default weight */
 }
 
 .filter-btn:hover {
-    border-color: #ccc;
-    background-color: #f9f9f9;
+    background-color: rgba(0, 0, 0, 0.03); /* Changed from #ddd to subtle tint */
+    border-color: #bbb; /* Darker border on hover */
+    color: #333; /* Darker text on hover */
 }
 
 .filter-btn.active {
-    background-color: #333;
-    color: #fff;
-    border-color: #333;
+    background-color: #f0f0f0; /* Changed from #555 to light grey fill */
+    color: #333; /* Changed from #fff to dark text */
+    border-color: #bbb; /* Changed from #555 to match hover */
+    font-weight: 500; /* Make text slightly bolder when active */
 }
 
 /* Dashboard Grid */
@@ -344,6 +352,14 @@ body::before, body::after {
     box-sizing: border-box;
     will-change: transform;
     border: 1px solid rgba(200, 200, 220, 0.3);
+    /* Base transition for FLIP transform and opacity */
+    transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+    transform-origin: top center;
+    will-change: transform, opacity;
+    position: relative; /* Needed for absolute positioning context */
+    overflow: hidden; 
+    /* Ensure initial state allows transitions */
+    opacity: 1;
 }
 
 /* Remove the conflicting blur effect */
@@ -2109,4 +2125,103 @@ body::before, body::after {
     .github-suggestion-footer {
         display: none; /* Kept from index.html mobile styles */
     }
+}
+
+/* Filter Buttons */
+.filter-buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 20px 0;
+    padding: 0 10px; /* Add some padding for smaller screens */
+}
+
+.filter-btn {
+    background-color: transparent; /* Changed from #eee */
+    color: #555; /* Changed from #333 */
+    border: 1px solid #ddd; /* Changed from #ccc */
+    padding: 8px 15px;
+    margin: 5px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9em;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s, font-weight 0.3s;
+    display: inline-flex; /* Align text and icon */
+    align-items: center;
+    font-weight: 400; /* Explicitly set default weight */
+}
+
+.filter-btn:hover {
+    background-color: rgba(0, 0, 0, 0.03); /* Changed from #ddd to subtle tint */
+    border-color: #bbb; /* Darker border on hover */
+    color: #333; /* Darker text on hover */
+}
+
+.filter-btn.active {
+    background-color: #f0f0f0; /* Changed from #555 to light grey fill */
+    color: #333; /* Changed from #fff to dark text */
+    border-color: #bbb; /* Changed from #555 to match hover */
+    font-weight: 500; /* Make text slightly bolder when active */
+}
+
+.filter-btn .deselect-icon {
+    display: none;
+    margin-left: 8px;
+    font-weight: bold;
+    font-size: 1.1em;
+    line-height: 1;
+}
+
+.filter-btn.active .deselect-icon {
+    display: inline-block;
+}
+
+/* Don't show 'x' for the 'All' button when it's active */
+.filter-btn[data-filter="all"].active .deselect-icon {
+    display: none;
+}
+
+/* Card Filtering */
+.card {
+    /* Base transition for FLIP transform and opacity */
+    transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+    transform-origin: top center;
+    will-change: transform, opacity;
+    position: relative; /* Needed for absolute positioning context */
+    overflow: hidden; 
+    /* Ensure initial state allows transitions */
+    opacity: 1;
+}
+
+/* Style for cards during hiding transition (absolute positioning) */
+.card.hiding {
+    position: absolute !important; /* Takes out of flow */
+    opacity: 0 !important;
+    /* REMOVED scale transform */
+    /* transform: scale(0.95) !important; */
+    transform: none !important; /* Explicitly disable transforms during exit */
+    pointer-events: none !important;
+    z-index: -1 !important; /* Position behind other cards */
+    /* Ensure transitions apply ONLY to opacity */
+    transition: opacity 0.5s ease-out !important;
+}
+
+/* Style for cards initially when they are meant to be shown (invisible) */
+.card.before-show {
+    opacity: 0 !important;
+}
+
+/* Optional: class to truly remove after hiding transition */
+.card.removed {
+    display: none !important;
+}
+
+/* Ensure hidden cards don't affect Masonry layout if you use one later */
+.dashboard {
+    /* If using display: grid or flex, adjust accordingly */
+    /* Example for flex: */
+    /* display: flex; */
+    /* flex-wrap: wrap; */
+    position: relative; /* Needed for absolute positioning of children */
 }
