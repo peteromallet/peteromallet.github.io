@@ -222,7 +222,7 @@ body {
 
 .pom-border-bottom.fading-light {
     bottom: 0px; /* Even lower position */
-    opacity: 0.3; /* Third stage of fading */
+    opacity: 0; /* Third stage of fading - NOW FULLY TRANSPARENT */
 }
 
 .pom-border-bottom.hidden {
@@ -1877,26 +1877,19 @@ body::before, body::after {
 
 /* Loading element styles */
 .loading-element {
-    opacity: 0;
-    transform: translateY(10px);
+    /* Force initial state with !important */
+    opacity: 0 !important;
+    transform: translateY(10px) !important;
     transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    /* transition-delay: var(--load-delay, 0ms); */ /* REMOVED CSS variable delay */
+    will-change: opacity, transform;
 }
 
 .loading-element.loaded {
-    opacity: 1;
-    transform: translateY(0);
+    /* Override initial state when loaded */
+    opacity: 1 !important;
+    transform: translateY(0) !important;
 }
-
-/* Stagger the transitions for a cascade effect */
-.loading-element:nth-child(1) { transition-delay: 0.1s; }
-.loading-element:nth-child(2) { transition-delay: 0.2s; }
-.loading-element:nth-child(3) { transition-delay: 0.3s; }
-.loading-element:nth-child(4) { transition-delay: 0.4s; }
-.loading-element:nth-child(5) { transition-delay: 0.5s; }
-.loading-element:nth-child(6) { transition-delay: 0.6s; }
-.loading-element:nth-child(7) { transition-delay: 0.7s; }
-.loading-element:nth-child(8) { transition-delay: 0.8s; }
-.loading-element:nth-child(9) { transition-delay: 0.9s; }
 
 /* Styles moved from index.html <style> tag */
 #plantCanvas {

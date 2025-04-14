@@ -5,6 +5,19 @@ document.addEventListener('DOMContentLoaded', () => {
         feather.replace();
     }
 
+    // --- Staggered Loading Animation --- REVERTED TO SIMPLER APPROACH ---
+    const loadingElements = document.querySelectorAll('.loading-element');
+    const baseDelay = 100; // Base delay in milliseconds (0.1s)
+
+    window.requestAnimationFrame(() => {
+        loadingElements.forEach((element, index) => {
+            const delay = (index + 1) * baseDelay;
+            element.style.transitionDelay = `${delay}ms`;
+            element.classList.add('loaded');
+        });
+    });
+    // --- End Staggered Loading Animation ---
+
     // Generate POM border letters dynamically
     const topBorderDiv = document.querySelector('.pom-border-top > div');
     const bottomBorderDiv = document.querySelector('.pom-border-bottom > div');
@@ -1431,17 +1444,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // Set body to visible when DOM is ready (already happens via CSS transition, but explicit set is okay)
     document.body.style.opacity = '1';
 
-    // Function to mark an element as loaded
+    // Function to mark an element as loaded (Now potentially redundant for initial load, but keep for safety/other uses)
     function markAsLoaded(element) {
       if (element) {
         element.classList.add('loaded');
       }
     }
 
-    // Process all loading elements
-    const loadingElements = document.querySelectorAll('.loading-element');
+    // Process all loading elements - REMOVED DELAY LOGIC FROM HERE
+    // const baseDelay = 100; // REMOVED
+    loadingElements.forEach(function(element, index) { // Removed index
+      // REMOVED Delay Calculation
+      // const delay = (index + 1) * baseDelay;
+      // element.style.setProperty('--load-delay', `${delay}ms`); // REMOVED CSS variable
 
-    loadingElements.forEach(function(element) {
       // Find images within the element, excluding those with class 'ignore-load'
       const images = element.querySelectorAll('img:not(.ignore-load)');
 
@@ -1474,7 +1490,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       } else {
         // If no images, mark as loaded immediately
-        markAsLoaded(element);
+        // markAsLoaded(element); // Commented out - loaded class added in initial loop
       }
     });
 
