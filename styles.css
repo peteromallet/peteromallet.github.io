@@ -290,33 +290,61 @@ body::before, body::after {
     justify-content: center;
 }
 
+/* Filter Buttons */
+.filter-buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 20px 0;
+    padding: 0 10px; /* Add some padding for smaller screens */
+}
+
 .filter-btn {
-    background-color: transparent; /* Changed from #eee */
-    color: #555; /* Changed from #333 */
-    border: 1px solid #ddd; /* Changed from #ccc */
-    padding: 8px 15px;
+    background-color: rgba(251, 248, 239, 0.6); /* Semi-transparent background */
+    color: #555;
+    border: 1px solid #ddd; /* Add default light gray border */
+    padding: 8px 15px; /* Restore original padding */
     margin: 5px;
     border-radius: 15px;
     cursor: pointer;
     font-family: 'Inter', sans-serif;
     font-size: 0.9em;
-    transition: background-color 0.3s, color 0.3s, border-color 0.3s, font-weight 0.3s;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s, font-weight 0.3s; /* Update transition target */
     display: inline-flex; /* Align text and icon */
     align-items: center;
     font-weight: 400; /* Explicitly set default weight */
 }
 
-.filter-btn:hover {
-    background-color: rgba(0, 0, 0, 0.03); /* Changed from #ddd to subtle tint */
-    border-color: #bbb; /* Darker border on hover */
-    color: #333; /* Darker text on hover */
+.filter-btn:not(.active):hover {
+    background-color: rgba(251, 248, 239, 0.8); /* Slightly darker semi-transparent bg */
+    border-color: #bbb; /* Change border color on hover */
+    color: #333;
+    /* padding: calc(8px - 1px) calc(15px - 1px); */ /* REMOVE padding adjustment */
 }
 
 .filter-btn.active {
-    background-color: #f0f0f0; /* Changed from #555 to light grey fill */
-    color: #333; /* Changed from #fff to dark text */
-    border-color: #bbb; /* Changed from #555 to match hover */
+    background-color: #f0f0f0; /* Light grey fill */
+    color: #333;
+    border-color: #bbb; /* Change border color for consistency */
     font-weight: 500; /* Make text slightly bolder when active */
+    /* padding: calc(8px - 1px) calc(15px - 1px); */ /* REMOVE padding adjustment */
+}
+
+.filter-btn .deselect-icon {
+    display: none;
+    margin-left: 8px;
+    font-weight: bold;
+    font-size: 1.1em;
+    line-height: 1;
+}
+
+.filter-btn.active .deselect-icon {
+    display: inline-block;
+}
+
+/* Don't show 'x' for the 'All' button when it's active */
+.filter-btn[data-filter="all"].active .deselect-icon {
+    display: none;
 }
 
 /* Dashboard Grid */
@@ -2125,61 +2153,6 @@ body::before, body::after {
     .github-suggestion-footer {
         display: none; /* Kept from index.html mobile styles */
     }
-}
-
-/* Filter Buttons */
-.filter-buttons {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin: 20px 0;
-    padding: 0 10px; /* Add some padding for smaller screens */
-}
-
-.filter-btn {
-    background-color: transparent; /* Changed from #eee */
-    color: #555; /* Changed from #333 */
-    border: 1px solid #ddd; /* Changed from #ccc */
-    padding: 8px 15px;
-    margin: 5px;
-    border-radius: 15px;
-    cursor: pointer;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.9em;
-    transition: background-color 0.3s, color 0.3s, border-color 0.3s, font-weight 0.3s;
-    display: inline-flex; /* Align text and icon */
-    align-items: center;
-    font-weight: 400; /* Explicitly set default weight */
-}
-
-.filter-btn:hover {
-    background-color: rgba(0, 0, 0, 0.03); /* Changed from #ddd to subtle tint */
-    border-color: #bbb; /* Darker border on hover */
-    color: #333; /* Darker text on hover */
-}
-
-.filter-btn.active {
-    background-color: #f0f0f0; /* Changed from #555 to light grey fill */
-    color: #333; /* Changed from #fff to dark text */
-    border-color: #bbb; /* Changed from #555 to match hover */
-    font-weight: 500; /* Make text slightly bolder when active */
-}
-
-.filter-btn .deselect-icon {
-    display: none;
-    margin-left: 8px;
-    font-weight: bold;
-    font-size: 1.1em;
-    line-height: 1;
-}
-
-.filter-btn.active .deselect-icon {
-    display: inline-block;
-}
-
-/* Don't show 'x' for the 'All' button when it's active */
-.filter-btn[data-filter="all"].active .deselect-icon {
-    display: none;
 }
 
 /* Card Filtering */
