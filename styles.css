@@ -2109,7 +2109,14 @@ body::before, body::after {
     opacity: 0;
     transition: opacity 0.5s ease-in-out, bottom 0.3s ease-in-out;
     pointer-events: none; /* Initially not clickable */
-    background-color: #fbf8ef; /* Add this line */
+    /* background-color: #fbf8ef; Remove this line */
+}
+
+/* Add this new rule for the span */
+.github-suggestion-footer span {
+    background-color: rgba(251, 248, 239, 0.8); /* Light beige with 80% opacity */
+    padding: 2px 5px; /* Add some padding */
+    border-radius: 3px; /* Slightly rounded corners */
 }
 
 .github-suggestion-footer.visible {
