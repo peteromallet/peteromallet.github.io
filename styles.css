@@ -34,8 +34,8 @@ body {
     z-index: 1;
     max-width: 1200px;
     margin: 0 auto;
-    padding-top: 2rem;
-    padding-bottom: 1.5rem;
+    padding-top: 2.25rem;
+    padding-bottom: 1rem;
 }
 
 .inner-border {
@@ -820,6 +820,11 @@ body::before, body::after {
 @media (max-width: 768px) {
     body {
         padding: 0.25rem 1rem 1rem 1rem; /* Minimized top padding */
+    }
+
+    .container { /* Add this rule */
+        padding-top: 0.8rem;
+        padding-bottom: 0.1rem;
     }
 
     .inner-border {
@@ -2093,28 +2098,26 @@ body::before, body::after {
 /* Add at the end of the file */
 .github-suggestion-footer {
     position: fixed;
-    bottom: 8px; /* Adjusted position */
+    bottom: 8px;
     left: 0;
-    width: 100%;
+    right: 0;
     text-align: center;
-    font-size: 0.75rem;
-    color: #aaa;  /* Changed from #888 to #aaa for more faded look */
-    padding: 5px 10px; /* Retained from previous edit */
-    background-color: rgba(251, 248, 239, 0.8); /* Retained from previous edit */
-    border-radius: 5px; /* Retained from previous edit */
-    z-index: 999;
-    opacity: 0; /* Start hidden */
-    transition: opacity 0.5s ease-in-out; /* Smooth transition */
-    pointer-events: none; /* Start non-interactive */
+    padding: 5px 0;
+    font-size: 12px;
+    color: #aaa;
+    z-index: 1001;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out, bottom 0.3s ease-in-out;
+    pointer-events: none; /* Initially not clickable */
 }
 
 .github-suggestion-footer.visible {
     opacity: 1;
-    pointer-events: auto; /* Become interactive when visible */
+    pointer-events: auto; /* Make clickable when visible */
 }
 
 .github-suggestion-footer a {
-    color: #999;  /* Changed from #666 to #999 to match the faded look */
+    color: #aaa;  /* Changed from #999 to match footer text */
     text-decoration: none;
     position: relative;
     padding-bottom: 1px;
@@ -2129,16 +2132,16 @@ body::before, body::after {
     right: 0;
     bottom: -1px;
     height: 1px;
-    background-color: #999;  /* Changed from #666 to #999 */
+    background-color: #ccc;  /* Lightened from #aaa */
     transition: all 0.2s ease;
 }
 
 .github-suggestion-footer a:hover {
-    color: #666;  /* Changed from #333 to #666 */
+    color: #888;  /* Lightened from #666 for a consistent faded style */
 }
 
 .github-suggestion-footer a:hover::after {
-    background-color: #888;  /* Changed from #666 to #888 */
+    background-color: #bbb;  /* Lightened from #777 */
     transform: scaleX(0.7);
 }
 
@@ -2190,4 +2193,177 @@ body::before, body::after {
     /* display: flex; */
     /* flex-wrap: wrap; */
     position: relative; /* Needed for absolute positioning of children */
+}
+
+/* Art I Made Card Styles (mirroring Meme Card) */
+.art-card {
+    position: relative;
+    /* height: 340px; /* Match standard card height if needed */
+    min-height: auto;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    width: 100%;
+}
+
+.art-card.expanded {
+    height: auto;
+    overflow: visible;
+    z-index: 10;
+}
+
+.art-hover-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+    transition: opacity 0.4s ease, height 0.3s ease;
+    margin-top: 0;
+    margin-bottom: 0;
+    visibility: hidden;
+    width: 100%; /* Constrain width */
+    position: absolute; /* Take out of normal flow when not expanded */
+}
+
+.card.expanded .art-hover-container {
+    opacity: 1;
+    height: auto;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    position: static; /* Return to normal flow when expanded */
+    visibility: visible;
+}
+
+.art-item {
+    width: 100%;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    transform: translateY(10px);
+    opacity: 0;
+    max-width: 100%;
+    background-color: rgba(255, 255, 255, 0.7); /* Slight background for items */
+}
+
+/* Remove block styling from text items */
+.art-item.text-item {
+    background-color: transparent; /* No background */
+    box-shadow: none; /* No shadow */
+    border-radius: 0; /* No rounded corners */
+    margin-bottom: 5px; /* Reduce margin */
+    padding: 0; /* Remove padding from the container */
+    transform: translateY(0); /* Remove initial transform for text */
+    opacity: 0; /* Keep opacity for transition */
+}
+
+.art-item.text-item p {
+    padding: 0.5rem 0; /* Adjust padding directly on the paragraph, remove side padding */
+    -webkit-line-clamp: unset !important; /* Ensure text isn't clamped */
+    max-height: none !important; /* Ensure text isn't cut off */
+    overflow: visible !important;
+    margin-bottom: 0 !important; /* Remove bottom margin inside the item */
+}
+
+/* Keep styling for video items */
+.art-item.video-item {
+    /* Styles remain as they were */
+}
+
+.art-item.video-item iframe {
+    display: block; /* Remove extra space below iframe */
+    width: 100%;
+    aspect-ratio: 16 / 9; /* Maintain aspect ratio */
+    height: auto; /* Adjust height based on width */
+    border-radius: 8px;
+}
+
+.art-item.placeholder {
+    background-color: #f0f0f0;
+    color: #666;
+    border: 1px dashed #ccc;
+}
+
+.card.expanded .art-item {
+    transform: translateY(0);
+    opacity: 1;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+/* Stagger the animation like the meme card */
+.card.expanded .art-item:nth-child(1) {
+    transition-delay: 0.1s;
+}
+
+.card.expanded .art-item:nth-child(2) {
+    transition-delay: 0.2s;
+}
+
+.card.expanded .art-item:nth-child(3) {
+    transition-delay: 0.3s;
+}
+
+.card.expanded .art-item:nth-child(4) {
+    transition-delay: 0.4s;
+}
+
+/* Mobile styles for art card */
+@media (max-width: 768px) {
+    .art-card {
+        /* height: 340px; /* Match standard height on mobile if needed */
+        width: 100%;
+    }
+
+    .art-card.expanded {
+        height: auto;
+        padding-bottom: 1rem; /* Add some padding at the bottom */
+    }
+
+    .art-hover-container {
+        width: 100%;
+        position: absolute; /* Keep out of flow on mobile */
+    }
+
+    .card.expanded .art-hover-container {
+        position: static; /* Return to flow when expanded */
+    }
+
+    .art-item {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+/* Hide the initial image container when the art card is expanded */
+.art-card.expanded .image-container {
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    right: 1rem;
+    pointer-events: none;
+}
+
+/* Initial state for the image container */
+.art-card .image-container {
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+
+/* Hide the initial text content when the art card is expanded */
+.art-card.expanded > .text-content {
+    display: none;
+}
+
+/* Ensure initial text content is visible normally */
+.art-card:not(.expanded) > .text-content {
+    display: block; /* Or whatever its default display is */
 }
