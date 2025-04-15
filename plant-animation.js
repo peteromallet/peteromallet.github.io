@@ -47,72 +47,74 @@ let animationStarted = false;
 let treeCount = 0; // Counter to track the number of trees
 const MAX_TREES = 100; // Maximum number of trees allowed
 
-wateringContainer.addEventListener('click', () => {
-    if (!animationStarted) {
-        animationStarted = true;
+// New unified event handler for both click and touchend events
+function handleWatering(event) {
+    event.preventDefault();
+    if (animationStarted) return;
+    animationStarted = true;
+    
+    // Disable hover animation by adding a class
+    wateringContainer.classList.add('no-hover');
+    
+    // Apply slower transition before adding the pouring class
+    addSlowerTransition();
+    
+    // Add pouring class to start the watering animation
+    wateringContainer.classList.add('pouring');
+    
+    // Start at the bud's position
+    const budRect = initialBud.getBoundingClientRect();
+    const startX = budRect.left + budRect.width / 2;
+    const startY = budRect.top + budRect.height / 2;
+    
+    // Reduce the animation duration for water droplets
+    const drops = document.querySelectorAll('.drop');
+    drops.forEach(drop => {
+        drop.style.animationDuration = '0.7s';
+    });
+    
+    // Wait for the water animation to complete, then start growth
+    setTimeout(() => {
+        // Stop the water animation by removing the pouring class
+        wateringContainer.classList.remove('pouring');
         
-        // Disable hover animation by adding a class
-        wateringContainer.classList.add('no-hover');
+        // Start the growth from the sapling position
+        startGrowth(startX, startY);
         
-        // Apply slower transition before adding the pouring class
-        addSlowerTransition();
-        
-        // Add pouring class to start the watering animation
-        wateringContainer.classList.add('pouring');
-        
-        // Start at the bud's position
-        const budRect = initialBud.getBoundingClientRect();
-        const startX = budRect.left + budRect.width / 2;
-        const startY = budRect.top + budRect.height / 2;
-        
-        // Reduce the animation duration for water droplets
-        const drops = document.querySelectorAll('.drop');
-        drops.forEach(drop => {
-            drop.style.animationDuration = '0.7s';
-        });
-        
-        // Wait for the water animation to complete, then start growth
+        // Wait for the plant to start growing before fading out the watering can
         setTimeout(() => {
-            // Stop the water animation by removing the pouring class
-            wateringContainer.classList.remove('pouring');
+            // Add fade-out class to the watering can
+            wateringContainer.classList.add('fade-out');
             
-            // Start the growth from the sapling position
-            // But don't hide the sapling
-            startGrowth(startX, startY);
+            // Add a smooth transition for the initialBud
+            initialBud.style.transition = 'opacity 1.5s ease-in-out';
+            initialBud.style.opacity = '0';
             
-            // Wait for the plant to start growing before fading out the watering can
+            // Wait for fade-out to complete before hiding
             setTimeout(() => {
-                // Add fade-out class to the watering can
-                wateringContainer.classList.add('fade-out');
+                wateringContainer.style.display = 'none';
+                initialBud.style.display = 'none';
                 
-                // Add a smooth transition for the initialBud
-                initialBud.style.transition = 'opacity 1.5s ease-in-out';
-                initialBud.style.opacity = '0';
-                
-                // Wait for fade-out to complete before hiding
+                // Wait an additional 1 second before removing the dead space
                 setTimeout(() => {
-                    wateringContainer.style.display = 'none';
-                    initialBud.style.display = 'none';
-                    
-                    // Wait an additional 1 second before removing the dead space
-                    setTimeout(() => {
-                        // Get the social-links element and adjust its margin to remove dead space
-                        const socialLinks = document.querySelector('.social-links');
-                        if (socialLinks) {
-                            // Add a transition for smooth animation
-                            socialLinks.style.transition = 'margin-bottom 1.5s ease-in-out';
-                            // After a small delay to ensure transition is applied
-                            setTimeout(() => {
-                                socialLinks.style.marginBottom = '0.45rem'; // Reduced space from 1.5rem to 1rem
-                            }, 50);
-                        }
-                    }, 1000); // 1 second delay before removing dead space
-                }, 1000); // Wait for fade-out to complete before hiding
-            }, 1000); // Wait for plant to start growing (reduced from 1500ms)
-            
-        }, 1500); // Reduced delay for water drop animation
-    }
-});
+                    // Get the social-links element and adjust its margin to remove dead space
+                    const socialLinks = document.querySelector('.social-links');
+                    if (socialLinks) {
+                        // Add a transition for smooth animation
+                        socialLinks.style.transition = 'margin-bottom 1.5s ease-in-out';
+                        // After a small delay to ensure transition is applied
+                        setTimeout(() => {
+                            socialLinks.style.marginBottom = '0.45rem';
+                        }, 50);
+                    }
+                }, 1000);
+            }, 1000);
+        }, 1000);
+    }, 1500);
+}
+
+wateringContainer.addEventListener('click', handleWatering, { once: true });
+wateringContainer.addEventListener('touchend', handleWatering, { once: true });
 
 class Branch {
     constructor(startX, startY, length, angle, branchWidth, depth) {
@@ -271,19 +273,19 @@ function animate() {
     requestAnimationFrame(animate);
 }
 
+// Updated startGrowth function to use canvas.height directly for consistent measurements
 function startGrowth(startX, startY) {
-    // Scale the initial startX and startY for the Branch constructor
+    // Use canvas.height (already set in device pixels by resizeCanvas) for consistency across devices
     const scaledStartX = startX * dpr;
     const scaledStartY = (startY + 5) * dpr;
-    const scaledCanvasHeight = canvas.getBoundingClientRect().height * dpr;
 
-    // Create the upward growing branch (scale length)
-    const upBranchLength = (canvas.getBoundingClientRect().height / 7.5) * dpr;
+    // Create the upward growing branch using canvas.height
+    const upBranchLength = canvas.height / 7.5;
     branches.push(new Branch(scaledStartX, scaledStartY, upBranchLength, 0, 10, 7));
     treeCount++; // Increment tree counter for the main upward branch
 
-    // Create a downward growing branch (root) - scale length
-    const rootBranchLength = (scaledCanvasHeight - scaledStartY);
+    // Create the downward growing branch (root) using canvas.height
+    const rootBranchLength = canvas.height - scaledStartY;
     const rootBranch = new Branch(scaledStartX, scaledStartY, rootBranchLength, 180, 10, 0);
     // Prevent the root from flowering
     rootBranch.floweringProgress = -1;
@@ -291,4 +293,4 @@ function startGrowth(startX, startY) {
     branches.push(rootBranch);
 
     animate();
-} 
+}
