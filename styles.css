@@ -1901,8 +1901,8 @@ body::before, body::after {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     z-index: 0;
     pointer-events: none;
     background: transparent;
@@ -2109,6 +2109,7 @@ body::before, body::after {
     opacity: 0;
     transition: opacity 0.5s ease-in-out, bottom 0.3s ease-in-out;
     pointer-events: none; /* Initially not clickable */
+    background-color: #fbf8ef; /* Add this line */
 }
 
 .github-suggestion-footer.visible {
