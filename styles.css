@@ -2151,6 +2151,12 @@ body::before, body::after {
 .github-suggestion-footer a:hover::after {
     background-color: #bbb;  /* Lightened from #777 */
     transform: scaleX(0.7);
+    width: 100%;
+}
+
+/* Style for the specific text span */
+.github-suggestion-text {
+    font-size: 0.85rem; /* Slightly smaller font size */
 }
 
 @media (max-width: 768px) {
