@@ -6,16 +6,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Staggered Loading Animation --- REVERTED TO SIMPLER APPROACH ---
+    const baseDelay = 100;                              // keep it global
     const loadingElements = document.querySelectorAll('.loading-element');
-    const baseDelay = 100; // Base delay in milliseconds (0.1s)
 
-    window.requestAnimationFrame(() => {
-        loadingElements.forEach((element, index) => {
-            const delay = (index + 1) * baseDelay;
-            element.style.transitionDelay = `${delay}ms`;
-            element.classList.add('loaded');
-        });
-    });
+    // first phase: mark everything .loaded without any delay
+    loadingElements.forEach(el => el.classList.add('loaded'));
+
     // --- End Staggered Loading Animation ---
 
     // Generate POM border letters dynamically
@@ -1777,5 +1773,46 @@ document.addEventListener('DOMContentLoaded', () => {
     if (plantCanvas) {
         // Re-calculate canvas height if needed after filtering
         // This might need adjustment based on your plant animation logic
+    }
+
+    /* --------------------------------------------------
+       Force-display the Steerable Motion card immediately
+       -------------------------------------------------- */
+    (function revealSteerableMotionCardEarly() {
+        /* 1.  Grab the card – it may move around, so try a few selectors   */
+        let smCard =
+            document.querySelector('.card.project-tile[data-position="3"]') ||   // current position
+            document.querySelector('.card.project-tile[data-position="2"]');     // fallback
+
+        /* Fallback – search by heading text if positions ever change       */
+        if (!smCard) {
+            smCard = Array.from(document.querySelectorAll('.card.project-tile'))
+                .find(card =>
+                    card.querySelector('h3')?.textContent
+                        .toLowerCase()
+                        .includes('steerable motion')
+                );
+        }
+
+        if (!smCard) return;   // Nothing found – abort.
+
+        /* 2.  Add the "loaded" class to the card itself and every element  */
+        /*     inside it that is still marked as a loading-element.         */
+        [smCard, ...smCard.querySelectorAll('.loading-element')].forEach(el => {
+            el.classList.add('loaded');
+        });
+    })();
+
+    // second phase: re-apply the visual stagger _in the new order_
+    applyStaggeredDelay();
+
+    // helper that is called right here and can be reused later
+    function applyStaggeredDelay() {
+        // grab only the elements that are _actually visible_ now
+        const orderedElems = document.querySelectorAll('.loading-element:not(.removed)');
+        orderedElems.forEach((el, i) => {
+            const delay = (i + 1) * baseDelay;
+            el.style.transitionDelay = `${delay}ms`;
+        });
     }
 }); 
