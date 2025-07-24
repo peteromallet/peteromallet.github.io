@@ -1888,7 +1888,7 @@ body::before, body::after {
     background: rgba(250, 250, 250, 0.5);
     border-radius: 6px;
     margin-bottom: 1rem;
-    border: 1px solid rgba(200, 200, 220, 0.2);
+    border: 1px solid rgba(200, 200, 220, 0.6);
     overflow: hidden;
     transition: padding-bottom 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -1928,7 +1928,7 @@ body::before, body::after {
 
 /* Chart specific responsive behavior */
 .data-tile:hover .chart-container {
-    border-color: rgba(200, 200, 220, 0.4);
+    border-color: rgba(200, 200, 220, 0.8);
     background: rgba(255, 255, 255, 0.8);
     padding-bottom: 56%;
 }
@@ -1936,6 +1936,7 @@ body::before, body::after {
 .data-tile.expanded .chart-container {
     padding-bottom: 65%;
     background: rgba(255, 255, 255, 0.95);
+    border-color: rgba(200, 200, 220, 1);
 }
 
 /* Chart zoom buttons */
