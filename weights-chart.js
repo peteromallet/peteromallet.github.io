@@ -486,7 +486,26 @@ class WeightsChart {
         zoomInButton.addEventListener('click', (e) => {
             e.stopPropagation();
             if (this.chart) {
-                this.chart.zoom(1.25);
+                // Custom zoom in that anchors to the right (latest data)
+                const xScale = this.chart.scales.x;
+                const currentMin = xScale.min;
+                const currentMax = xScale.max;
+                const currentRange = currentMax - currentMin;
+                
+                // Calculate new range (zoom in by 25%)
+                const newRange = currentRange / 1.25;
+                
+                // Keep the max (right side) the same, only move the min
+                const newMin = currentMax - newRange;
+                
+                // Get data limits to ensure we don't zoom beyond available data
+                const dataMin = this.chart.data.datasets[0].data.reduce((min, point) => 
+                    Math.min(min, point.x.getTime()), Infinity);
+                
+                // Apply the zoom, but don't go beyond the data range
+                const clampedMin = Math.max(newMin, dataMin);
+                this.chart.zoomScale('x', { min: clampedMin, max: currentMax });
+                
                 this.updateToggleButton(toggleButton);
             }
         });
