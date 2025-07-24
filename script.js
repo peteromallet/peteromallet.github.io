@@ -813,6 +813,13 @@ document.addEventListener('DOMContentLoaded', () => {
             
             c.classList.remove('expanded');
             
+            // Hide zoom buttons for weights chart when collapsing
+            const zoomControls = c.querySelector('.chart-zoom-controls');
+            if (zoomControls) {
+                zoomControls.style.opacity = '0';
+                zoomControls.style.pointerEvents = 'none';
+            }
+            
             // Reset hover-gif for all cards
             handleHoverGifForMobile(c, false);
             
@@ -876,6 +883,13 @@ document.addEventListener('DOMContentLoaded', () => {
             // If the card is already expanded, just collapse it
             card.classList.remove('expanded');
             handleHoverGifForMobile(card, false);
+            
+            // Explicitly hide zoom buttons for weights chart
+            const zoomControls = card.querySelector('.chart-zoom-controls');
+            if (zoomControls) {
+                zoomControls.style.opacity = '0';
+                zoomControls.style.pointerEvents = 'none';
+            }
             
             // Reset any fixed positioning
             card.style.position = '';
@@ -1116,6 +1130,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 // Reset hover-gif for all cards
                 handleHoverGifForMobile(card, false);
+                
+                // Hide zoom buttons for weights chart
+                const zoomControls = card.querySelector('.chart-zoom-controls');
+                if (zoomControls) {
+                    zoomControls.style.opacity = '0';
+                    zoomControls.style.pointerEvents = 'none';
+                }
 
                 // Reset meme images
                 if (card.classList.contains('meme-card')) {
@@ -1546,6 +1567,30 @@ document.addEventListener('DOMContentLoaded', () => {
         attributes: true // Keep attributes true, characterData might be overkill
       });
     }
+
+    // Initialize Weights Chart
+    let weightsChart = null;
+    
+    function initializeWeightsChart() {
+        if (typeof WeightsChart !== 'undefined') {
+            weightsChart = new WeightsChart('weights-chart-container');
+            weightsChart.init().catch(error => {
+                console.error('Failed to initialize weights chart:', error);
+            });
+        } else {
+            console.warn('WeightsChart class not available');
+        }
+    }
+    
+    // Initialize the chart after a short delay to ensure all other elements are loaded
+    setTimeout(initializeWeightsChart, 1000);
+    
+    // Cleanup chart on page unload
+    window.addEventListener('beforeunload', () => {
+        if (weightsChart) {
+            weightsChart.destroy();
+        }
+    });
 
     // Added to fix black flicker on mobile when returning to the page (Outside DOMContentLoaded)
     window.addEventListener('pageshow', function(event) {
