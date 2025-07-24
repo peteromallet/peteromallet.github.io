@@ -160,10 +160,12 @@ class WeightsChart {
         const canvas = document.createElement('canvas');
         canvas.id = `${this.containerId}-canvas`;
         canvas.style.position = 'absolute';
-        canvas.style.top = '0';
-        canvas.style.left = '0';
-        canvas.style.width = '100%';
-        canvas.style.height = '100%';
+        canvas.style.top = '1px';    // Inset by border width
+        canvas.style.left = '1px';   // Inset by border width
+        canvas.style.right = '1px';  // Inset by border width
+        canvas.style.bottom = '1px'; // Inset by border width
+        canvas.style.width = 'calc(100% - 2px)';  // Account for left+right borders
+        canvas.style.height = 'calc(100% - 2px)'; // Account for top+bottom borders
         
         // Prevent chart clicks from bubbling up to card click handler
         canvas.addEventListener('click', (e) => {
