@@ -657,6 +657,41 @@ class WeightsChart {
                 titleElement.textContent = `My weight for the past ${yearsDiff} years`;
             }
         }
+        
+        // Update BMI in the text content
+        this.updateBMI(data);
+    }
+    
+    updateBMI(data) {
+        if (!data || data.length === 0) return;
+        
+        // Get the latest weight measurement
+        const latestData = data.reduce((latest, current) => {
+            return current.x.getTime() > latest.x.getTime() ? current : latest;
+        });
+        
+        // Calculate BMI: weight (kg) / (height (m))^2
+        // Height: 190cm = 1.90m
+        const heightInMeters = 1.90;
+        const weightKg = latestData.y;
+        const bmi = weightKg / (heightInMeters * heightInMeters);
+        
+        console.log(`📊 Calculating BMI: ${weightKg}kg / (${heightInMeters}m)² = ${bmi.toFixed(1)}`);
+        
+        // Find the text content element and update it
+        const card = document.querySelector('#weights-chart-container').closest('.card');
+        const textContent = card ? card.querySelector('.text-content p') : null;
+        if (textContent) {
+            const currentText = textContent.innerHTML;
+            const updatedText = currentText.replace(
+                '{calculate based on last measurement}', 
+                `${bmi.toFixed(1)}`
+            );
+            textContent.innerHTML = updatedText;
+            console.log(`✅ Updated BMI text: ${bmi.toFixed(1)}`);
+        } else {
+            console.warn('⚠️ Could not find text content element to update BMI');
+        }
     }
 
     addResizeObserver(container) {
