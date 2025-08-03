@@ -497,14 +497,71 @@ class WeightsChart {
         zoomInButton.addEventListener('click', (e) => {
             e.stopPropagation();
             if (this.chart) {
-                this.chart.zoom(1.1);
+                // Clear active marker/tooltip
+                this.chart.setActiveElements([]);
+                if (this.chart.tooltip) {
+                    this.chart.tooltip.setActiveElements([], { x: 0, y: 0 });
+                }
+                
+                // Custom zoom in that anchors to the right (latest data)
+                const xScale = this.chart.scales.x;
+                const currentMin = xScale.min;
+                const currentMax = xScale.max;
+                const currentRange = currentMax - currentMin;
+                
+                // Calculate new range (zoom in by 25%)
+                const newRange = currentRange / 1.25;
+                
+                // Keep the max (right side) the same, only move the min
+                const newMin = currentMax - newRange;
+                
+                // Get data limits to ensure we don't zoom beyond available data
+                const dataMin = this.chart.data.datasets[0].data.reduce((min, point) => 
+                    Math.min(min, point.x.getTime()), Infinity);
+                
+                // Apply the zoom, but don't go beyond the data range
+                const clampedMin = Math.max(newMin, dataMin);
+                this.chart.zoomScale('x', { min: clampedMin, max: currentMax });
             }
         });
 
         zoomOutButton.addEventListener('click', (e) => {
             e.stopPropagation();
             if (this.chart) {
-                this.chart.zoom(0.9);
+                // Clear active marker/tooltip
+                this.chart.setActiveElements([]);
+                if (this.chart.tooltip) {
+                    this.chart.tooltip.setActiveElements([], { x: 0, y: 0 });
+                }
+                
+                // Get current zoom state
+                const xScale = this.chart.scales.x;
+                const currentMin = xScale.min;
+                const currentMax = xScale.max;
+                const currentRange = currentMax - currentMin;
+                
+                // Calculate new range (zoom out by 25%)
+                const newRange = currentRange * 1.25;
+                
+                // Keep the max (right side) the same, only move the min
+                const newMin = currentMax - newRange;
+                
+                // Get data limits
+                const dataMin = this.chart.data.datasets[0].data.reduce((min, point) => 
+                    Math.min(min, point.x.getTime()), Infinity);
+                const dataMax = this.chart.data.datasets[0].data.reduce((max, point) => 
+                    Math.max(max, point.x.getTime()), -Infinity);
+                
+                // Apply the zoom, but don't go beyond the data range
+                const clampedMin = Math.max(newMin, dataMin);
+                
+                // If we've hit the data minimum, we might need to adjust the max to maintain proper range
+                if (clampedMin === dataMin && newRange > (dataMax - dataMin)) {
+                    // Show full range if we're trying to zoom out beyond available data
+                    this.chart.zoomScale('x', { min: dataMin, max: dataMax });
+                } else {
+                    this.chart.zoomScale('x', { min: clampedMin, max: currentMax });
+                }
             }
         });
 
