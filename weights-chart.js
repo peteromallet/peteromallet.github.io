@@ -160,12 +160,10 @@ class WeightsChart {
         const canvas = document.createElement('canvas');
         canvas.id = `${this.containerId}-canvas`;
         canvas.style.position = 'absolute';
-        canvas.style.top = '1px';
-        canvas.style.left = '1px';
-        canvas.style.right = '1px';
-        canvas.style.bottom = '1px';
-        canvas.style.width = 'calc(100% - 2px)';
-        canvas.style.height = 'calc(100% - 2px)';
+        canvas.style.top = '0';
+        canvas.style.left = '0';
+        canvas.style.width = '100%';
+        canvas.style.height = '100%';
         
         // Prevent chart clicks from bubbling up to card click handler
         canvas.addEventListener('click', (e) => {
@@ -421,7 +419,25 @@ class WeightsChart {
 
         // Add zoom control buttons
         this.addZoomControls(container);
-        
+
+        // === New: Clear active marker when clicking outside the chart ===
+        this.outsideClickHandler = (event) => {
+            // If the click/touch is NOT inside the chart canvas, clear active elements
+            if (!canvas.contains(event.target)) {
+                if (this.chart) {
+                    // Clear highlighted elements and hide tooltip
+                    this.chart.setActiveElements([]);
+                    if (this.chart.tooltip) {
+                        this.chart.tooltip.setActiveElements([], { x: 0, y: 0 });
+                    }
+                    this.chart.update();
+                }
+            }
+        };
+        document.addEventListener('click', this.outsideClickHandler);
+        document.addEventListener('touchstart', this.outsideClickHandler);
+        // === End new code ===
+
         // DEBUG: Check what the chart is actually showing
         setTimeout(() => {
             if (this.chart && this.chart.scales && this.chart.scales.x) {
@@ -463,183 +479,84 @@ class WeightsChart {
         const controlsContainer = document.createElement('div');
         controlsContainer.className = 'chart-zoom-controls';
         
-        // Zoom In button
-        const zoomInButton = document.createElement('button');
-        zoomInButton.textContent = '+ Zoom In';
-        zoomInButton.className = 'chart-zoom-btn';
-        zoomInButton.title = 'Zoom In';
+        const createIconButton = (iconName, title, tooltipText) => {
+            const button = document.createElement('button');
+            button.className = 'chart-zoom-btn';
+            button.title = title;
+            button.setAttribute('data-tooltip', tooltipText);
+            button.innerHTML = feather.icons[iconName].toSvg({ width: 18, height: 18 });
+            return button;
+        };
         
-        // Zoom Out button
-        const zoomOutButton = document.createElement('button');
-        zoomOutButton.textContent = '− Zoom Out';
-        zoomOutButton.className = 'chart-zoom-btn';
-        zoomOutButton.title = 'Zoom Out';
-        
-        // Smart Toggle button (starts as "Fully Zoom Out")
-        const toggleButton = document.createElement('button');
-        toggleButton.textContent = 'Fully Zoom Out';
-        toggleButton.className = 'chart-zoom-btn';
-        toggleButton.title = 'Show full data range';
-        
-        // Store data for toggle functionality
-        this.originalData = null;
+        const zoomFullyOutButton = createIconButton('maximize-2', 'Show All Time', 'Show all data');
+        const zoomOutButton = createIconButton('zoom-out', 'Zoom Out', 'Zoom out');
+        const zoomInButton = createIconButton('zoom-in', 'Zoom In', 'Zoom in');
+        const zoomFullyInButton = createIconButton('target', 'Show Last Week', 'Last 7 days');
 
-        // Event listeners (existing click handlers)
+        // Event Listeners
         zoomInButton.addEventListener('click', (e) => {
             e.stopPropagation();
             if (this.chart) {
-                // Custom zoom in that anchors to the right (latest data)
-                const xScale = this.chart.scales.x;
-                const currentMin = xScale.min;
-                const currentMax = xScale.max;
-                const currentRange = currentMax - currentMin;
-                
-                // Calculate new range (zoom in by 25%)
-                const newRange = currentRange / 1.25;
-                
-                // Keep the max (right side) the same, only move the min
-                const newMin = currentMax - newRange;
-                
-                // Get data limits to ensure we don't zoom beyond available data
-                const dataMin = this.chart.data.datasets[0].data.reduce((min, point) => 
-                    Math.min(min, point.x.getTime()), Infinity);
-                
-                // Apply the zoom, but don't go beyond the data range
-                const clampedMin = Math.max(newMin, dataMin);
-                this.chart.zoomScale('x', { min: clampedMin, max: currentMax });
-                
-                this.updateToggleButton(toggleButton);
+                this.chart.zoom(1.1);
             }
         });
-        
+
         zoomOutButton.addEventListener('click', (e) => {
             e.stopPropagation();
             if (this.chart) {
-                // Get current zoom state
-                const xScale = this.chart.scales.x;
-                const currentMin = xScale.min;
-                const currentMax = xScale.max;
-                const currentRange = currentMax - currentMin;
-                
-                // Calculate new range (zoom out by 25%)
-                const newRange = currentRange / 0.8;
-                const expansion = (newRange - currentRange) / 2;
-                
-                // Get data limits
-                const dataMin = this.chart.data.datasets[0].data.reduce((min, point) => 
-                    Math.min(min, point.x.getTime()), Infinity);
-                const dataMax = this.chart.data.datasets[0].data.reduce((max, point) => 
-                    Math.max(max, point.x.getTime()), -Infinity);
-                
-                // Calculate new bounds, ensuring we don't go beyond data range
-                let newMin = Math.max(currentMin - expansion, dataMin);
-                let newMax = Math.min(currentMax + expansion, dataMax);
-                
-                // If we hit the max limit, adjust the min to maintain the desired range
-                if (newMax === dataMax && newMin > dataMin) {
-                    newMin = Math.max(dataMax - newRange, dataMin);
-                }
-                
-                // Apply the zoom
-                this.chart.zoomScale('x', { min: newMin, max: newMax });
-                this.updateToggleButton(toggleButton);
+                this.chart.zoom(0.9);
             }
         });
 
-        toggleButton.addEventListener('click', (e) => {
+        zoomFullyOutButton.addEventListener('click', (e) => {
             e.stopPropagation();
             if (this.chart) {
-                this.handleToggleZoom(toggleButton);
+                const dataMin = this.chart.data.datasets[0].data.reduce((min, point) => Math.min(min, point.x.getTime()), Infinity);
+                const dataMax = this.chart.data.datasets[0].data.reduce((max, point) => Math.max(max, point.x.getTime()), -Infinity);
+                if (isFinite(dataMin) && isFinite(dataMax)) {
+                    this.chart.zoomScale('x', { min: dataMin, max: dataMax });
+                }
             }
         });
-        
-        // REVISED: Add touchstart handlers that manually trigger a click
-        [zoomInButton, zoomOutButton, toggleButton].forEach(btn => {
-            btn.addEventListener('touchstart', (e) => {
-                e.stopPropagation();
-                e.preventDefault(); // Prevent ghost clicks and other touch issues
-                btn.click(); // Manually trigger the 'click' event
-            }, { passive: false });
+
+        zoomFullyInButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (this.chart && this.chart.data.datasets[0].data.length > 0) {
+                const data = this.chart.data.datasets[0].data;
+                const dataMax = Math.max(...data.map(d => d.x.getTime()));
+                
+                const oneWeekAgo = new Date(dataMax);
+                oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+
+                const dataMin = Math.min(...data.map(d => d.x.getTime()));
+                
+                const finalMin = Math.max(oneWeekAgo.getTime(), dataMin);
+
+                this.chart.zoomScale('x', { min: finalMin, max: dataMax });
+            }
         });
 
-        controlsContainer.appendChild(zoomInButton);
+        // Append buttons in the new order
+        controlsContainer.appendChild(zoomFullyOutButton);
         controlsContainer.appendChild(zoomOutButton);
-        controlsContainer.appendChild(toggleButton);
+        controlsContainer.appendChild(zoomInButton);
+        controlsContainer.appendChild(zoomFullyInButton);
 
         container.style.position = 'relative';
         container.appendChild(controlsContainer);
-        
-        // Add resize observer to handle container size changes
+
         this.addResizeObserver(container);
-        
-        // Prevent clicks on the entire chart container from bubbling up to card click handler
+
         container.addEventListener('click', (e) => {
             e.stopPropagation();
         });
     }
 
-    updateToggleButton(toggleButton) {
-        if (!this.chart) return;
-        
-        const xScale = this.chart.scales.x;
-        const dataMin = this.chart.data.datasets[0].data.reduce((min, point) => 
-            Math.min(min, point.x.getTime()), Infinity);
-        const dataMax = this.chart.data.datasets[0].data.reduce((max, point) => 
-            Math.max(max, point.x.getTime()), -Infinity);
-        
-        // Check if we're showing the full range (within 7 day tolerance)
-        const isFullyZoomedOut = Math.abs(xScale.min - dataMin) < (7 * 86400000) && 
-                                Math.abs(xScale.max - dataMax) < (7 * 86400000);
-        
-        if (isFullyZoomedOut) {
-            toggleButton.textContent = '3 Months';
-            toggleButton.title = 'Zoom to recent 3 months';
-        } else {
-            toggleButton.textContent = 'Fully Zoom Out';
-            toggleButton.title = 'Show full data range';
-        }
-    }
+    // This function is no longer needed with the new button implementation.
+    // updateToggleButton(toggleButton) { ... }
 
-    handleToggleZoom(toggleButton) {
-        if (!this.chart) return;
-        
-        const xScale = this.chart.scales.x;
-        const dataMin = this.chart.data.datasets[0].data.reduce((min, point) => 
-            Math.min(min, point.x.getTime()), Infinity);
-        const dataMax = this.chart.data.datasets[0].data.reduce((max, point) => 
-            Math.max(max, point.x.getTime()), -Infinity);
-        
-        // Debug current state
-        console.log('🔍 Toggle Debug:');
-        console.log('  Current view:', new Date(xScale.min).toLocaleDateString(), 'to', new Date(xScale.max).toLocaleDateString());
-        console.log('  Data range:', new Date(dataMin).toLocaleDateString(), 'to', new Date(dataMax).toLocaleDateString());
-        console.log('  Min diff (days):', Math.abs(xScale.min - dataMin) / (1000 * 60 * 60 * 24));
-        console.log('  Max diff (days):', Math.abs(xScale.max - dataMax) / (1000 * 60 * 60 * 24));
-        
-        // Check current state - be more lenient with the tolerance
-        const isFullyZoomedOut = Math.abs(xScale.min - dataMin) < (7 * 86400000) && 
-                                Math.abs(xScale.max - dataMax) < (7 * 86400000);
-        
-        console.log('  Is fully zoomed out?', isFullyZoomedOut);
-        
-        if (isFullyZoomedOut) {
-            // Currently fully zoomed out, zoom to 3 months
-            const latestDate = new Date(dataMax);
-            const threeMonthsAgo = new Date(latestDate);
-            threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
-            const startDate = Math.max(threeMonthsAgo.getTime(), dataMin);
-            
-            console.log('  Zooming to 3 months:', new Date(startDate).toLocaleDateString(), 'to', new Date(dataMax).toLocaleDateString());
-            this.chart.zoomScale('x', { min: startDate, max: dataMax });
-        } else {
-            // Currently zoomed in, zoom out to full range
-            console.log('  Zooming to full range:', new Date(dataMin).toLocaleDateString(), 'to', new Date(dataMax).toLocaleDateString());
-            this.chart.zoomScale('x', { min: dataMin, max: dataMax });
-        }
-        
-        // Update button text after zoom
-        setTimeout(() => this.updateToggleButton(toggleButton), 100);
-    }
+    // This function is no longer needed with the new button implementation.
+    // handleToggleZoom(toggleButton) { ... }
 
     updateTitle(data) {
         if (!data || data.length === 0) return;
@@ -751,6 +668,13 @@ class WeightsChart {
     }
 
     destroy() {
+        // === New: remove outside click handler ===
+        if (this.outsideClickHandler) {
+            document.removeEventListener('click', this.outsideClickHandler);
+            document.removeEventListener('touchstart', this.outsideClickHandler);
+            this.outsideClickHandler = null;
+        }
+        // === End new code ===
         if (this.resizeObserver) {
             this.resizeObserver.disconnect();
             this.resizeObserver = null;
