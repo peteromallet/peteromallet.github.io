@@ -593,6 +593,37 @@ class WeightsChart {
             }
         });
 
+        // Add comprehensive touch event handling for mobile
+        const buttons = [zoomInButton, zoomOutButton, zoomFullyOutButton, zoomFullyInButton];
+        
+        buttons.forEach(button => {
+            // Prevent touch events from bubbling to card handlers
+            button.addEventListener('touchstart', (e) => {
+                e.stopPropagation();
+                e.preventDefault();
+            }, { passive: false });
+            
+            button.addEventListener('touchend', (e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                // Manually trigger click after preventing default touch behavior
+                button.click();
+            }, { passive: false });
+            
+            button.addEventListener('touchmove', (e) => {
+                e.stopPropagation();
+            }, { passive: false });
+            
+            // Also prevent mousedown/mouseup for extra safety
+            button.addEventListener('mousedown', (e) => {
+                e.stopPropagation();
+            });
+            
+            button.addEventListener('mouseup', (e) => {
+                e.stopPropagation();
+            });
+        });
+
         // Append buttons in the new order
         controlsContainer.appendChild(zoomFullyOutButton);
         controlsContainer.appendChild(zoomOutButton);

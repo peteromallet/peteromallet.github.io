@@ -2151,11 +2151,7 @@ body::before, body::after {
     mask-image: none !important;
 }
 
-/* Disable fade pseudo-elements for data tiles */
-.data-tile:not(.expanded)::before,
-.data-tile:not(.expanded)::after {
-    display: none !important;
-}
+/* Removed rule that was disabling fade pseudo-elements for data tiles */
 
 /* Add styles below as needed */
 
