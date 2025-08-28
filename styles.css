@@ -1075,7 +1075,7 @@ body::before, body::after {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0 0 1.5rem 0;
+    margin: 0 0 1rem 0;
     position: relative;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -1390,11 +1390,14 @@ body::before, body::after {
     display: flex;
     justify-content: center;
     gap: 1.5rem;
-    margin: 2rem 0 4rem;
+    margin: 1rem 0 1.5rem;
     padding-top: 0;
     border-top: none;
     transition: margin-bottom 1.5s ease-in-out;
-    margin-top: 20px;
+}
+
+.social-links:last-of-type {
+    margin-bottom: 5rem;
 }
 
 /* Github suggestion text styles */
@@ -2192,7 +2195,7 @@ body::before, body::after {
 
 .watering-container {
     position: absolute;
-    top: calc(100% + 0rem);
+    top: calc(100% + 0.75rem);
     left: calc(50% - 1.0rem);
     transform: translateX(calc(-50% + 10px));
     cursor: pointer;
@@ -2340,7 +2343,7 @@ body::before, body::after {
 
 #initialBud {
     position: absolute;
-    top: calc(100% + 2rem);
+    top: calc(100% + 2.70rem);
     left: calc(50% + 1.95rem);
     transform: translateX(calc(-50% - 2.5px));
     width: 12px;
