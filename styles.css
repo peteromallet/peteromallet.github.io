@@ -1430,7 +1430,7 @@ body::before, body::after {
     border-radius: 50%;
     color: #555;
     text-decoration: none;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.5s ease-out, transform 0.5s ease-out;
     background-color: #ffffff;
     width: 40px;
     height: 40px;
