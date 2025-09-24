@@ -41,3 +41,8 @@ But I'm exhausted.
 So consider this my attempt to brute-force bootstrapping creative expression. And to keep myself somewhat accountable. 
 
 I mean, you are reading this...right? And now you're expecting me to create stuff...right?
+
+<video width="100%" controls>
+  <source src="../assets/0.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
