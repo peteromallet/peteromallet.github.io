@@ -1139,6 +1139,15 @@ body::before, body::after {
     gap: 2rem;
 }
 
+/* Make posts take up half width on wide screens */
+@media (min-width: 1024px) {
+    .posts-list {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+}
+
 .posts-post-card-link {
     text-decoration: none;
     color: inherit;
@@ -1218,7 +1227,7 @@ body::before, body::after {
 }
 
 .post-excerpt {
-    color: #d1d5db;
+    color: #f3f4f6;
     line-height: 1.6;
     margin: 0;
 }
