@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const { marked } = require('marked');
 
-const PORT = 3002;
+const PORT = process.env.PORT || 3002;
 // Use 0.0.0.0 to listen on all network interfaces (needed for external access)
 const HOST = '0.0.0.0';
 
@@ -15,9 +15,16 @@ const MIME_TYPES = {
   '.json': 'application/json',
   '.png': 'image/png',
   '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg',
   '.gif': 'image/gif',
   '.svg': 'image/svg+xml',
   '.ico': 'image/x-icon',
+  '.mp4': 'video/mp4',
+  '.webm': 'video/webm',
+  '.mov': 'video/quicktime',
+  '.pdf': 'application/pdf',
+  '.txt': 'text/plain',
+  '.md': 'text/markdown',
 };
 
 // Function to get all markdown files from posts directory

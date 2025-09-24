@@ -1,15 +1,20 @@
 {
   "name": "personal_website",
   "version": "1.0.0",
-  "description": "![What are YOU doing here?](whatareyoudoinghere.gif)",
-  "main": "plant-animation.js",
+  "description": "Personal website with blog functionality",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["personal", "website", "blog", "portfolio"],
+  "author": "Peter O'Malley",
   "license": "ISC",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
   "dependencies": {
     "marked": "^15.0.12"
   }
