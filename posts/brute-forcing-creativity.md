@@ -46,7 +46,6 @@ I mean, you are reading this...right? And now you're expecting me to create stuf
   <source src="../assets/0.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
-
 *A 'failed' gen*
 
-<br><br><br>
+<br>
