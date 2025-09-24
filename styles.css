@@ -1081,6 +1081,340 @@ body::before, body::after {
     transition: all 0.3s ease;
 }
 
+/* Section Toggle */
+.section-toggle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem 0 1.5rem 0;
+    gap: 0.75rem;
+}
+
+.toggle-btn {
+    background: none;
+    border: none;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #6b7280;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.toggle-btn:hover {
+    color: #374151;
+    background-color: rgba(156, 163, 175, 0.1);
+}
+
+.toggle-btn.active {
+    color: #111827;
+    font-weight: 600;
+}
+
+.toggle-separator {
+    color: #6b7280;
+    font-size: 1.1rem;
+    font-weight: 300;
+}
+
+/* Content Section Styles */
+.content-section {
+    width: 100%;
+}
+
+/* Posts Section Styles */
+.posts-section-content {
+    max-width: 1200px;
+    margin: 2rem auto 0 auto;
+    padding: 0 1rem;
+}
+
+.posts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.posts-post-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: all 0.3s ease;
+}
+
+.posts-post-card-link:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+.posts-post-card {
+    background: rgba(31, 41, 55, 0.4);
+    border: 1px solid rgba(75, 85, 99, 0.4);
+    border-radius: 0.75rem;
+    padding: 2rem;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Random background color classes for posts */
+.posts-post-card.color-1 { background: rgba(88, 28, 135, 0.3); border-color: rgba(88, 28, 135, 0.4); } /* Deep Purple */
+.posts-post-card.color-2 { background: rgba(30, 58, 138, 0.3); border-color: rgba(30, 58, 138, 0.4); } /* Deep Blue */
+.posts-post-card.color-3 { background: rgba(5, 46, 22, 0.3); border-color: rgba(5, 46, 22, 0.4); } /* Deep Green */
+.posts-post-card.color-4 { background: rgba(120, 53, 15, 0.3); border-color: rgba(120, 53, 15, 0.4); } /* Deep Orange */
+.posts-post-card.color-5 { background: rgba(127, 29, 29, 0.3); border-color: rgba(127, 29, 29, 0.4); } /* Deep Red */
+.posts-post-card.color-6 { background: rgba(91, 33, 182, 0.3); border-color: rgba(91, 33, 182, 0.4); } /* Deep Violet */
+.posts-post-card.color-7 { background: rgba(15, 118, 110, 0.3); border-color: rgba(15, 118, 110, 0.4); } /* Deep Teal */
+.posts-post-card.color-8 { background: rgba(190, 24, 93, 0.3); border-color: rgba(190, 24, 93, 0.4); } /* Deep Pink */
+
+/* Hover states for colored cards */
+.posts-post-card-link:hover .posts-post-card.color-1 { background: rgba(88, 28, 135, 0.5); border-color: rgba(88, 28, 135, 0.6); }
+.posts-post-card-link:hover .posts-post-card.color-2 { background: rgba(30, 58, 138, 0.5); border-color: rgba(30, 58, 138, 0.6); }
+.posts-post-card-link:hover .posts-post-card.color-3 { background: rgba(5, 46, 22, 0.5); border-color: rgba(5, 46, 22, 0.6); }
+.posts-post-card-link:hover .posts-post-card.color-4 { background: rgba(120, 53, 15, 0.5); border-color: rgba(120, 53, 15, 0.6); }
+.posts-post-card-link:hover .posts-post-card.color-5 { background: rgba(127, 29, 29, 0.5); border-color: rgba(127, 29, 29, 0.6); }
+.posts-post-card-link:hover .posts-post-card.color-6 { background: rgba(91, 33, 182, 0.5); border-color: rgba(91, 33, 182, 0.6); }
+.posts-post-card-link:hover .posts-post-card.color-7 { background: rgba(15, 118, 110, 0.5); border-color: rgba(15, 118, 110, 0.6); }
+.posts-post-card-link:hover .posts-post-card.color-8 { background: rgba(190, 24, 93, 0.5); border-color: rgba(190, 24, 93, 0.6); }
+
+.posts-post-card-link:hover .posts-post-card {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Default hover for cards without specific colors */
+.posts-post-card-link:hover .posts-post-card:not([class*="color-"]) {
+    background: rgba(31, 41, 55, 0.6);
+    border-color: rgba(107, 114, 128, 0.6);
+}
+
+.posts-post-card h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #f9fafb;
+    transition: color 0.3s ease;
+}
+
+.posts-post-card-link:hover .posts-post-card h3 {
+    color: #d1d5db;
+}
+
+.post-date {
+    color: #e5e7eb;
+    font-size: 0.9rem;
+    margin: 0 0 1rem 0;
+    font-family: 'Space Mono', monospace;
+    font-weight: 500;
+}
+
+/* Darker date color for individual posts */
+.posts-post .post-date {
+    color: #4b5563;
+}
+
+.post-excerpt {
+    color: #d1d5db;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.no-posts, .error {
+    text-align: center;
+    color: #9ca3af;
+    font-style: italic;
+    padding: 2rem;
+}
+
+/* Posts Post Page Styles */
+.posts-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem 0 2rem 0;
+    gap: 0.75rem;
+}
+
+.posts-nav a {
+    color: #374151 !important;
+    text-decoration: none;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.posts-nav a:hover {
+    color: #111827 !important;
+}
+
+.posts-nav .back-link {
+    color: #000000 !important;
+    font-weight: 700 !important;
+    text-shadow: none !important;
+}
+
+.posts-nav .home-link {
+    color: #000000 !important;
+    font-weight: 600 !important;
+    text-shadow: none !important;
+}
+
+/* Nuclear option - force ALL navigation links to be black */
+.posts-nav * {
+    color: #000000 !important;
+}
+
+.posts-nav a,
+.posts-nav a:link,
+.posts-nav a:visited,
+.posts-nav a:hover,
+.posts-nav a:active {
+    color: #000000 !important;
+    font-weight: 600 !important;
+}
+
+.nav-separator {
+    color: #9ca3af;
+    font-weight: 300;
+}
+
+.posts-post {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.post-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    border-bottom: 1px solid rgba(75, 85, 99, 0.3);
+    padding-bottom: 2rem;
+}
+
+.post-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 1rem 0;
+    line-height: 1.2;
+}
+
+.post-content {
+    color: #1f2937;
+    line-height: 1.8;
+    font-size: 1.1rem;
+    font-family: 'Inter', sans-serif;
+}
+
+.post-content h1,
+.post-content h2,
+.post-content h3,
+.post-content h4,
+.post-content h5,
+.post-content h6 {
+    color: #111827;
+    margin: 2rem 0 1rem 0;
+    font-weight: 600;
+}
+
+.post-content h1 { font-size: 2rem; }
+.post-content h2 { font-size: 1.75rem; }
+.post-content h3 { font-size: 1.5rem; }
+.post-content h4 { font-size: 1.25rem; }
+
+.post-content p {
+    margin: 1.5rem 0;
+    color: #374151;
+}
+
+.post-content code {
+    background: rgba(156, 163, 175, 0.2);
+    padding: 0.125rem 0.375rem;
+    border-radius: 0.25rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.9em;
+    color: #dc2626;
+}
+
+.post-content pre {
+    background: rgba(156, 163, 175, 0.1);
+    border: 1px solid rgba(156, 163, 175, 0.3);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+}
+
+.post-content pre code {
+    background: none;
+    padding: 0;
+    color: #374151;
+}
+
+.post-content ul, .post-content ol {
+    margin: 1.5rem 0;
+    padding-left: 2rem;
+}
+
+.post-content li {
+    margin: 0.5rem 0;
+    color: #374151;
+}
+
+.post-content blockquote {
+    border-left: 4px solid #6b7280;
+    margin: 1.5rem 0;
+    padding-left: 1.5rem;
+    color: #9ca3af;
+    font-style: italic;
+}
+
+.post-content a {
+    color: #60a5fa;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.post-content a:hover {
+    color: #93c5fd;
+    text-decoration: underline;
+}
+
+/* Responsive adjustments for posts */
+@media (max-width: 768px) {
+    .posts-section-content {
+        padding: 0 0.5rem;
+    }
+
+    .posts-post-card {
+        padding: 1.5rem;
+    }
+
+    .posts-post-card h3 {
+        font-size: 1.25rem;
+    }
+
+    .posts-post {
+        padding: 0 0.5rem;
+    }
+
+    .post-header h1 {
+        font-size: 2rem;
+    }
+
+    .post-content {
+        font-size: 1rem;
+    }
+
+    .post-content h1 { font-size: 1.75rem; }
+    .post-content h2 { font-size: 1.5rem; }
+    .post-content h3 { font-size: 1.25rem; }
+}
+
 /* Add a subtle pulse animation to the letters on hover */
 @keyframes letter-pulse {
     0% { transform: scale(1); }

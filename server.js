@@ -2,6 +2,7 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
+const { marked } = require('marked');
 
 const PORT = 3002;
 // Use 0.0.0.0 to listen on all network interfaces (needed for external access)
@@ -19,8 +20,245 @@ const MIME_TYPES = {
   '.ico': 'image/x-icon',
 };
 
+// Function to get all markdown files from posts directory
+function getPostsPosts() {
+  const postsDir = path.join(__dirname, 'posts');
+  
+  if (!fs.existsSync(postsDir)) {
+    return [];
+  }
+  
+  const files = fs.readdirSync(postsDir).filter(file => file.endsWith('.md'));
+  
+  return files.map(file => {
+    const filePath = path.join(postsDir, file);
+    const content = fs.readFileSync(filePath, 'utf-8');
+    const slug = file.replace('.md', '');
+    
+    // Extract title from first heading or use filename
+    const titleMatch = content.match(/^#\s+(.+)/m);
+    const title = titleMatch ? titleMatch[1] : slug.replace(/-/g, ' ');
+    
+    // Remove the first # heading from content for excerpt extraction
+    let contentWithoutTitle = content;
+    if (titleMatch) {
+      contentWithoutTitle = content.replace(/^#\s+.+$/m, '').trim();
+    }
+    
+    // Extract excerpt from first paragraph
+    const paragraphMatch = contentWithoutTitle.match(/^([^#\n].+?)(?:\n\n|$)/);
+    const excerpt = paragraphMatch ? paragraphMatch[1].substring(0, 150) + '...' : '';
+    
+    // Get file modification time
+    const stats = fs.statSync(filePath);
+    
+    return {
+      slug,
+      title,
+      excerpt,
+      date: stats.mtime
+    };
+  }).sort((a, b) => b.date - a.date); // Sort by date, newest first
+}
+
+// Function to render markdown post with proper error handling
+function renderMarkdownPost(slug, callback) {
+  const filePath = path.join(__dirname, 'posts', `${slug}.md`);
+  
+  // Check if markdown file exists
+  fs.access(filePath, fs.constants.F_OK, (err) => {
+    if (err) {
+      return callback(null, null); // File doesn't exist
+    }
+    
+    // Read the markdown file
+    fs.readFile(filePath, 'utf-8', (err, content) => {
+      if (err) {
+        return callback(err, null);
+      }
+      
+      // Extract title from first # heading
+      const titleMatch = content.match(/^#\s+(.+)/m);
+      const title = titleMatch ? titleMatch[1] : slug.replace(/-/g, ' ');
+      
+      // Remove the first # heading from content before rendering
+      let contentWithoutTitle = content;
+      if (titleMatch) {
+        contentWithoutTitle = content.replace(/^#\s+.+$/m, '').trim();
+      }
+      
+      const html = marked(contentWithoutTitle);
+      
+      // Get file modification time
+      fs.stat(filePath, (err, stats) => {
+        if (err) {
+          return callback(err, null);
+        }
+        
+        const date = stats.mtime.toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        });
+        
+        // Load template
+        const templatePath = path.join(__dirname, 'posts-post.html');
+        fs.readFile(templatePath, 'utf-8', (err, template) => {
+          if (err) {
+            return callback(err, null);
+          }
+          
+          // Fix relative paths to absolute paths
+          template = template.replace(/href="\.\.\/styles\.css"/g, 'href="/styles.css"');
+          template = template.replace(/src="\.\.\/script\.js"/g, 'src="/script.js"');
+          template = template.replace(/src="\.\.\/plant-animation\.js"/g, 'src="/plant-animation.js"');
+          template = template.replace(/href="\.\.\/favicon\.ico"/g, 'href="/favicon.ico"');
+          template = template.replace(/href="\/writing\/" class="back-link"/g, 'href="/writing" class="back-link"');
+          
+          template = template.replace(/\{\{TITLE\}\}/g, title);
+          template = template.replace(/\{\{DATE\}\}/g, date);
+          template = template.replace(/\{\{CONTENT\}\}/g, html);
+          
+          callback(null, template);
+        });
+      });
+    });
+  });
+}
+
 const server = http.createServer((req, res) => {
   console.log(`Request for ${req.url}`);
+  
+  // Handle API routes
+  if (req.url === '/api/posts') {
+    const posts = getPostsPosts();
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify(posts));
+    return;
+  }
+  
+  // Redirect /posts/ to /posts for consistency
+  if (req.url === '/posts/') {
+    res.writeHead(301, { 'Location': '/posts' });
+    res.end();
+    return;
+  }
+
+  // Handle posts routes - serve dedicated posts page
+  if (req.url === '/posts') {
+    fs.readFile('./index.html', (err, content) => {
+      if (err) {
+        res.writeHead(404, { 'Content-Type': 'text/html' });
+        res.end('Page not found');
+      } else {
+        // Create posts page by modifying the home page structure
+        let html = content.toString();
+
+        // Fix relative paths to absolute paths to prevent /posts/styles.css issues
+        html = html.replace(/href="styles\.css"/g, 'href="/styles.css"');
+        html = html.replace(/src="script\.js"/g, 'src="/script.js"');
+        html = html.replace(/src="plant-animation\.js"/g, 'src="/plant-animation.js"');
+        html = html.replace(/src="weights-chart\.js"/g, 'src="/weights-chart.js"');
+        html = html.replace(/href="favicon\.ico"/g, 'href="/favicon.ico"');
+        html = html.replace(/src="assets\//g, 'src="/assets/');
+
+        // Update the toggle to show Posts as active and link About back to home
+        html = html.replace(
+          '<span class="toggle-btn active">About</span>',
+          '<a href="/" class="toggle-btn">About</a>'
+        );
+        html = html.replace(
+          '<a href="/posts" class="toggle-btn">Posts</a>',
+          '<span class="toggle-btn active">Posts</span>'
+        );
+        
+        // Replace everything from about section to watering can with posts content
+        const aboutSectionRegex = /<div id="about-section" class="content-section">([\s\S]*?)<!-- Watering Can Animation -->/;
+        const postsContent = `<div id="posts-section" class="content-section">
+            <!-- Posts Content -->
+            <div class="posts-section-content">
+                <div class="posts-list loading-element">
+                    <!-- Posts will be loaded here -->
+                </div>
+            </div>
+        </div> <!-- End Posts Section -->
+
+        <!-- Watering Can Animation -->`;
+        
+        html = html.replace(aboutSectionRegex, postsContent);
+
+        // Add script to load posts
+        const scriptToAdd = `
+    <script>
+        // Load posts on page load
+        function loadPostsPosts() {
+            fetch('/api/posts')
+                .then(response => response.json())
+                .then(posts => {
+                    const postsList = document.querySelector('.posts-list');
+                    if (posts.length === 0) {
+                        postsList.innerHTML = '<div class="no-posts"><p>No posts yet.</p><p>Add markdown files to the posts/ folder to see them here.</p></div>';
+                        return;
+                    }
+
+                    postsList.innerHTML = posts.map((post, index) => {
+                        const colorClass = 'color-' + (Math.floor(Math.random() * 8) + 1);
+                        return \`
+                        <a href="/posts/\${post.slug}" class="posts-post-card-link">
+                            <div class="posts-post-card \${colorClass}">
+                                <h3>\${post.title}</h3>
+                                <p class="post-date">\${new Date(post.date).toLocaleDateString()}</p>
+                                <p class="post-excerpt">\${post.excerpt}</p>
+                            </div>
+                        </a>
+                    \`;
+                    }).join('');
+                })
+                .catch(error => {
+                    console.error('Error loading posts:', error);
+                    document.querySelector('.posts-list').innerHTML = '<div class="error"><p>Error loading posts.</p></div>';
+                });
+        }
+
+        // Load posts when page loads
+        loadPostsPosts();
+    </script>`;
+        
+        html = html.replace('</body>', scriptToAdd + '</body>');
+        
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.end(html, 'utf-8');
+      }
+    });
+    return;
+  }
+  
+  // Handle individual posts
+  const postsMatch = req.url.match(/^\/posts\/([^\/]+)\/?$/);
+  if (postsMatch) {
+    const slug = postsMatch[1];
+    
+    renderMarkdownPost(slug, (err, postHtml) => {
+      if (err) {
+        console.error('Error rendering markdown post:', err);
+        res.writeHead(500, { 'Content-Type': 'text/html' });
+        res.end('Internal server error');
+        return;
+      }
+      
+      if (postHtml) {
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.end(postHtml, 'utf-8');
+      } else {
+        // Post not found - serve 404 page
+        fs.readFile('./404.html', (err, content) => {
+          res.writeHead(404, { 'Content-Type': 'text/html' });
+          res.end(content || 'Post not found', 'utf-8');
+        });
+      }
+    });
+    return;
+  }
   
   // Handle the root path
   let filePath = req.url === '/' 
