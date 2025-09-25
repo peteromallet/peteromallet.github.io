@@ -37,35 +37,52 @@ function getPostsPosts() {
   
   const files = fs.readdirSync(postsDir).filter(file => file.endsWith('.md'));
   
-  return files.map(file => {
-    const filePath = path.join(postsDir, file);
-    const content = fs.readFileSync(filePath, 'utf-8');
-    const slug = file.replace('.md', '');
-    
-    // Extract title from first heading or use filename
-    const titleMatch = content.match(/^#\s+(.+)/m);
-    const title = titleMatch ? titleMatch[1] : slug.replace(/-/g, ' ');
-    
-    // Remove the first # heading from content for excerpt extraction
-    let contentWithoutTitle = content;
-    if (titleMatch) {
-      contentWithoutTitle = content.replace(/^#\s+.+$/m, '').trim();
-    }
-    
-    // Extract excerpt from first paragraph
-    const paragraphMatch = contentWithoutTitle.match(/^([^#\n].+?)(?:\n\n|$)/);
-    const excerpt = paragraphMatch ? paragraphMatch[1].substring(0, 150) + '...' : '';
-    
-    // Get file modification time
-    const stats = fs.statSync(filePath);
-    
-    return {
-      slug,
-      title,
-      excerpt,
-      date: stats.mtime
-    };
-  }).sort((a, b) => b.date - a.date); // Sort by date, newest first
+  return files
+    .map(file => {
+      const filePath = path.join(postsDir, file);
+      const content = fs.readFileSync(filePath, 'utf-8');
+      const slug = file.replace('.md', '');
+      
+      // Extract title from first heading - MUST start with #
+      const titleMatch = content.match(/^#\s+(.+)/m);
+      
+      // Skip posts that don't start with a # heading
+      if (!titleMatch) {
+        return null;
+      }
+      
+      const title = titleMatch[1];
+      
+      // Remove the first # heading from content for excerpt extraction
+      const contentWithoutTitle = content.replace(/^#\s+.+$/m, '').trim();
+      
+      // Extract excerpt from first paragraph
+      const paragraphMatch = contentWithoutTitle.match(/^([^#\n].+?)(?:\n\n|$)/);
+      let excerpt = paragraphMatch ? paragraphMatch[1] : '';
+      
+      // Remove hyperlinks [text](url) -> text
+      excerpt = excerpt.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1');
+      
+      // Limit to one line and very short length
+      excerpt = excerpt.split('\n')[0].substring(0, 20);
+      
+      // Add ellipsis if truncated
+      if (excerpt.length === 20 && paragraphMatch && paragraphMatch[1].length > 20) {
+        excerpt += '...';
+      }
+      
+      // Get file modification time
+      const stats = fs.statSync(filePath);
+      
+      return {
+        slug,
+        title,
+        excerpt,
+        date: stats.mtime
+      };
+    })
+    .filter(post => post !== null) // Remove null entries (posts without # headings)
+    .sort((a, b) => b.date - a.date); // Sort by date, newest first
 }
 
 // Function to render markdown post with proper error handling
@@ -86,13 +103,16 @@ function renderMarkdownPost(slug, callback) {
       
       // Extract title from first # heading
       const titleMatch = content.match(/^#\s+(.+)/m);
-      const title = titleMatch ? titleMatch[1] : slug.replace(/-/g, ' ');
+      
+      // If post doesn't start with #, treat as not found
+      if (!titleMatch) {
+        return callback(null, null);
+      }
+      
+      const title = titleMatch[1];
       
       // Remove the first # heading from content before rendering
-      let contentWithoutTitle = content;
-      if (titleMatch) {
-        contentWithoutTitle = content.replace(/^#\s+.+$/m, '').trim();
-      }
+      const contentWithoutTitle = content.replace(/^#\s+.+$/m, '').trim();
       
       const html = marked(contentWithoutTitle);
       

@@ -1571,7 +1571,26 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize Weights Chart
     let weightsChart = null;
     
+    function shouldInitializeChart() {
+        // Check if we're in development mode
+        const hostname = window.location.hostname;
+        const isDev = hostname === 'localhost' || 
+                     hostname === '127.0.0.1' || 
+                     hostname.startsWith('192.168.') ||
+                     hostname.includes('dev') ||
+                     window.location.port !== '';
+        
+        // For now, allow chart in both dev and production
+        // To disable in production, change this to: return isDev;
+        return true;
+    }
+    
     function initializeWeightsChart() {
+        if (!shouldInitializeChart()) {
+            console.log('Weights chart disabled in production environment');
+            return;
+        }
+        
         if (typeof WeightsChart !== 'undefined') {
             weightsChart = new WeightsChart('weights-chart-container');
             weightsChart.init().catch(error => {

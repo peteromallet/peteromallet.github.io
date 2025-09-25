@@ -9,7 +9,39 @@ class WeightsChart {
         // Supabase configuration
         this.supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRkYm9iaWFsemRqa3phaW55cWdiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY2MzQ0MTgsImV4cCI6MjA2MjIxMDQxOH0.CAstIrTFMcIAIDht0ZacLYY-obBptH3XXShohSzbwjU';
         this.isLoaded = false;
+        // Environment detection
+        this.isDevelopment = this.detectEnvironment();
         // removed initialZoomApplied flag – no longer needed
+    }
+
+    detectEnvironment() {
+        // Check if we're in development mode
+        const hostname = window.location.hostname;
+        const isDev = hostname === 'localhost' || 
+                     hostname === '127.0.0.1' || 
+                     hostname.startsWith('192.168.') ||
+                     hostname.includes('dev') ||
+                     window.location.port !== '';
+        return isDev;
+    }
+
+    log(...args) {
+        // Only log in development environment
+        if (this.isDevelopment) {
+            console.log(...args);
+        }
+    }
+
+    warn(...args) {
+        // Only warn in development environment
+        if (this.isDevelopment) {
+            console.warn(...args);
+        }
+    }
+
+    error(...args) {
+        // Always log errors, but prefix with environment info
+        console.error(`[${this.isDevelopment ? 'DEV' : 'PROD'}]`, ...args);
     }
 
     async init() {
@@ -19,7 +51,7 @@ class WeightsChart {
             this.createChart(data);
             this.isLoaded = true;
         } catch (error) {
-            console.error('Error initializing weights chart:', error);
+            this.error('Error initializing weights chart:', error);
             this.showError('Failed to load weights data');
         }
     }
@@ -58,7 +90,7 @@ class WeightsChart {
             const { createClient } = window.supabase;
             const client = createClient(this.supabaseUrl, this.supabaseKey);
 
-            console.log('🔍 Fetching ALL weight records using pagination...');
+            this.log('🔍 Fetching ALL weight records using pagination...');
             
             // Fetch ALL records using pagination
             const allData = [];
@@ -67,7 +99,7 @@ class WeightsChart {
             let hasMore = true;
 
             while (hasMore) {
-                console.log(`🔍 Fetching page ${page + 1}...`);
+                this.log(`🔍 Fetching page ${page + 1}...`);
                 const { data, error } = await client
                     .from('measurements')
                     .select('*')
@@ -75,7 +107,7 @@ class WeightsChart {
                     .range(page * pageSize, (page + 1) * pageSize - 1);
 
                 if (error) {
-                    console.warn(`Error fetching page ${page + 1}:`, error);
+                    this.warn(`Error fetching page ${page + 1}:`, error);
                     break;
                 }
 
@@ -83,7 +115,7 @@ class WeightsChart {
                     hasMore = false;
                 } else {
                     allData.push(...data);
-                    console.log(`📄 Page ${page + 1}: ${data.length} records (total so far: ${allData.length})`);
+                    this.log(`📄 Page ${page + 1}: ${data.length} records (total so far: ${allData.length})`);
                     
                     // If we got less than a full page, we're done
                     if (data.length < pageSize) {
@@ -94,13 +126,13 @@ class WeightsChart {
                 }
             }
 
-            console.log(`✅ Successfully fetched ${allData.length} total weight records from measurements`);
+            this.log(`✅ Successfully fetched ${allData.length} total weight records from measurements`);
             const processedData = this.processData(allData);
             this.updateTitle(processedData);
             return processedData;
         } catch (error) {
-            console.error('Error fetching weights data:', error);
-            console.warn('Using sample data instead');
+            this.error('Error fetching weights data:', error);
+            this.warn('Using sample data instead');
             // Return sample data for demonstration if real data fails
             const sampleData = this.getSampleData();
             this.updateTitle(sampleData);
@@ -152,7 +184,7 @@ class WeightsChart {
     createChart(data) {
         const container = document.getElementById(this.containerId);
         if (!container) {
-            console.error(`Container with id '${this.containerId}' not found`);
+            this.error(`Container with id '${this.containerId}' not found`);
             return;
         }
 
@@ -193,12 +225,12 @@ class WeightsChart {
         let initialMax = undefined;
         if (Array.isArray(data) && data.length) {
             // DEBUG: Log the raw data
-            console.log('🔍 Raw data points:', data.length);
-            console.log('🔍 First 3 data points:', data.slice(0, 3).map(pt => ({
+            this.log('🔍 Raw data points:', data.length);
+            this.log('🔍 First 3 data points:', data.slice(0, 3).map(pt => ({
                 date: pt.x.toLocaleDateString(),
                 weight: pt.y
             })));
-            console.log('🔍 Last 3 data points:', data.slice(-3).map(pt => ({
+            this.log('🔍 Last 3 data points:', data.slice(-3).map(pt => ({
                 date: pt.x.toLocaleDateString(), 
                 weight: pt.y
             })));
@@ -208,22 +240,22 @@ class WeightsChart {
             const latestDate = new Date(latestMs);
             const earliestDate = new Date(earliestMs);
             
-            console.log('🔍 Date range in data:');
-            console.log('   Earliest:', earliestDate.toLocaleDateString());
-            console.log('   Latest:', latestDate.toLocaleDateString());
+            this.log('🔍 Date range in data:');
+            this.log('   Earliest:', earliestDate.toLocaleDateString());
+            this.log('   Latest:', latestDate.toLocaleDateString());
             
             const threeMonthsAgo = new Date(latestDate);
             threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
             
-            console.log('🔍 Three months ago from latest:', threeMonthsAgo.toLocaleDateString());
+            this.log('🔍 Three months ago from latest:', threeMonthsAgo.toLocaleDateString());
             
             initialMin = Math.max(threeMonthsAgo.getTime(), earliestMs);
             initialMax = latestMs;
             
-            console.log('🔍 Chart window will be:');
-            console.log('   From:', new Date(initialMin).toLocaleDateString());
-            console.log('   To:', new Date(initialMax).toLocaleDateString());
-            console.log('   Window size (days):', Math.round((initialMax - initialMin) / (1000 * 60 * 60 * 24)));
+            this.log('🔍 Chart window will be:');
+            this.log('   From:', new Date(initialMin).toLocaleDateString());
+            this.log('   To:', new Date(initialMax).toLocaleDateString());
+            this.log('   Window size (days):', Math.round((initialMax - initialMin) / (1000 * 60 * 60 * 24)));
         }
 
         this.chart = new Chart(ctx, {
@@ -442,10 +474,10 @@ class WeightsChart {
         setTimeout(() => {
             if (this.chart && this.chart.scales && this.chart.scales.x) {
                 const xScale = this.chart.scales.x;
-                console.log('🔍 Chart is actually showing:');
-                console.log('   From:', new Date(xScale.min).toLocaleDateString());
-                console.log('   To:', new Date(xScale.max).toLocaleDateString());
-                console.log('   Actual window size (days):', Math.round((xScale.max - xScale.min) / (1000 * 60 * 60 * 24)));
+                this.log('🔍 Chart is actually showing:');
+                this.log('   From:', new Date(xScale.min).toLocaleDateString());
+                this.log('   To:', new Date(xScale.max).toLocaleDateString());
+                this.log('   Actual window size (days):', Math.round((xScale.max - xScale.min) / (1000 * 60 * 60 * 24)));
             }
         }, 500);
     }
@@ -683,7 +715,7 @@ class WeightsChart {
         const weightKg = latestData.y;
         const bmi = weightKg / (heightInMeters * heightInMeters);
         
-        console.log(`📊 Calculating BMI: ${weightKg}kg / (${heightInMeters}m)² = ${bmi.toFixed(1)}`);
+        this.log(`📊 Calculating BMI: ${weightKg}kg / (${heightInMeters}m)² = ${bmi.toFixed(1)}`);
         
         // Find the text content element and update it
         const card = document.querySelector('#weights-chart-container').closest('.card');
@@ -695,9 +727,9 @@ class WeightsChart {
                 `${bmi.toFixed(1)}`
             );
             textContent.innerHTML = updatedText;
-            console.log(`✅ Updated BMI text: ${bmi.toFixed(1)}`);
+            this.log(`✅ Updated BMI text: ${bmi.toFixed(1)}`);
         } else {
-            console.warn('⚠️ Could not find text content element to update BMI');
+            this.warn('⚠️ Could not find text content element to update BMI');
         }
     }
 
