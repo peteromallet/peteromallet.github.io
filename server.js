@@ -64,10 +64,10 @@ function getPostsPosts() {
       excerpt = excerpt.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1');
       
       // Limit to one line and very short length
-      excerpt = excerpt.split('\n')[0].substring(0, 20);
+      excerpt = excerpt.split('\n')[0].substring(0, 30);
       
       // Add ellipsis if truncated
-      if (excerpt.length === 20 && paragraphMatch && paragraphMatch[1].length > 20) {
+      if (excerpt.length === 30 && paragraphMatch && paragraphMatch[1].length > 30) {
         excerpt += '...';
       }
       
