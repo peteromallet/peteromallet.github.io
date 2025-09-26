@@ -71,14 +71,14 @@ function getPostsPosts() {
         excerpt += '...';
       }
       
-      // Get file modification time
+      // Get file creation time
       const stats = fs.statSync(filePath);
       
       return {
         slug,
         title,
         excerpt,
-        date: stats.mtime
+        date: stats.birthtime
       };
     })
     .filter(post => post !== null) // Remove null entries (posts without # headings)
@@ -122,7 +122,7 @@ function renderMarkdownPost(slug, callback) {
           return callback(err, null);
         }
         
-        const date = stats.mtime.toLocaleDateString('en-US', {
+        const date = stats.birthtime.toLocaleDateString('en-US', {
           year: 'numeric',
           month: 'long',
           day: 'numeric'

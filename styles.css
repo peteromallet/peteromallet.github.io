@@ -1171,14 +1171,14 @@ body::before, body::after {
     background: rgba(31, 41, 55, 0.4);
     border: 1px solid rgba(75, 85, 99, 0.4);
     border-radius: 0.75rem;
-    padding: 2rem;
+    padding: 1.5rem;
     transition: all 0.3s ease;
     backdrop-filter: blur(10px);
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     height: 200px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
 }
 
 /* Random background color classes for posts */
@@ -1213,7 +1213,7 @@ body::before, body::after {
 }
 
 .posts-post-card h3 {
-    margin: 0 0 0.5rem 0;
+    margin: 0 0 1rem 0;
     font-size: 1.5rem;
     font-weight: 600;
     color: #f9fafb;
@@ -1227,7 +1227,7 @@ body::before, body::after {
 .post-date {
     color: #e5e7eb;
     font-size: 0.9rem;
-    margin: 0 0 1rem 0;
+    margin: 0 0 1.25rem 0;
     font-family: 'Space Mono', monospace;
     font-weight: 500;
 }
@@ -1411,7 +1411,7 @@ body::before, body::after {
     }
 
     .posts-post-card {
-        padding: 1.5rem;
+        padding: 1.25rem;
         height: 180px;
     }
 
