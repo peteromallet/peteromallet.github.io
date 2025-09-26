@@ -1461,8 +1461,8 @@ body::before, body::after {
     background: rgba(0, 0, 0, 0.3);
 }
 
-/* Separator between navigation links */
-.post-navigation::after {
+/* Separator between navigation links - only show when both links are present */
+.post-navigation:has(.nav-prev):has(.nav-next)::after {
     content: '|';
     position: absolute;
     left: 50%;
@@ -1538,21 +1538,70 @@ body::before, body::after {
         margin-top: 2rem;
         padding-top: 1.5rem;
     }
-    
+
     .nav-link {
         max-width: 100%;
         width: 100%;
         justify-content: center;
         text-align: center;
     }
-    
+
     .nav-prev, .nav-next {
         justify-content: center;
         text-align: center;
     }
-    
+
     .nav-spacer {
         display: none;
+    }
+}
+
+/* Mobile video styles for posts */
+@media (max-width: 768px) {
+    .post-content video {
+        display: block !important;
+        width: 100% !important;
+        height: auto !important;
+        max-width: 100% !important;
+        margin: 1rem 0 !important;
+        border-radius: 6px;
+    }
+
+    .post-content iframe {
+        display: block !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: 300px !important;
+        max-width: 100% !important;
+        margin: 1rem 0 !important;
+        border-radius: 6px;
+    }
+
+    /* Ensure videos are visible on mobile */
+    .post-content video[style*="display:none"] {
+        display: block !important;
+    }
+
+    .post-content iframe[style*="display:none"] {
+        display: block !important;
+    }
+}
+
+/* Touch device video interaction */
+@media (hover: none) and (pointer: coarse) {
+    .post-content video {
+        width: 100% !important;
+        height: auto !important;
+        display: block !important;
+        margin: 1rem 0 !important;
+    }
+
+    .post-content iframe {
+        width: 100% !important;
+        height: auto !important;
+        min-height: 300px !important;
+        display: block !important;
+        margin: 1rem 0 !important;
     }
 }
 

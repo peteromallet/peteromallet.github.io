@@ -128,7 +128,10 @@ function renderMarkdownPost(slug, callback) {
       const contentWithoutTitle = content.replace(/^#\s+.+$/m, '').trim();
       
       const html = marked(contentWithoutTitle);
-      
+
+      // Fix video source paths in the rendered markdown
+      const fixedHtml = html.replace(/src="\.\.\/assets\//g, 'src="/assets/');
+
       // Get file modification time
       fs.stat(filePath, (err, stats) => {
         if (err) {
@@ -170,7 +173,7 @@ function renderMarkdownPost(slug, callback) {
           
           template = template.replace(/\{\{TITLE\}\}/g, title);
           template = template.replace(/\{\{DATE\}\}/g, date);
-          template = template.replace(/\{\{CONTENT\}\}/g, html);
+          template = template.replace(/\{\{CONTENT\}\}/g, fixedHtml);
           template = template.replace(/\{\{PREV_NAV\}\}/g, prevNav);
           template = template.replace(/\{\{NEXT_NAV\}\}/g, nextNav);
           
