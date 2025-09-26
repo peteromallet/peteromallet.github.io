@@ -1079,6 +1079,13 @@ body::before, body::after {
     position: relative;
     cursor: pointer;
     transition: all 0.3s ease;
+    text-decoration: none;
+    color: inherit;
+}
+
+.large-letters:hover {
+    text-decoration: none;
+    color: inherit;
 }
 
 /* Section Toggle */
