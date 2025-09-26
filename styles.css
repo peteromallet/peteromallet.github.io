@@ -34,7 +34,7 @@ body {
     z-index: 1;
     max-width: 1200px;
     margin: 0 auto;
-    padding-top: 2.25rem;
+    padding-top: 1.75rem;
     padding-bottom: 1rem;
 }
 
@@ -823,7 +823,7 @@ body::before, body::after {
     }
 
     .container { /* Add this rule */
-        padding-top: 0.8rem;
+        padding-top: 0.5rem;
         padding-bottom: 0.1rem;
     }
 
