@@ -1565,6 +1565,8 @@ body::before, body::after {
         max-width: 100% !important;
         margin: 1rem 0 !important;
         border-radius: 6px;
+        opacity: 1 !important;
+        visibility: visible !important;
     }
 
     .post-content iframe {
@@ -1575,15 +1577,23 @@ body::before, body::after {
         max-width: 100% !important;
         margin: 1rem 0 !important;
         border-radius: 6px;
+        opacity: 1 !important;
+        visibility: visible !important;
     }
 
     /* Ensure videos are visible on mobile */
-    .post-content video[style*="display:none"] {
+    .post-content video[style*="display:none"],
+    .post-content video[style*="display: none"] {
         display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
     }
 
-    .post-content iframe[style*="display:none"] {
+    .post-content iframe[style*="display:none"],
+    .post-content iframe[style*="display: none"] {
         display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
     }
 }
 
@@ -1594,6 +1604,8 @@ body::before, body::after {
         height: auto !important;
         display: block !important;
         margin: 1rem 0 !important;
+        opacity: 1 !important;
+        visibility: visible !important;
     }
 
     .post-content iframe {
@@ -1602,6 +1614,54 @@ body::before, body::after {
         min-height: 300px !important;
         display: block !important;
         margin: 1rem 0 !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+}
+
+/* Additional mobile video fixes */
+@media (max-width: 768px) {
+    .post-content video {
+        /* Override any inherited styles that might hide videos */
+        position: static !important;
+        top: auto !important;
+        left: auto !important;
+        z-index: 1 !important;
+        /* Force video to be visible */
+        opacity: 1 !important;
+        visibility: visible !important;
+        display: block !important;
+    }
+
+    /* Ensure any video with hidden attributes is shown */
+    .post-content *[style*="opacity: 0"],
+    .post-content *[style*="visibility: hidden"],
+    .post-content *[style*="display: none"] {
+        opacity: 1 !important;
+        visibility: visible !important;
+        display: block !important;
+    }
+
+    /* Most specific rule for post videos on mobile */
+    .post-content video,
+    .post-content iframe {
+        display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        width: 100% !important;
+        height: auto !important;
+        position: static !important;
+    }
+
+    /* Override any inline styles that might hide videos */
+    .post-content video[style*="opacity: 0"] {
+        opacity: 1 !important;
+    }
+    .post-content video[style*="visibility: hidden"] {
+        visibility: visible !important;
+    }
+    .post-content video[style*="display: none"] {
+        display: block !important;
     }
 }
 
