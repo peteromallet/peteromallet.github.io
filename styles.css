@@ -856,7 +856,7 @@ body::before, body::after {
     }
 
     .large-letters {
-        margin-bottom: 0.5rem; /* Minimized bottom margin */
+        margin-bottom: 0.125rem; /* Minimized bottom margin */
         margin-top: 0; /* Removed top margin */
     }
 
@@ -1075,7 +1075,7 @@ body::before, body::after {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0 0 1rem 0;
+    margin: 0 0 0.125rem 0;
     position: relative;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -1093,7 +1093,7 @@ body::before, body::after {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 1rem 0 1.5rem 0;
+    margin: 0.125rem 0 1.5rem 0;
     gap: 0.75rem;
 }
 
