@@ -1436,6 +1436,126 @@ body::before, body::after {
     .post-content h3 { font-size: 1.25rem; }
 }
 
+/* Post Navigation */
+.post-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2.5rem;
+    margin-bottom: 3rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    gap: 2rem;
+    position: relative;
+}
+
+/* Section break line above navigation */
+.post-navigation::before {
+    content: '';
+    position: absolute;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    height: 2px;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+/* Separator between navigation links */
+.post-navigation::after {
+    content: '|';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: rgba(0, 0, 0, 0.3);
+    font-size: 1.5rem;
+    font-weight: 300;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: #333333;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    max-width: 45%;
+    min-height: 3rem;
+}
+
+.nav-link:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.nav-prev {
+    justify-content: flex-start;
+}
+
+.nav-next {
+    justify-content: flex-end;
+    text-align: right;
+}
+
+.nav-arrow {
+    font-size: 1.2rem;
+    font-weight: bold;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.nav-link:hover .nav-arrow {
+    opacity: 1;
+}
+
+.nav-title {
+    font-weight: 500;
+    line-height: 1.3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.nav-spacer {
+    width: 45%;
+    min-height: 3rem;
+}
+
+/* Responsive navigation */
+@media (max-width: 768px) {
+    .post-navigation {
+        flex-direction: column;
+        gap: 1rem;
+        margin-top: 2rem;
+        padding-top: 1.5rem;
+    }
+    
+    .nav-link {
+        max-width: 100%;
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+    }
+    
+    .nav-prev, .nav-next {
+        justify-content: center;
+        text-align: center;
+    }
+    
+    .nav-spacer {
+        display: none;
+    }
+}
+
 /* Add a subtle pulse animation to the letters on hover */
 @keyframes letter-pulse {
     0% { transform: scale(1); }

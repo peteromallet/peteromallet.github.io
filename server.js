@@ -71,14 +71,14 @@ function getPostsPosts() {
         excerpt += '...';
       }
       
-      // Get file creation time
+      // Get file creation time (use birthtime for creation, mtime for modification)
       const stats = fs.statSync(filePath);
       
       return {
         slug,
         title,
         excerpt,
-        date: stats.birthtime
+        date: stats.birthtime // This should be creation time, not modification time
       };
     })
     .filter(post => post !== null) // Remove null entries (posts without # headings)
@@ -94,6 +94,19 @@ function renderMarkdownPost(slug, callback) {
     if (err) {
       return callback(null, null); // File doesn't exist
     }
+    
+    // Get all posts to determine navigation
+    const allPosts = getPostsPosts();
+    const currentIndex = allPosts.findIndex(post => post.slug === slug);
+    
+    if (currentIndex === -1) {
+      return callback(null, null); // Post not found in list
+    }
+    
+    const currentPost = allPosts[currentIndex];
+    // Previous = newer post (in reading order), Next = older post (in reading order)
+    const prevPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
+    const nextPost = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
     
     // Read the markdown file
     fs.readFile(filePath, 'utf-8', (err, content) => {
@@ -128,6 +141,19 @@ function renderMarkdownPost(slug, callback) {
           day: 'numeric'
         });
         
+        // Generate navigation HTML
+        const prevNav = prevPost ? 
+          `<a href="/posts/${prevPost.slug}" class="nav-link nav-prev">
+            <span class="nav-arrow">←</span>
+            <span class="nav-title">${prevPost.title}</span>
+          </a>` : '<div class="nav-spacer"></div>';
+        
+        const nextNav = nextPost ? 
+          `<a href="/posts/${nextPost.slug}" class="nav-link nav-next">
+            <span class="nav-title">${nextPost.title}</span>
+            <span class="nav-arrow">→</span>
+          </a>` : '<div class="nav-spacer"></div>';
+        
         // Load template
         const templatePath = path.join(__dirname, 'posts-post.html');
         fs.readFile(templatePath, 'utf-8', (err, template) => {
@@ -145,6 +171,8 @@ function renderMarkdownPost(slug, callback) {
           template = template.replace(/\{\{TITLE\}\}/g, title);
           template = template.replace(/\{\{DATE\}\}/g, date);
           template = template.replace(/\{\{CONTENT\}\}/g, html);
+          template = template.replace(/\{\{PREV_NAV\}\}/g, prevNav);
+          template = template.replace(/\{\{NEXT_NAV\}\}/g, nextNav);
           
           callback(null, template);
         });
