@@ -199,6 +199,16 @@ const server = http.createServer((req, res) => {
           '<span class="toggle-btn active">Posts</span>'
         );
         
+        // Make POM letters clickable to link to home page
+        html = html.replace(
+          '<div class="large-letters loading-element" id="pom-letters">',
+          '<a href="/" class="large-letters loading-element" id="pom-letters">'
+        );
+        html = html.replace(
+          '</div>\n\n            <!-- About/Writing Toggle -->',
+          '</a>\n\n            <!-- About/Writing Toggle -->'
+        );
+        
         // Replace everything from about section to watering can with posts content
         const aboutSectionRegex = /<div id="about-section" class="content-section">([\s\S]*?)<!-- Watering Can Animation -->/;
         const postsContent = `<div id="posts-section" class="content-section">
