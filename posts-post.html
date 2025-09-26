@@ -76,6 +76,32 @@
     <script>
         // Initialize Feather icons
         feather.replace();
+        
+        // Mobile video fix - ensure videos are properly configured
+        document.addEventListener('DOMContentLoaded', function() {
+            const videos = document.querySelectorAll('.post-content video');
+            videos.forEach(video => {
+                // Force video attributes for mobile compatibility
+                video.setAttribute('playsinline', 'true');
+                video.setAttribute('preload', 'metadata');
+                video.setAttribute('controls', 'true');
+                
+                // Ensure video is visible
+                video.style.display = 'block';
+                video.style.width = '100%';
+                video.style.height = 'auto';
+                video.style.opacity = '1';
+                video.style.visibility = 'visible';
+                
+                // Remove any problematic attributes
+                video.removeAttribute('autoplay');
+                
+                // Force load the video
+                video.load();
+                
+                console.log('Video configured:', video.src || video.querySelector('source')?.src);
+            });
+        });
     </script>
 </body>
 </html>

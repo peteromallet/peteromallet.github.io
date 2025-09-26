@@ -130,7 +130,13 @@ function renderMarkdownPost(slug, callback) {
       const html = marked(contentWithoutTitle);
 
       // Fix video source paths in the rendered markdown
-      const fixedHtml = html.replace(/src="\.\.\/assets\//g, 'src="/assets/');
+      let fixedHtml = html.replace(/src="\.\.\/assets\//g, 'src="/assets/');
+      
+      // Add mobile-specific video attributes
+      fixedHtml = fixedHtml.replace(
+        /<video([^>]*)>/g, 
+        '<video$1 playsinline preload="metadata" muted>'
+      );
 
       // Get file modification time
       fs.stat(filePath, (err, stats) => {
@@ -350,9 +356,18 @@ const server = http.createServer((req, res) => {
         res.end(`Server Error: ${err.code}`);
       }
     } else {
-      // Success
-      res.writeHead(200, { 'Content-Type': contentType });
-      res.end(content, 'utf-8');
+      // Success - add additional headers for video files
+      const headers = { 'Content-Type': contentType };
+      
+      // Add video-specific headers for better mobile compatibility
+      if (contentType.startsWith('video/')) {
+        headers['Accept-Ranges'] = 'bytes';
+        headers['Content-Length'] = content.length;
+        headers['Cache-Control'] = 'public, max-age=31536000';
+      }
+      
+      res.writeHead(200, headers);
+      res.end(content, contentType.startsWith('text/') ? 'utf-8' : undefined);
     }
   });
 });

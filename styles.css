@@ -1663,6 +1663,22 @@ body::before, body::after {
     .post-content video[style*="display: none"] {
         display: block !important;
     }
+
+    /* Force video attributes for mobile compatibility */
+    .post-content video {
+        /* Safari mobile video fix */
+        -webkit-playsinline: true !important;
+        /* Force preload */
+        preload: metadata !important;
+        /* Ensure controls are visible */
+        controls: true !important;
+        /* Make sure video is clickable */
+        pointer-events: auto !important;
+        /* Remove any transforms */
+        transform: none !important;
+        /* Ensure proper overflow */
+        overflow: visible !important;
+    }
 }
 
 /* Add a subtle pulse animation to the letters on hover */
