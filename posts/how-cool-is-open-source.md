@@ -31,7 +31,12 @@ This inspired and empowered TheShadow to keep investigating, who in turn figured
   Your browser does not support the video tag.
 </video>
 
-As a product of their work, with just 4 sampling steps, they've collectively overcome a common issue with distilling Wan 2.2 to run faster on consumer hardware: the slow motion effect. They've also kept CFG high enough that it's still promptable, solving another common issue with distillation.
+This included implementing [Banostasis](https://huggingface.co/Cseti/wan2.2-14B-Kinestasis_concept-lora-v1) -a LoRA that Cseti trained - in a novel way trained to increase the amount of motion.
+
+<img src="../assets/lora1-low-notitle_00021.webp" width="100%" alt="Animation showing results">
+
+
+As a product of their collected work, with just 4 sampling steps, they've collectively overcome a common issue with distilling Wan 2.2 to run faster on consumer hardware: the slow motion effect. They've also kept CFG high enough that it's still promptable, solving another common issue with distillation.
 
 Some of what TheShadow has shared has been beautiful:
 

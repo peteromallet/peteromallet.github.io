@@ -1411,12 +1411,19 @@ body::before, body::after {
     }
 
     .posts-post-card {
-        padding: 1.25rem;
-        height: 180px;
+        padding: 1.25rem 1.25rem 0.5rem 1.25rem; /* Further reduced bottom padding */
+        height: auto; /* Flexible height based on content */
+        min-height: 90px; /* Minimum height for consistency */
     }
 
     .posts-post-card h3 {
         font-size: 1.25rem;
+        margin-bottom: 0.5rem; /* Reduced margin bottom */
+    }
+
+    /* Hide preview text on mobile */
+    .post-excerpt {
+        display: none;
     }
 
     .posts-post {

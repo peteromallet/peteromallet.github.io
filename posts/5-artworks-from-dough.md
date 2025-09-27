@@ -1,4 +1,4 @@
-# 5 Artworks made with Dough
+# 5 artworks made with Dough
 
 As covered before, my previous tool - [Dough](https://github.com/banodoco/Dough) - was a massive failure. Despite this, some beautiful work was made with it.
 

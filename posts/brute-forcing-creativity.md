@@ -1,4 +1,4 @@
-# Brute-Forcing Creativity
+# Brute-forcing creativity
 
 I'm exhausted. 
 
