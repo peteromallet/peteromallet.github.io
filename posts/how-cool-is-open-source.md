@@ -31,7 +31,7 @@ This inspired and empowered TheShadow to keep investigating, who in turn figured
   Your browser does not support the video tag.
 </video>
 
-This included implementing [Banostasis](https://huggingface.co/Cseti/wan2.2-14B-Kinestasis_concept-lora-v1) - a LoRA that Cseti trained in a novel way to increase the amount of motion.
+This included using [Banostasis](https://huggingface.co/Cseti/wan2.2-14B-Kinestasis_concept-lora-v1) - a LoRA that Cseti trained on stop-motion-like videos in a novel way to increase the amount of motion:
 
 <img src="../assets/lora1-low-notitle_00021.webp" width="100%" alt="Animation showing results">
 
