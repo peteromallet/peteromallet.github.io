@@ -1,18 +1,19 @@
-# The Field
+# Retrospective on The Field
 
 I made the video at the bottom over a year ago
 
 I had spent most of my life working on things that were in various ways bullshit - startups driven by mindless ambition, companies based on a shallow sense of purpose.
 
-But in the open source AI space, that changes. It finally felt like I had found something profoundly meaningful to dedicate my life to
+But in the open source AI space, that changed. 
 
-And I was fucking it up
+It finally felt like I had found something profoundly meaningful to dedicate my life to.
+
+So that's what i did, but I was fucking it up.
 
 I worked so hard but never quite got to where I was going.
 
 I was pushing AI to its limits but it just wasn't as capable as I needed it to be. 
 
-I asked many people for help but rarely got any.
 
 I felt I was mostly doing the right things but couldn’t execute fast or well enough.
 
