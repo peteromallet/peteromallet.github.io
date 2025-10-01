@@ -27,6 +27,31 @@ const MIME_TYPES = {
   '.md': 'text/markdown',
 };
 
+// Function to parse frontmatter from markdown content
+function parseFrontmatter(content) {
+  const frontmatterRegex = /^---\s*\n([\s\S]*?)\n---\s*\n/;
+  const match = content.match(frontmatterRegex);
+  
+  if (!match) {
+    return { metadata: {}, content: content };
+  }
+  
+  const frontmatterText = match[1];
+  const contentWithoutFrontmatter = content.slice(match[0].length);
+  
+  const metadata = {};
+  frontmatterText.split('\n').forEach(line => {
+    const colonIndex = line.indexOf(':');
+    if (colonIndex > 0) {
+      const key = line.slice(0, colonIndex).trim();
+      const value = line.slice(colonIndex + 1).trim();
+      metadata[key] = value;
+    }
+  });
+  
+  return { metadata, content: contentWithoutFrontmatter };
+}
+
 // Function to get all markdown files from posts directory
 function getPostsPosts() {
   const postsDir = path.join(__dirname, 'posts');
@@ -40,7 +65,8 @@ function getPostsPosts() {
   return files
     .map(file => {
       const filePath = path.join(postsDir, file);
-      const content = fs.readFileSync(filePath, 'utf-8');
+      const rawContent = fs.readFileSync(filePath, 'utf-8');
+      const { metadata, content } = parseFrontmatter(rawContent);
       const slug = file.replace('.md', '');
       
       // Extract title from first heading - MUST start with #
@@ -71,14 +97,20 @@ function getPostsPosts() {
         excerpt += '...';
       }
       
-      // Get file creation time (use birthtime for creation, mtime for modification)
-      const stats = fs.statSync(filePath);
+      // Use date from frontmatter if available, otherwise fall back to file stats
+      let postDate;
+      if (metadata.date) {
+        postDate = new Date(metadata.date);
+      } else {
+        const stats = fs.statSync(filePath);
+        postDate = stats.birthtime;
+      }
       
       return {
         slug,
         title,
         excerpt,
-        date: stats.birthtime // This should be creation time, not modification time
+        date: postDate
       };
     })
     .filter(post => post !== null) // Remove null entries (posts without # headings)
@@ -109,10 +141,13 @@ function renderMarkdownPost(slug, callback) {
     const nextPost = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
     
     // Read the markdown file
-    fs.readFile(filePath, 'utf-8', (err, content) => {
+    fs.readFile(filePath, 'utf-8', (err, rawContent) => {
       if (err) {
         return callback(err, null);
       }
+      
+      // Parse frontmatter
+      const { metadata, content } = parseFrontmatter(rawContent);
       
       // Extract title from first # heading
       const titleMatch = content.match(/^#\s+(.+)/m);
@@ -138,17 +173,33 @@ function renderMarkdownPost(slug, callback) {
         '<video$1 playsinline preload="metadata" muted>'
       );
 
-      // Get file modification time
-      fs.stat(filePath, (err, stats) => {
-        if (err) {
-          return callback(err, null);
+      // Use date from frontmatter if available, otherwise fall back to file stats
+      const getDateAndContinue = () => {
+        if (metadata.date) {
+          const postDate = new Date(metadata.date);
+          const date = postDate.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          });
+          continueWithDate(date);
+        } else {
+          fs.stat(filePath, (err, stats) => {
+            if (err) {
+              return callback(err, null);
+            }
+            
+            const date = stats.birthtime.toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
+            });
+            continueWithDate(date);
+          });
         }
-        
-        const date = stats.birthtime.toLocaleDateString('en-US', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric'
-        });
+      };
+      
+      const continueWithDate = (date) => {
         
         // Generate navigation HTML
         const prevNav = prevPost ? 
@@ -185,7 +236,9 @@ function renderMarkdownPost(slug, callback) {
           
           callback(null, template);
         });
-      });
+      };
+      
+      getDateAndContinue();
     });
   });
 }

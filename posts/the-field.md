@@ -1,3 +1,7 @@
+---
+date: 2025-09-28
+---
+
 # Retrospective on The Field
 
 I made The Field - the audiovisual poem at the bottom - over a year ago.

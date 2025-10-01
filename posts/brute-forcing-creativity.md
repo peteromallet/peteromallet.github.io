@@ -1,3 +1,7 @@
+---
+date: 2025-09-24
+---
+
 # Brute-forcing creativity
 
 I'm exhausted. 

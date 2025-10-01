@@ -1,3 +1,7 @@
+---
+date: 2025-09-26
+---
+
 # How cool is open source? 
 
 A few months ago, I shared a workflow for travelling between images in the #wan_resources channel on Banodoco.
