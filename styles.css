@@ -918,16 +918,31 @@ body::before, body::after {
         width: 32%;
         max-width: none;
         margin: 0;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+    }
+    
+    .square-image-container .square-image,
+    .square-image-container video {
+        position: relative;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1;
     }
 
     .image-hover-text {
-        opacity: 0;
-        transform: translateY(10px);
+        position: static;
+        opacity: 1;
+        transform: none;
         transition: all 0.3s ease;
         text-align: center;
-        padding: 0.35rem;
+        padding: 0.35rem 0.25rem;
         font-size: 0.65rem;
         line-height: 1.2;
+        background-color: transparent;
+        color: #666;
+        margin-top: 0.25rem;
     }
 
     .square-image-container.mobile-active .image-hover-text {
