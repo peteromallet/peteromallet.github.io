@@ -1879,4 +1879,101 @@ document.addEventListener('DOMContentLoaded', () => {
             el.style.transitionDelay = `${delay}ms`;
         });
     }
+
+    // --- Single-Click Video Swap for Square Images ---
+    
+    // Helper function to setup video swap for an image container
+    function setupVideoSwap(imageContainer, videoUrl) {
+        const image = imageContainer?.querySelector('.square-image');
+        if (!image || !imageContainer) return;
+        
+        // Add class to indicate this image has video functionality
+        imageContainer.classList.add('has-video');
+        
+        let videoElement = null;
+        let isVideoPlaying = false;
+        
+        // Pre-load video in background after a short delay
+        setTimeout(() => {
+            videoElement = document.createElement('video');
+            videoElement.src = videoUrl;
+            videoElement.preload = 'auto';
+            videoElement.style.width = '100%';
+            videoElement.style.height = '100%';
+            videoElement.style.objectFit = 'cover';
+            videoElement.style.display = 'none';
+            videoElement.setAttribute('playsinline', '');
+            videoElement.muted = false;
+            
+            // Add to container but keep hidden
+            imageContainer.appendChild(videoElement);
+            
+            // Preload the video
+            videoElement.load();
+        }, 1000); // Load after 1 second to let other content load first
+        
+        // Handle single click to swap and play video
+        image.addEventListener('click', (e) => {
+            if (isVideoPlaying) return; // Prevent triggering during playback
+            
+            // Ensure video is loaded
+            if (!videoElement) {
+                videoElement = document.createElement('video');
+                videoElement.src = videoUrl;
+                videoElement.preload = 'auto';
+                videoElement.style.width = '100%';
+                videoElement.style.height = '100%';
+                videoElement.style.objectFit = 'cover';
+                videoElement.style.display = 'none';
+                videoElement.setAttribute('playsinline', '');
+                videoElement.muted = false;
+                imageContainer.appendChild(videoElement);
+                videoElement.load();
+            }
+            
+            // Swap to video
+            image.style.display = 'none';
+            videoElement.style.display = 'block';
+            isVideoPlaying = true;
+            
+            // Play video
+            videoElement.play();
+            
+            // When video ends, swap back to image
+            videoElement.onended = () => {
+                videoElement.style.display = 'none';
+                image.style.display = 'block';
+                isVideoPlaying = false;
+                
+                // Reset video to beginning for next play
+                videoElement.currentTime = 0;
+            };
+        });
+        
+        // Handle click on video to prevent propagation
+        imageContainer.addEventListener('click', (e) => {
+            if (e.target === videoElement) {
+                e.stopPropagation();
+            }
+        });
+    }
+    
+    // Setup video for first image (How my wife sees me)
+    const firstImageContainer = document.querySelector('.square-image-container');
+    if (firstImageContainer) {
+        setupVideoSwap(firstImageContainer, 'assets/how-wife-sees-me.mp4');
+    }
+    
+    // Setup video for second image (How I see me)
+    const allSquareImageContainers = document.querySelectorAll('.square-image-container');
+    if (allSquareImageContainers[1]) {
+        setupVideoSwap(allSquareImageContainers[1], 'assets/how-i-see-me.mp4');
+    }
+    
+    // Setup video for third image (How my dog sees me)
+    if (allSquareImageContainers[2]) {
+        setupVideoSwap(allSquareImageContainers[2], 'assets/how-dog-sees-me.mp4');
+    }
+    
+    // --- End Single-Click Video Swap ---
 }); 
