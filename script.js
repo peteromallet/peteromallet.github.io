@@ -1912,8 +1912,8 @@ document.addEventListener('DOMContentLoaded', () => {
             videoElement.load();
         }, 1000); // Load after 1 second to let other content load first
         
-        // Handle single click to swap and play video
-        image.addEventListener('click', (e) => {
+        // Handle single click/tap to swap and play video
+        const handlePlayVideo = (e) => {
             if (isVideoPlaying) return; // Prevent triggering during playback
             
             // Ensure video is loaded
@@ -1960,6 +1960,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Wait for video to be ready
                 videoElement.addEventListener('canplay', playVideo, { once: true });
             }
+        };
+        
+        // Add both click and touch event listeners for better mobile support
+        image.addEventListener('click', handlePlayVideo);
+        image.addEventListener('touchstart', (e) => {
+            // Show text briefly on touch
+            imageContainer.classList.add('mobile-active');
+            setTimeout(() => {
+                imageContainer.classList.remove('mobile-active');
+            }, 300);
         });
         
         // Handle click on video to prevent propagation

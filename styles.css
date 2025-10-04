@@ -925,11 +925,18 @@ body::before, body::after {
         transform: translateY(10px);
         transition: all 0.3s ease;
         text-align: center;
-        padding: 0.5rem;
-        font-size: 0.8rem;
+        padding: 0.35rem;
+        font-size: 0.65rem;
+        line-height: 1.2;
     }
 
     .square-image-container.mobile-active .image-hover-text {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    /* Show text on tap for video-enabled images on mobile */
+    .square-image-container.has-video:active .image-hover-text {
         opacity: 1;
         transform: translateY(0);
     }
