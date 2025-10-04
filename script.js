@@ -1931,23 +1931,35 @@ document.addEventListener('DOMContentLoaded', () => {
                 videoElement.load();
             }
             
-            // Swap to video
-            image.style.display = 'none';
-            videoElement.style.display = 'block';
-            isVideoPlaying = true;
-            
-            // Play video
-            videoElement.play();
-            
-            // When video ends, swap back to image
-            videoElement.onended = () => {
-                videoElement.style.display = 'none';
-                image.style.display = 'block';
-                isVideoPlaying = false;
+            // Wait for video to be ready before swapping
+            const playVideo = () => {
+                // Swap to video
+                image.style.display = 'none';
+                videoElement.style.display = 'block';
+                isVideoPlaying = true;
                 
-                // Reset video to beginning for next play
-                videoElement.currentTime = 0;
+                // Play video
+                videoElement.play();
+                
+                // When video ends, swap back to image
+                videoElement.onended = () => {
+                    videoElement.style.display = 'none';
+                    image.style.display = 'block';
+                    isVideoPlaying = false;
+                    
+                    // Reset video to beginning for next play
+                    videoElement.currentTime = 0;
+                };
             };
+            
+            // Check if video is ready to play
+            if (videoElement.readyState >= 3) {
+                // Video is ready, play immediately
+                playVideo();
+            } else {
+                // Wait for video to be ready
+                videoElement.addEventListener('canplay', playVideo, { once: true });
+            }
         });
         
         // Handle click on video to prevent propagation
