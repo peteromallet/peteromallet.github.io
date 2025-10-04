@@ -1962,15 +1962,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
         
-        // Add both click and touch event listeners for better mobile support
+        // Add click event listener
         image.addEventListener('click', handlePlayVideo);
-        image.addEventListener('touchstart', (e) => {
-            // Show text briefly on touch
-            imageContainer.classList.add('mobile-active');
-            setTimeout(() => {
-                imageContainer.classList.remove('mobile-active');
-            }, 300);
-        });
         
         // Handle click on video to prevent propagation
         imageContainer.addEventListener('click', (e) => {

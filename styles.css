@@ -932,28 +932,7 @@ body::before, body::after {
     }
 
     .image-hover-text {
-        position: static;
-        opacity: 1;
-        transform: none;
-        transition: all 0.3s ease;
-        text-align: center;
-        padding: 0.35rem 0.25rem;
-        font-size: 0.65rem;
-        line-height: 1.2;
-        background-color: transparent;
-        color: #666;
-        margin-top: 0.25rem;
-    }
-
-    .square-image-container.mobile-active .image-hover-text {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    
-    /* Show text on tap for video-enabled images on mobile */
-    .square-image-container.has-video:active .image-hover-text {
-        opacity: 1;
-        transform: translateY(0);
+        display: none;
     }
 
     .social-links {
