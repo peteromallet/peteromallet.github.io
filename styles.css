@@ -1251,6 +1251,164 @@ body::before, body::after {
     padding: 2rem;
 }
 
+/* ======================== */
+/* Projects Section Styles  */
+/* ======================== */
+
+.projects-section-content {
+    max-width: 720px;
+    margin: 2rem auto 0 auto;
+    padding: 0 1rem;
+}
+
+.projects-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.project-entry {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: #444;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid rgba(200, 200, 220, 0.2);
+}
+
+.project-entry:last-child {
+    border-bottom: none;
+}
+
+.project-date {
+    color: #999;
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-right: 0.5rem;
+    white-space: nowrap;
+}
+
+.project-desc {
+    color: #444;
+}
+
+/* Project links (repo names) */
+.project-link {
+    color: #333 !important;
+    text-decoration: none !important;
+    border-bottom: 1.5px solid rgba(100, 100, 100, 0.4) !important;
+    transition: all 0.2s ease !important;
+    display: inline !important;
+    position: relative !important;
+    font-weight: 500;
+}
+
+.project-link::after {
+    display: none !important;
+}
+
+.project-link:hover {
+    color: #000 !important;
+    border-bottom-color: #333 !important;
+}
+
+/* Hover trigger words (show images) */
+.hover-trigger {
+    color: #333;
+    background: linear-gradient(to top, rgba(200, 180, 255, 0.25) 0%, rgba(200, 180, 255, 0.25) 40%, transparent 40%);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0 2px;
+    border-radius: 2px;
+}
+
+.hover-trigger:hover {
+    background: linear-gradient(to top, rgba(160, 130, 230, 0.35) 0%, rgba(160, 130, 230, 0.35) 40%, transparent 40%);
+    color: #111;
+}
+
+/* Combined link + hover trigger */
+a.hover-trigger {
+    text-decoration: none !important;
+    border-bottom: none !important;
+}
+
+/* Projects filter buttons */
+.projects-filter {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.2rem;
+}
+
+.projects-filter-btn {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.78rem;
+    padding: 0.3rem 0.8rem;
+    background: none;
+    border: 1px solid rgba(200, 200, 220, 0.4);
+    border-radius: 3px;
+    color: #888;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.projects-filter-btn:hover {
+    color: #374151;
+    border-color: rgba(150, 150, 170, 0.5);
+}
+
+.projects-filter-btn.active {
+    color: #111827;
+    font-weight: 600;
+    border-color: rgba(100, 100, 120, 0.5);
+    background-color: rgba(156, 163, 175, 0.08);
+}
+
+.project-entry.filtered-out {
+    display: none;
+}
+
+/* Floating hover image popup */
+.hover-image-popup {
+    position: fixed;
+    z-index: 10000;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    max-width: 380px;
+    border-radius: 6px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18), 0 2px 8px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    background: #fff;
+}
+
+.hover-image-popup.visible {
+    opacity: 1;
+}
+
+.hover-image-popup img {
+    width: 100%;
+    display: block;
+}
+
+/* Projects mobile styles */
+@media (max-width: 768px) {
+    .projects-section-content {
+        padding: 0 0.5rem;
+        margin-top: 1rem;
+    }
+
+    .project-entry {
+        font-size: 0.85rem;
+        line-height: 1.7;
+        padding: 0.5rem 0;
+    }
+
+    .hover-image-popup {
+        max-width: 280px;
+    }
+}
+
 /* Posts Post Page Styles */
 .posts-nav {
     display: flex;
