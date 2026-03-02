@@ -1551,18 +1551,47 @@ a.hover-trigger {
     font-size: 0.88rem;
     line-height: 1.65;
     color: #444;
-    border-bottom: 1px solid rgba(200, 200, 220, 0.2);
+    border-left: 3px solid #ccc;
+    border-radius: 6px;
+    background: rgba(200, 200, 220, 0.06);
+    padding: 0;
+    margin-bottom: 1rem;
+    transition: box-shadow 0.2s ease;
+}
+
+.commitment-entry:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.commitment-entry:nth-child(1) {
+    border-left-color: #6366f1;
+    background: rgba(99, 102, 241, 0.04);
+}
+
+.commitment-entry:nth-child(2) {
+    border-left-color: #10b981;
+    background: rgba(16, 185, 129, 0.04);
+}
+
+.commitment-entry:nth-child(3) {
+    border-left-color: #f59e0b;
+    background: rgba(245, 158, 11, 0.04);
+}
+
+.commitment-entry:nth-child(4) {
+    border-left-color: #ec4899;
+    background: rgba(236, 72, 153, 0.04);
 }
 
 .commitment-entry:last-child {
-    border-bottom: none;
+    margin-bottom: 0;
 }
 
 .commitment-entry summary {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.75rem 0;
+    padding: 0.85rem 1rem;
     cursor: pointer;
     list-style: none;
     gap: 0.75rem;
@@ -1590,8 +1619,8 @@ a.hover-trigger {
 }
 
 @keyframes commitmentHighlight {
-    0% { background-color: rgba(255, 255, 255, 0.08); }
-    100% { background-color: transparent; }
+    0%, 30% { box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.3); }
+    100% { box-shadow: none; }
 }
 
 .commitment-title {
@@ -1604,12 +1633,16 @@ a.hover-trigger {
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 0.75rem;
-    padding: 0.2rem 0.4rem;
+    font-size: 0.85rem;
+    padding: 0.2rem 0.5rem;
     margin-left: 0.5rem;
     opacity: 0;
     transition: opacity 0.2s;
     flex-shrink: 0;
+    overflow: visible;
+    line-height: 1;
+    min-width: 1.5em;
+    text-align: center;
 }
 
 .commitment-entry summary:hover .commitment-copy-link {
@@ -1643,10 +1676,14 @@ a.hover-trigger {
 }
 
 .commitment-details {
-    padding: 0 0 1rem 1.4rem;
+    padding: 0 1rem 1rem 1.8rem;
     color: #555;
     font-size: 0.85rem;
     line-height: 1.7;
+}
+
+.commitment-details p + p {
+    margin-top: 0.75rem;
 }
 
 .commitment-details a {

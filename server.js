@@ -554,7 +554,7 @@ const server = http.createServer((req, res) => {
                             <div class="commitment-dates">
                                 <span>Committed: March 2, 2026</span>
                             </div>
-                            <p>I created an open source project called <a href="https://github.com/peteromallet/desloppify" target="_blank">Desloppify</a>. Random crypto people created a token called DataClaw around it. While I didn't own any of this token, they gave me creator tokens \u2014 which earn a 0.05% fee on every trade via Pump.fun. I decided to put these fees to good use by donating all of them to <a href="https://arcagidan.com/" target="_blank">The Arca Gidan Art Prize</a>, an art competition run by Banodoco that pushes open-source AI models to their limits.</p>
+                            <p>I created an open source project called <a href="https://github.com/peteromallet/dataclaw" target="_blank">DataClaw</a>. Random crypto people created a token around it. While I didn't own any of this token, they gave me creator tokens \u2014 which earn a 0.05% fee on every trade via Pump.fun. I decided to put these fees to good use by donating all of them to <a href="https://arcagidan.com/" target="_blank">The Arca Gidan Art Prize</a>, an art competition run by Banodoco that pushes open-source AI models to their limits.</p>
                             <p>As of March 2, 2026, the wallet holds <strong>~752 SOL</strong> (~680 from DataClaw, ~72 from DESLOPPIFY tokens) across 126 Pump.fun creator fee claims. All DataClaw fees will be donated.</p>
                             <div class="commitment-onchain">
                                 <p><strong>Token mint:</strong> <code>Duxeg8HrG89Dq95oyiydrnFd8irZhjApGZu8PYrEpump</code></p>
