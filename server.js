@@ -466,6 +466,13 @@ const server = http.createServer((req, res) => {
     const aboutSectionRegex = /<div id="about-section" class="content-section">([\s\S]*?)<!-- Watering Can Animation -->/;
     html = html.replace(aboutSectionRegex, sectionContent + '\n\n        <!-- Watering Can Animation -->');
 
+    // Strip scripts that are only needed on the home page
+    html = html.replace(/<script src="\/plant-animation\.js"><\/script>/, '');
+    html = html.replace(/<script src="\/weights-chart\.js"><\/script>/, '');
+
+    // Strip the watering can / plant animation markup
+    html = html.replace(/<!-- Watering Can Animation -->\s*<div class="social-links">[\s\S]*?<div id="initialBud"><\/div>\s*<\/div>/, '');
+
     return html;
   }
 
