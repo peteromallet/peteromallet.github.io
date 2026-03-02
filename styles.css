@@ -1409,6 +1409,308 @@ a.hover-trigger {
     }
 }
 
+/* ========================== */
+/* Sorted Section        */
+/* ========================== */
+
+.sorted-section-content {
+    max-width: 720px;
+    margin: 2rem auto 0 auto;
+    padding: 0 1rem;
+}
+
+.sorted-directory {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.sorted-dir-link {
+    display: block;
+    padding: 1.75rem 2rem;
+    border: 1px solid rgba(200, 200, 220, 0.35);
+    border-radius: 6px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.sorted-dir-link:hover {
+    border-color: rgba(150, 150, 170, 0.5);
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+    transform: translateY(-1px);
+}
+
+.dir-name {
+    font-family: 'Space Mono', monospace;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #222;
+    display: block;
+    margin-bottom: 0.4rem;
+}
+
+.sorted-dir-link:hover .dir-name {
+    color: #000;
+}
+
+.dir-desc {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    color: #888;
+    display: block;
+    line-height: 1.5;
+}
+
+.sorted-dir-coming-soon {
+    opacity: 0.5;
+    cursor: default;
+    position: relative;
+}
+
+.sorted-dir-coming-soon:hover {
+    border-color: rgba(200, 200, 220, 0.35);
+    background: rgba(255, 255, 255, 0.5);
+    box-shadow: none;
+    transform: none;
+}
+
+.dir-arrow {
+    font-size: 0.85rem;
+    color: #bbb;
+    transition: all 0.2s ease;
+    float: right;
+    margin-top: -1.6rem;
+}
+
+.sorted-dir-link:hover .dir-arrow {
+    color: #666;
+    transform: translateX(3px);
+}
+
+.dir-coming-soon-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #92400e;
+    background-color: rgba(251, 191, 36, 0.15);
+    border: 1px solid rgba(251, 191, 36, 0.3);
+    border-radius: 3px;
+    padding: 0.1rem 0.45rem;
+    position: absolute;
+    top: 1rem;
+    right: 1.25rem;
+}
+
+.mute-list-note {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    line-height: 1.7;
+    color: #999;
+    margin-top: 0.75rem;
+    font-style: italic;
+}
+
+.sorted-breadcrumb {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.78rem;
+    color: #999;
+    margin-bottom: 1.2rem;
+}
+
+.sorted-breadcrumb a {
+    color: #777;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(150, 150, 150, 0.3);
+    transition: all 0.15s ease;
+}
+
+.sorted-breadcrumb a:hover {
+    color: #333;
+    border-bottom-color: #333;
+}
+
+.mute-list-intro {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.85rem;
+    line-height: 1.7;
+    color: #777;
+}
+
+.accountability-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.commitment-entry {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: #444;
+    border-bottom: 1px solid rgba(200, 200, 220, 0.2);
+}
+
+.commitment-entry:last-child {
+    border-bottom: none;
+}
+
+.commitment-entry summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    cursor: pointer;
+    list-style: none;
+    gap: 0.75rem;
+}
+
+.commitment-entry summary::-webkit-details-marker {
+    display: none;
+}
+
+.commitment-entry summary::before {
+    content: '\25B6';
+    font-size: 0.6rem;
+    color: #999;
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+    margin-right: 0.5rem;
+}
+
+.commitment-entry[open] summary::before {
+    transform: rotate(90deg);
+}
+
+.commitment-entry.highlight {
+    animation: commitmentHighlight 2s ease-out;
+}
+
+@keyframes commitmentHighlight {
+    0% { background-color: rgba(255, 255, 255, 0.08); }
+    100% { background-color: transparent; }
+}
+
+.commitment-title {
+    flex: 1;
+    font-weight: 500;
+    color: #333;
+}
+
+.commitment-copy-link {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.75rem;
+    padding: 0.2rem 0.4rem;
+    margin-left: 0.5rem;
+    opacity: 0;
+    transition: opacity 0.2s;
+    flex-shrink: 0;
+}
+
+.commitment-entry summary:hover .commitment-copy-link {
+    opacity: 0.6;
+}
+
+.commitment-copy-link:hover {
+    opacity: 1 !important;
+}
+
+.commitment-status {
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.status-in-progress {
+    color: #92400e;
+    background-color: rgba(251, 191, 36, 0.15);
+    border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+.status-completed {
+    color: #065f46;
+    background-color: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.commitment-details {
+    padding: 0 0 1rem 1.4rem;
+    color: #555;
+    font-size: 0.85rem;
+    line-height: 1.7;
+}
+
+.commitment-details a {
+    color: #333;
+    text-decoration: none;
+    border-bottom: 1.5px solid rgba(100, 100, 100, 0.4);
+    transition: all 0.2s ease;
+    font-weight: 500;
+}
+
+.commitment-details a:hover {
+    color: #000;
+    border-bottom-color: #333;
+}
+
+.commitment-dates {
+    color: #999;
+    font-size: 0.78rem;
+    margin-bottom: 0.5rem;
+}
+
+.commitment-onchain {
+    margin-top: 0.75rem;
+    padding: 0.75rem;
+    background: rgba(200, 200, 220, 0.08);
+    border: 1px solid rgba(200, 200, 220, 0.2);
+    border-radius: 4px;
+    font-size: 0.8rem;
+    line-height: 1.8;
+}
+
+.commitment-onchain code {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    background: rgba(200, 200, 220, 0.15);
+    padding: 0.1rem 0.3rem;
+    border-radius: 2px;
+    word-break: break-all;
+}
+
+/* Sorted mobile styles */
+@media (max-width: 768px) {
+    .sorted-section-content {
+        padding: 0 0.5rem;
+        margin-top: 1rem;
+    }
+
+    .sorted-dir-link {
+        padding: 1.25rem 1.25rem;
+    }
+
+    .commitment-entry {
+        font-size: 0.85rem;
+    }
+
+    .commitment-entry summary {
+        padding: 0.6rem 0;
+    }
+
+    .commitment-details {
+        padding-left: 1rem;
+    }
+}
+
 /* Posts Post Page Styles */
 .posts-nav {
     display: flex;

@@ -312,6 +312,29 @@ function renderMarkdownPost(slug, callback) {
 const server = http.createServer((req, res) => {
   console.log(`Request for ${req.url}`);
   
+  // Handle home page — strip loading-element from header so it doesn't replay on navigation
+  if (req.url === '/') {
+    fs.readFile('./index.html', (err, content) => {
+      if (err) {
+        res.writeHead(500, { 'Content-Type': 'text/html' });
+        res.end('Server error');
+        return;
+      }
+      let html = content.toString();
+      html = html.replace(
+        '<div class="large-letters loading-element" id="pom-letters">',
+        '<div class="large-letters" id="pom-letters">'
+      );
+      html = html.replace(
+        '<div class="section-toggle loading-element">',
+        '<div class="section-toggle">'
+      );
+      res.writeHead(200, { 'Content-Type': 'text/html' });
+      res.end(html, 'utf-8');
+    });
+    return;
+  }
+
   // Handle API routes
   if (req.url === '/api/posts') {
     const posts = getPostsPosts();
@@ -334,51 +357,16 @@ const server = http.createServer((req, res) => {
         res.writeHead(404, { 'Content-Type': 'text/html' });
         res.end('Page not found');
       } else {
-        // Create posts page by modifying the home page structure
-        let html = content.toString();
-
-        // Fix relative paths to absolute paths to prevent /posts/styles.css issues
-        html = html.replace(/href="styles\.css"/g, 'href="/styles.css"');
-        html = html.replace(/src="script\.js"/g, 'src="/script.js"');
-        html = html.replace(/src="plant-animation\.js"/g, 'src="/plant-animation.js"');
-        html = html.replace(/src="weights-chart\.js"/g, 'src="/weights-chart.js"');
-        html = html.replace(/href="favicon\.ico"/g, 'href="/favicon.ico"');
-        html = html.replace(/src="assets\//g, 'src="/assets/');
-
-        // Update the toggle to show Posts as active and link About back to home
-        html = html.replace(
-          '<span class="toggle-btn active">About</span>',
-          '<a href="/" class="toggle-btn">About</a>'
-        );
-        html = html.replace(
-          '<a href="/posts" class="toggle-btn">Posts</a>',
-          '<span class="toggle-btn active">Posts</span>'
-        );
-        
-        // Make POM letters clickable to link to home page
-        html = html.replace(
-          '<div class="large-letters loading-element" id="pom-letters">',
-          '<a href="/" class="large-letters loading-element" id="pom-letters">'
-        );
-        html = html.replace(
-          '</div>\n\n            <!-- About/Writing Toggle -->',
-          '</a>\n\n            <!-- About/Writing Toggle -->'
-        );
-        
-        // Replace everything from about section to watering can with posts content
-        const aboutSectionRegex = /<div id="about-section" class="content-section">([\s\S]*?)<!-- Watering Can Animation -->/;
-        const postsContent = `<div id="posts-section" class="content-section">
+        const postsSection = `<div id="posts-section" class="content-section">
             <!-- Posts Content -->
             <div class="posts-section-content">
                 <div class="posts-list loading-element">
                     <!-- Posts will be loaded here -->
                 </div>
             </div>
-        </div> <!-- End Posts Section -->
+        </div> <!-- End Posts Section -->`;
 
-        <!-- Watering Can Animation -->`;
-        
-        html = html.replace(aboutSectionRegex, postsContent);
+        let html = prepareSubpageShell(content.toString(), postsSection, 'posts');
 
         // Add script to load posts
         const scriptToAdd = `
@@ -416,9 +404,9 @@ const server = http.createServer((req, res) => {
         // Load posts when page loads
         loadPostsPosts();
     </script>`;
-        
+
         html = html.replace('</body>', scriptToAdd + '</body>');
-        
+
         res.writeHead(200, { 'Content-Type': 'text/html' });
         res.end(html, 'utf-8');
       }
@@ -426,53 +414,184 @@ const server = http.createServer((req, res) => {
     return;
   }
   
-  // Redirect /projects/ to /projects for consistency
-  if (req.url === '/projects/') {
-    res.writeHead(301, { 'Location': '/projects' });
+  // Redirect old /projects URLs to new location
+  if (req.url === '/projects' || req.url === '/projects/') {
+    res.writeHead(301, { 'Location': '/assorted/projects' });
     res.end();
     return;
   }
 
-  // Handle projects page
-  if (req.url === '/projects') {
+  // Helper: prepare sub-page shell (shared by sorted pages, posts, etc.)
+  function prepareSubpageShell(html, sectionContent, activeTab) {
+    // Fix relative paths
+    html = html.replace(/href="styles\.css"/g, 'href="/styles.css"');
+    html = html.replace(/src="script\.js"/g, 'src="/script.js"');
+    html = html.replace(/src="plant-animation\.js"/g, 'src="/plant-animation.js"');
+    html = html.replace(/src="weights-chart\.js"/g, 'src="/weights-chart.js"');
+    html = html.replace(/href="favicon\.ico"/g, 'href="/favicon.ico"');
+    html = html.replace(/src="assets\//g, 'src="/assets/');
+
+    // Remove loading-element from header so it doesn't replay animations
+    html = html.replace(
+      '<div class="large-letters loading-element" id="pom-letters">',
+      '<a href="/" class="large-letters" id="pom-letters">'
+    );
+    html = html.replace(
+      '</div>\n\n            <!-- About/Writing Toggle -->',
+      '</a>\n\n            <!-- About/Writing Toggle -->'
+    );
+    html = html.replace(
+      '<div class="section-toggle loading-element">',
+      '<div class="section-toggle">'
+    );
+
+    // Update toggle to show active tab
+    html = html.replace(
+      '<span class="toggle-btn active">About</span>',
+      '<a href="/" class="toggle-btn">About</a>'
+    );
+    if (activeTab === 'sorted') {
+      html = html.replace(
+        '<a href="/assorted" class="toggle-btn">Assorted</a>',
+        '<span class="toggle-btn active">Assorted</span>'
+      );
+    } else if (activeTab === 'posts') {
+      html = html.replace(
+        '<a href="/posts" class="toggle-btn">Posts</a>',
+        '<span class="toggle-btn active">Posts</span>'
+      );
+    }
+
+    // Replace about section with provided content
+    const aboutSectionRegex = /<div id="about-section" class="content-section">([\s\S]*?)<!-- Watering Can Animation -->/;
+    html = html.replace(aboutSectionRegex, sectionContent + '\n\n        <!-- Watering Can Animation -->');
+
+    return html;
+  }
+
+  // Redirect old /housekeeping and /sorted URLs to /assorted
+  if (req.url.startsWith('/housekeeping')) {
+    res.writeHead(301, { 'Location': req.url.replace('/housekeeping', '/assorted') });
+    res.end();
+    return;
+  }
+  if (req.url.startsWith('/sorted')) {
+    res.writeHead(301, { 'Location': req.url.replace('/sorted', '/assorted') });
+    res.end();
+    return;
+  }
+
+  // Redirect trailing slashes for sorted routes
+  if (req.url === '/assorted/' || req.url === '/assorted/accountability/' || req.url === '/assorted/mute-list/' || req.url === '/assorted/projects/') {
+    res.writeHead(301, { 'Location': req.url.replace(/\/$/, '') });
+    res.end();
+    return;
+  }
+
+  // Handle sorted pages
+  if (req.url === '/assorted' || req.url === '/assorted/accountability' || req.url === '/assorted/mute-list' || req.url === '/assorted/projects') {
     fs.readFile('./index.html', (err, content) => {
       if (err) {
         res.writeHead(404, { 'Content-Type': 'text/html' });
         res.end('Page not found');
-      } else {
-        let html = content.toString();
+        return;
+      }
 
-        // Fix relative paths
-        html = html.replace(/href="styles\.css"/g, 'href="/styles.css"');
-        html = html.replace(/src="script\.js"/g, 'src="/script.js"');
-        html = html.replace(/src="plant-animation\.js"/g, 'src="/plant-animation.js"');
-        html = html.replace(/src="weights-chart\.js"/g, 'src="/weights-chart.js"');
-        html = html.replace(/href="favicon\.ico"/g, 'href="/favicon.ico"');
-        html = html.replace(/src="assets\//g, 'src="/assets/');
+      let html = content.toString();
+      let sectionContent;
 
-        // Update toggle to show Projects as active
-        html = html.replace(
-          '<span class="toggle-btn active">About</span>',
-          '<a href="/" class="toggle-btn">About</a>'
-        );
-        html = html.replace(
-          '<a href="/projects" class="toggle-btn">Projects</a>',
-          '<span class="toggle-btn active">Projects</span>'
-        );
+      if (req.url === '/assorted') {
+        // Index page — directory of sub-pages
+        sectionContent = `<div id="sorted-section" class="content-section">
+            <div class="sorted-section-content">
+                <div class="sorted-directory">
+                    <a href="/assorted/projects" class="sorted-dir-link">
+                        <span class="dir-name">Projects</span>
+                        <span class="dir-desc">Things I've built and am building</span>
+                        <span class="dir-arrow">\u2192</span>
+                    </a>
+                    <a href="/assorted/accountability" class="sorted-dir-link">
+                        <span class="dir-name">Accountability</span>
+                        <span class="dir-desc">Public commitments and follow-through</span>
+                        <span class="dir-arrow">\u2192</span>
+                    </a>
+                    <a href="/assorted/mute-list" class="sorted-dir-link">
+                        <span class="dir-name">Mute list</span>
+                        <span class="dir-desc">People and topics I'm currently ignoring</span>
+                        <span class="dir-arrow">\u2192</span>
+                    </a>
+                    <div class="sorted-dir-link sorted-dir-coming-soon">
+                        <span class="dir-coming-soon-tag">Coming soon</span>
+                        <span class="dir-name">Feedback</span>
+                        <span class="dir-desc">I'm going to allow public feedback from anyone on this website</span>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- End Sorted Section -->`;
 
-        // Make POM letters clickable
-        html = html.replace(
-          '<div class="large-letters loading-element" id="pom-letters">',
-          '<a href="/" class="large-letters loading-element" id="pom-letters">'
-        );
-        html = html.replace(
-          '</div>\n\n            <!-- About/Writing Toggle -->',
-          '</a>\n\n            <!-- About/Writing Toggle -->'
-        );
+      } else if (req.url === '/assorted/accountability') {
+        sectionContent = `<div id="sorted-section" class="content-section">
+            <div class="sorted-section-content">
+                <div class="sorted-breadcrumb">
+                    <a href="/assorted">Assorted</a> / Accountability
+                </div>
+                <div class="accountability-list">
 
-        // Replace about section with projects content
-        const aboutSectionRegex = /<div id="about-section" class="content-section">([\s\S]*?)<!-- Watering Can Animation -->/;
-        const projectsContent = `<div id="projects-section" class="content-section">
+                    <details id="dataclaw" class="commitment-entry">
+                        <summary>
+                            <span class="commitment-title">Donate all DataClaw creator fees to The Arca Gidan Art Prize</span>
+                            <span class="commitment-status status-in-progress">In Progress</span>
+                            <button class="commitment-copy-link" title="Copy link" onclick="event.preventDefault(); navigator.clipboard.writeText(window.location.origin + '/assorted/accountability#dataclaw').then(() => { this.textContent = 'Copied!'; setTimeout(() => this.textContent = '\\u{1F517}', 1500); });">&#x1F517;</button>
+                        </summary>
+                        <div class="commitment-details">
+                            <div class="commitment-dates">
+                                <span>Committed: March 2, 2026</span>
+                            </div>
+                            <p>I created an open source project called <a href="https://github.com/peteromallet/desloppify" target="_blank">Desloppify</a>. Random crypto people created a token called DataClaw around it. While I didn't own any of this token, they gave me creator tokens \u2014 which earn a 0.05% fee on every trade via Pump.fun. I decided to put these fees to good use by donating all of them to <a href="https://arcagidan.com/" target="_blank">The Arca Gidan Art Prize</a>, an art competition run by Banodoco that pushes open-source AI models to their limits.</p>
+                            <p>As of March 2, 2026, the wallet holds <strong>~752 SOL</strong> (~680 from DataClaw, ~72 from DESLOPPIFY tokens) across 126 Pump.fun creator fee claims. All DataClaw fees will be donated.</p>
+                            <div class="commitment-onchain">
+                                <p><strong>Token mint:</strong> <code>Duxeg8HrG89Dq95oyiydrnFd8irZhjApGZu8PYrEpump</code></p>
+                                <p><strong>Creator wallet:</strong> <code>3xDeFXgK1nikzqdQUp2WdofbvqziteUoZf6MdX8CvgDu</code></p>
+                                <p><strong>Fee mechanism:</strong> 0.05% creator fee on every PumpSwap trade, auto-claimed to the wallet above. Full breakdown in the <a href="https://github.com/peteromallet/peteromallet.github.io/blob/main/random_docs/solana-wallet-analysis.md" target="_blank">wallet analysis</a>.</p>
+                            </div>
+                        </div>
+                    </details>
+
+                </div>
+                <script>
+                    if (window.location.hash) {
+                        const el = document.querySelector(window.location.hash);
+                        if (el && el.tagName === 'DETAILS') {
+                            el.open = true;
+                            el.scrollIntoView({ behavior: 'smooth' });
+                            el.classList.add('highlight');
+                            setTimeout(() => el.classList.remove('highlight'), 2000);
+                        }
+                    }
+                </script>
+            </div>
+        </div> <!-- End Sorted Section -->`;
+
+      } else if (req.url === '/assorted/mute-list') {
+        sectionContent = `<div id="sorted-section" class="content-section">
+            <div class="sorted-section-content">
+                <div class="sorted-breadcrumb">
+                    <a href="/assorted">Assorted</a> / Mute list
+                </div>
+                <div class="mute-list">
+                    <p class="mute-list-intro">People and topics I'm currently muting or ignoring. Nothing personal \u2014 just managing attention.</p>
+                    <p class="mute-list-note">A lot of these have been done automatically by AI. Please DM me if you want to be removed \u2014 I will remove anyone, no questions asked. I'm going to automate this soon.</p>
+                </div>
+            </div>
+        </div> <!-- End Sorted Section -->`;
+
+      } else if (req.url === '/assorted/projects') {
+        sectionContent = `<div id="sorted-section" class="content-section">
+            <div class="sorted-section-content">
+                <div class="sorted-breadcrumb">
+                    <a href="/assorted">Assorted</a> / Projects
+                </div>
+            </div>
             <div class="projects-section-content">
                 <div class="projects-filter">
                     <button class="projects-filter-btn active" data-filter="all">All</button>
@@ -493,6 +612,11 @@ const server = http.createServer((req, res) => {
                     <div class="project-entry" data-ongoing="true">
                         <span class="project-date">Jan 2026\u2013now</span>
                         <span class="project-desc">I've become too agent-brained to use interfaces that abstract away code, so I built <a href="https://github.com/peteromallet/VibeComfy" target="_blank" class="project-link">VibeComfy</a> to bridge Claude Code and ComfyUI via MCP. You talk, Claude manipulates the workflow.</span>
+                    </div>
+
+                    <div class="project-entry" data-ongoing="true">
+                        <span class="project-date">Nov 2025\u2013now</span>
+                        <span class="project-desc">I'm building <a href="https://reigh.art/" target="_blank" class="project-link">Reigh</a> \u2014 an art tool that unleashes the technical potential of the open source AI art space. Naturally, it's <a href="https://github.com/banodoco/reigh" target="_blank" class="project-link">open source</a>.</span>
                     </div>
 
                     <div class="project-entry" data-ongoing="true">
@@ -562,17 +686,16 @@ const server = http.createServer((req, res) => {
 
                 </div>
             </div>
-        </div> <!-- End Projects Section -->
+        </div> <!-- End Sorted Section -->`;
+      }
 
-        <!-- Watering Can Animation -->`;
+      html = prepareSubpageShell(html, sectionContent, 'sorted');
 
-        html = html.replace(aboutSectionRegex, projectsContent);
-
-        // Add hover interaction script
+      // Add projects hover script if on projects page
+      if (req.url === '/assorted/projects') {
         const projectsScript = `
     <script>
         (function() {
-            // Create hover popup element
             var popup = document.createElement('div');
             popup.className = 'hover-image-popup';
             popup.innerHTML = '<img src="" alt="">';
@@ -580,7 +703,6 @@ const server = http.createServer((req, res) => {
             var popupImg = popup.querySelector('img');
             var currentTrigger = null;
 
-            // Filter functionality
             document.querySelectorAll('.projects-filter-btn').forEach(function(btn) {
                 btn.addEventListener('click', function() {
                     document.querySelectorAll('.projects-filter-btn').forEach(function(b) { b.classList.remove('active'); });
@@ -596,87 +718,50 @@ const server = http.createServer((req, res) => {
                 });
             });
 
-            // Preload all hover images
             document.querySelectorAll('.hover-trigger, .hover-trigger-plain').forEach(function(trigger) {
                 var imgSrc = trigger.dataset.img;
-                if (imgSrc) {
-                    var preload = new Image();
-                    preload.src = imgSrc;
-                }
+                if (imgSrc) { var preload = new Image(); preload.src = imgSrc; }
             });
 
-            // Desktop hover behavior
             document.querySelectorAll('.hover-trigger, .hover-trigger-plain').forEach(function(trigger) {
                 var imgSrc = trigger.dataset.img;
                 if (!imgSrc) return;
-
-                trigger.addEventListener('mouseenter', function() {
-                    popupImg.src = imgSrc;
-                    popup.classList.add('visible');
-                    currentTrigger = trigger;
-                });
-
-                trigger.addEventListener('mouseleave', function() {
-                    popup.classList.remove('visible');
-                    currentTrigger = null;
-                });
-
+                trigger.addEventListener('mouseenter', function() { popupImg.src = imgSrc; popup.classList.add('visible'); currentTrigger = trigger; });
+                trigger.addEventListener('mouseleave', function() { popup.classList.remove('visible'); currentTrigger = null; });
                 trigger.addEventListener('mousemove', function(e) {
                     var popupRect = popup.getBoundingClientRect();
                     var popupW = popupRect.width || 400;
                     var popupH = popupRect.height || 300;
-
                     var x = e.clientX + 20;
                     var y = e.clientY - popupH / 2;
-
-                    // Keep on screen
-                    if (x + popupW > window.innerWidth - 20) {
-                        x = e.clientX - popupW - 20;
-                    }
+                    if (x + popupW > window.innerWidth - 20) { x = e.clientX - popupW - 20; }
                     y = Math.max(20, Math.min(y, window.innerHeight - popupH - 20));
-
                     popup.style.left = x + 'px';
                     popup.style.top = y + 'px';
                 });
             });
 
-            // Mobile: tap to toggle
             if ('ontouchstart' in window) {
                 document.querySelectorAll('.hover-trigger, .hover-trigger-plain').forEach(function(trigger) {
                     trigger.addEventListener('touchstart', function(e) {
                         var imgSrc = trigger.dataset.img;
                         if (!imgSrc) return;
-
-                        if (currentTrigger === trigger && popup.classList.contains('visible')) {
-                            popup.classList.remove('visible');
-                            currentTrigger = null;
-                        } else {
-                            popupImg.src = imgSrc;
-                            var rect = trigger.getBoundingClientRect();
-                            popup.style.left = Math.min(rect.left, window.innerWidth - 320) + 'px';
-                            popup.style.top = (rect.bottom + 10) + 'px';
-                            popup.classList.add('visible');
-                            currentTrigger = trigger;
-                        }
+                        if (currentTrigger === trigger && popup.classList.contains('visible')) { popup.classList.remove('visible'); currentTrigger = null; }
+                        else { popupImg.src = imgSrc; var rect = trigger.getBoundingClientRect(); popup.style.left = Math.min(rect.left, window.innerWidth - 320) + 'px'; popup.style.top = (rect.bottom + 10) + 'px'; popup.classList.add('visible'); currentTrigger = trigger; }
                         e.preventDefault();
                     });
                 });
-
                 document.addEventListener('touchstart', function(e) {
-                    if (!e.target.closest('.hover-trigger') && !e.target.closest('.hover-trigger-plain') && !e.target.closest('.hover-image-popup')) {
-                        popup.classList.remove('visible');
-                        currentTrigger = null;
-                    }
+                    if (!e.target.closest('.hover-trigger') && !e.target.closest('.hover-trigger-plain') && !e.target.closest('.hover-image-popup')) { popup.classList.remove('visible'); currentTrigger = null; }
                 });
             }
         })();
     </script>`;
-
         html = html.replace('</body>', projectsScript + '</body>');
-
-        res.writeHead(200, { 'Content-Type': 'text/html' });
-        res.end(html, 'utf-8');
       }
+
+      res.writeHead(200, { 'Content-Type': 'text/html' });
+      res.end(html, 'utf-8');
     });
     return;
   }
