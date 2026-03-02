@@ -54,6 +54,12 @@ function parseFrontmatter(content) {
 
 // Function to validate if a post has valid title and date
 function isValidPost(content, metadata, filePath) {
+  // Skip drafts
+  if (metadata.draft === 'true') {
+    console.log(`Post skipped: draft post ${filePath}`);
+    return false;
+  }
+
   // Check for valid title - must start with # heading and have non-empty content
   const titleMatch = content.match(/^#\s+(.+)/m);
   if (!titleMatch || !titleMatch[1] || titleMatch[1].trim().length === 0) {
@@ -134,18 +140,26 @@ function getPostsPosts() {
       // Remove the first # heading from content for excerpt extraction
       const contentWithoutTitle = content.replace(/^#\s+.+$/m, '').trim();
       
-      // Extract excerpt from first paragraph
-      const paragraphMatch = contentWithoutTitle.match(/^([^#\n].+?)(?:\n\n|$)/);
-      let excerpt = paragraphMatch ? paragraphMatch[1] : '';
-      
+      // Extract excerpt from first text paragraph (skip HTML tags and blank lines)
+      const lines = contentWithoutTitle.split('\n');
+      let excerpt = '';
+      for (const line of lines) {
+        const trimmed = line.trim();
+        // Skip empty lines, headings, and lines that start with HTML tags
+        if (!trimmed || trimmed.startsWith('#') || trimmed.startsWith('<')) continue;
+        excerpt = trimmed;
+        break;
+      }
+
       // Remove hyperlinks [text](url) -> text
       excerpt = excerpt.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1');
       
       // Limit to one line and very short length
-      excerpt = excerpt.split('\n')[0].substring(0, 30);
-      
+      const fullExcerpt = excerpt.split('\n')[0];
+      excerpt = fullExcerpt.substring(0, 30);
+
       // Add ellipsis if truncated
-      if (excerpt.length === 30 && paragraphMatch && paragraphMatch[1].length > 30) {
+      if (excerpt.length === 30 && fullExcerpt.length > 30) {
         excerpt += '...';
       }
       
