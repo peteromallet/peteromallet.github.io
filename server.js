@@ -546,7 +546,7 @@ const server = http.createServer((req, res) => {
 
                     <details id="dataclaw" class="commitment-entry">
                         <summary>
-                            <span class="commitment-title">Donate all DataClaw creator fees to The Arca Gidan Art Prize</span>
+                            <span class="commitment-title">Donate all $DataClaw creator fees to The Arca Gidan Art Prize</span>
                             <span class="commitment-status status-in-progress">In Progress</span>
                             <button class="commitment-copy-link" title="Copy link" onclick="event.preventDefault(); navigator.clipboard.writeText(window.location.origin + '/assorted/accountability#dataclaw').then(() => { this.textContent = 'Copied!'; setTimeout(() => this.textContent = '\\u{1F517}', 1500); });">&#x1F517;</button>
                         </summary>
@@ -555,9 +555,9 @@ const server = http.createServer((req, res) => {
                                 <span>Committed: March 2, 2026</span>
                             </div>
                             <p>I created an open source project called <a href="https://github.com/peteromallet/dataclaw" target="_blank">DataClaw</a>. Random crypto people created a token around it. While I didn't own any of this token, they gave me creator tokens \u2014 which earn a 0.05% fee on every trade via Pump.fun. I decided to put these fees to good use by donating all of them to <a href="https://arcagidan.com/" target="_blank">The Arca Gidan Art Prize</a>, an art competition run by Banodoco that pushes open-source AI models to their limits.</p>
-                            <p>As of March 2, 2026, the wallet holds <strong>~752 SOL</strong> (~680 from DataClaw, ~72 from DESLOPPIFY tokens) across 126 Pump.fun creator fee claims. All DataClaw fees will be donated.</p>
+                            <p>As of March 2, 2026, the wallet holds <strong>~752 SOL</strong> (~680 from $DataClaw, ~72 from $DESLOPPIFY tokens) across 126 Pump.fun creator fee claims. All $DataClaw fees will be donated.</p>
                             <div class="commitment-onchain">
-                                <p><strong>Token mint:</strong> <code>Duxeg8HrG89Dq95oyiydrnFd8irZhjApGZu8PYrEpump</code></p>
+                                <p><strong>DataClaw CA:</strong> <code>Duxeg8HrG89Dq95oyiydrnFd8irZhjApGZu8PYrEpump</code></p>
                                 <p><strong>Creator wallet:</strong> <code>3xDeFXgK1nikzqdQUp2WdofbvqziteUoZf6MdX8CvgDu</code></p>
                                 <p><strong>Fee mechanism:</strong> 0.05% creator fee on every PumpSwap trade, auto-claimed to the wallet above. Full breakdown in the <a href="https://github.com/peteromallet/peteromallet.github.io/blob/main/random_docs/solana-wallet-analysis.md" target="_blank">wallet analysis</a>.</p>
                             </div>
@@ -566,7 +566,7 @@ const server = http.createServer((req, res) => {
 
                     <details id="desloppify" class="commitment-entry">
                         <summary>
-                            <span class="commitment-title">Donate all DESLOPPIFY creator fees to code quality bounties</span>
+                            <span class="commitment-title">Donate all $DESLOPPIFY creator fees to code quality bounties</span>
                             <span class="commitment-status status-in-progress">In Progress</span>
                             <button class="commitment-copy-link" title="Copy link" onclick="event.preventDefault(); navigator.clipboard.writeText(window.location.origin + '/assorted/accountability#desloppify').then(() => { this.textContent = 'Copied!'; setTimeout(() => this.textContent = '\\u{1F517}', 1500); });">&#x1F517;</button>
                         </summary>
@@ -574,13 +574,33 @@ const server = http.createServer((req, res) => {
                             <div class="commitment-dates">
                                 <span>Committed: March 3, 2026</span>
                             </div>
-                            <p>Two DESLOPPIFY tokens also generate Pump.fun creator fees to the same wallet. I'm donating all of these fees to bounties for people who discover issues with code that <a href="https://github.com/peteromallet/desloppify" target="_blank">Desloppify</a> has approved \u2014 putting the tool's own money where its mouth is.</p>
-                            <p>As of March 2, 2026, approximately <strong>~72 SOL</strong> (~28 from DESLOPPIFY #2, ~44 from DESLOPPIFY #3) of the wallet's 752 SOL came from DESLOPPIFY trading volume. Bounties will be announced via <a href="https://github.com/peteromallet/desloppify/issues" target="_blank">Desloppify GitHub Issues</a>.</p>
+                            <p>Two $DESLOPPIFY tokens also generate Pump.fun creator fees to the same wallet. I'm donating all of these fees to bounties for people who discover issues with code that <a href="https://github.com/peteromallet/desloppify" target="_blank">Desloppify</a> has approved \u2014 putting the tool's own money where its mouth is.</p>
+                            <p>As of March 2, 2026, approximately <strong>~72 SOL</strong> (~28 from $DESLOPPIFY #2, ~44 from $DESLOPPIFY #3) of the wallet's 752 SOL came from DESLOPPIFY trading volume. Bounties will be announced via <a href="https://github.com/peteromallet/desloppify/issues" target="_blank">Desloppify GitHub Issues</a>.</p>
                             <div class="commitment-onchain">
-                                <p><strong>DESLOPPIFY #2 mint:</strong> <code>2XZyVjE6r5p84wL8CqHKFXH2v9iTd21cBRsoPpCJpump</code></p>
-                                <p><strong>DESLOPPIFY #3 mint:</strong> <code>6mjs2797K62H8vXWUkYikdkNiP3zsfmybC9Zq6z4pump</code></p>
+                                <p><strong>DESLOPPIFY #2 CA:</strong> <code>2XZyVjE6r5p84wL8CqHKFXH2v9iTd21cBRsoPpCJpump</code></p>
+                                <p><strong>DESLOPPIFY #3 CA:</strong> <code>6mjs2797K62H8vXWUkYikdkNiP3zsfmybC9Zq6z4pump</code></p>
                                 <p><strong>Creator wallet:</strong> <code>3xDeFXgK1nikzqdQUp2WdofbvqziteUoZf6MdX8CvgDu</code></p>
-                                <p><strong>Fee mechanism:</strong> Same 0.05% creator fee as DataClaw, same wallet. Full breakdown in the <a href="https://github.com/peteromallet/peteromallet.github.io/blob/main/random_docs/solana-wallet-analysis.md" target="_blank">wallet analysis</a>.</p>
+                                <p><strong>Fee mechanism:</strong> Same 0.05% creator fee as $DataClaw, same wallet. Full breakdown in the <a href="https://github.com/peteromallet/peteromallet.github.io/blob/main/random_docs/solana-wallet-analysis.md" target="_blank">wallet analysis</a>.</p>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details id="tokens" class="commitment-entry">
+                        <summary>
+                            <span class="commitment-title">Sell all gifted $DESLOPPIFY tokens to fund open source AI work</span>
+                            <span class="commitment-status status-in-progress">In Progress</span>
+                            <button class="commitment-copy-link" title="Copy link" onclick="event.preventDefault(); navigator.clipboard.writeText(window.location.origin + '/assorted/accountability#tokens').then(() => { this.textContent = 'Copied!'; setTimeout(() => this.textContent = '\\u{1F517}', 1500); });">&#x1F517;</button>
+                        </summary>
+                        <div class="commitment-details">
+                            <div class="commitment-dates">
+                                <span>Committed: March 3, 2026</span>
+                            </div>
+                            <p>People have sent me $DESLOPPIFY tokens. I'm going to sell these slowly, responsibly, and with pre-announcement to buy LLM tokens, compute, and possibly hardware. Transparently, this will first fund my AI development, but will be extended to others who work on open source projects if funds allow. My goal is that all data will be released via <a href="https://github.com/peteromallet/dataclaw" target="_blank">DataClaw</a>, all code will be open source, and all work will be dedicated towards improving the open source ecosystem and tooling. For transparency, all invoices and token sales will be published.</p>
+
+                            <div class="commitment-onchain">
+                                <p><strong>Wallet:</strong> <code>3xDeFXgK1nikzqdQUp2WdofbvqziteUoZf6MdX8CvgDu</code></p>
+                                <p><strong>DESLOPPIFY #3 CA:</strong> <code>6mjs2797K62H8vXWUkYikdkNiP3zsfmybC9Zq6z4pump</code></p>
+                                <p><strong>DESLOPPIFY #3 held:</strong> 71,200,000 tokens (~$6,644)</p>
                             </div>
                         </div>
                     </details>

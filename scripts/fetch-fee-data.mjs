@@ -85,10 +85,37 @@ async function main() {
   console.log(`  DESLOPPIFY all: ~${dsSOL} SOL (${dsPct}%)`);
 
   console.log(`\nFor website:`);
-  console.log(`  As of ${today.replace(/(\d{4})-(\d{2})-(\d{2})/, (_, y, m, d) => {
+  const dateStr = today.replace(/(\d{4})-(\d{2})-(\d{2})/, (_, y, m, d) => {
     const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
     return `${months[parseInt(m)-1]} ${parseInt(d)}, ${y}`;
-  })}, the wallet holds ~${Math.round(solBalance)} SOL (~${dcSOL} from DataClaw, ~${dsSOL} from DESLOPPIFY tokens) across ${txCount} Pump.fun creator fee claims.`);
+  });
+  console.log(`  As of ${dateStr}, the wallet holds ~${Math.round(solBalance)} SOL (~${dcSOL} from DataClaw, ~${dsSOL} from DESLOPPIFY tokens) across ${txCount} Pump.fun creator fee claims.`);
+
+  // 4. Token holdings (Token-2022)
+  await new Promise(r => setTimeout(r, 1500));
+  const t22 = await rpc('getTokenAccountsByOwner', [
+    CREATOR_WALLET,
+    { programId: 'TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb' },
+    { encoding: 'jsonParsed' },
+  ]);
+
+  const TOKEN_NAMES = {
+    'Duxeg8HrG89Dq95oyiydrnFd8irZhjApGZu8PYrEpump': 'DataClaw',
+    '6mjs2797K62H8vXWUkYikdkNiP3zsfmybC9Zq6z4pump': 'DESLOPPIFY #3',
+    '2XZyVjE6r5p84wL8CqHKFXH2v9iTd21cBRsoPpCJpump': 'DESLOPPIFY #2',
+  };
+
+  const holdings = t22.value
+    .map(a => ({ mint: a.account.data.parsed.info.mint, amount: a.account.data.parsed.info.tokenAmount.uiAmount }))
+    .filter(h => h.amount > 0);
+
+  if (holdings.length > 0) {
+    console.log(`\nToken holdings:`);
+    for (const h of holdings) {
+      const name = TOKEN_NAMES[h.mint] || h.mint.slice(0, 10) + '...';
+      console.log(`  ${name.padEnd(16)} ${h.amount.toLocaleString()} tokens`);
+    }
+  }
 }
 
 main().catch(e => { console.error(e); process.exit(1); });
