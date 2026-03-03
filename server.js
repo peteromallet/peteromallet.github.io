@@ -497,7 +497,7 @@ const server = http.createServer((req, res) => {
   }
 
   // Handle sorted pages
-  if (req.url === '/assorted' || req.url === '/assorted/accountability' || req.url === '/assorted/mute-list' || req.url === '/assorted/projects' || req.url === '/assorted/crypto-conversations' || req.url.match(/^\/assorted\/crypto-conversations\/\d+$/)) {
+  if (req.url === '/assorted' || req.url === '/assorted/accountability' || req.url === '/assorted/mute-list' || req.url === '/assorted/projects' || req.url === '/assorted/crypto-conversations' || req.url.match(/^\/assorted\/crypto-conversations\/[a-zA-Z0-9_]+$/)) {
     fs.readFile('./index.html', (err, content) => {
       if (err) {
         res.writeHead(404, { 'Content-Type': 'text/html' });
