@@ -1676,7 +1676,8 @@ a.hover-trigger {
 }
 
 .commitment-details {
-    padding: 0 1rem 1rem 1.8rem;
+    padding: 1rem 1rem 1rem 1.8rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
     color: #555;
     font-size: 0.85rem;
     line-height: 1.7;
@@ -1684,6 +1685,29 @@ a.hover-trigger {
 
 .commitment-details p + p {
     margin-top: 0.75rem;
+}
+
+.commitment-bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.commitment-bullets li {
+    padding: 0.4rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    line-height: 1.5;
+}
+
+.commitment-bullets li:last-child {
+    border-bottom: none;
+}
+
+.commitment-conversions-note {
+    font-size: 0.75rem;
+    color: #888;
+    margin-top: 0.75rem;
+    font-style: italic;
 }
 
 .commitment-details a {
