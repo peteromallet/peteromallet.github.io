@@ -655,8 +655,9 @@ const server = http.createServer((req, res) => {
 
                     <div class="conversation-list">
                         <a href="/assorted/crypto-conversations/quanatee" class="conversation-link">
-                            <span class="conversation-date">March 2\u20133, 2026</span>
+                            <span class="conversation-username">@quanatee</span>
                             <span class="conversation-title">Quanatee explains liquidity pools & LP positions</span>
+                            <span class="conversation-date">March 2\u20133, 2026</span>
                             <span class="dir-arrow">\u2192</span>
                         </a>
                     </div>

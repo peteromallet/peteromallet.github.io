@@ -1576,13 +1576,28 @@ a.hover-trigger {
     background: rgba(139, 92, 246, 0.08);
 }
 
+.conversation-link .conversation-username {
+    font-weight: 600;
+    color: #8b5cf6;
+    white-space: nowrap;
+}
+
 .conversation-link .conversation-title {
     flex: 1;
     font-weight: 500;
 }
 
+.conversation-link .conversation-date {
+    font-size: 0.75rem;
+    color: #888;
+    white-space: nowrap;
+}
+
 .conversation-link .dir-arrow {
     color: #8b5cf6;
+    align-self: center;
+    float: none;
+    margin-top: 0;
 }
 
 /* Chat page — individual conversation */
