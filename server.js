@@ -629,6 +629,28 @@ const server = http.createServer((req, res) => {
                         </div>
                     </details>
 
+                    <details id="pisscoin" class="commitment-entry">
+                        <summary>
+                            <span class="commitment-title">Hold $PISSCOIN until the day I die</span>
+                            <span class="commitment-status status-in-progress">In Progress</span>
+                            <button class="commitment-copy-link" title="Copy link" onclick="event.preventDefault(); navigator.clipboard.writeText(window.location.origin + '/assorted/accountability#pisscoin').then(() => { this.textContent = 'Copied!'; setTimeout(() => this.textContent = '\\u{1F517}', 1500); });">&#x1F517;</button>
+                        </summary>
+                        <div class="commitment-details">
+                            <div class="commitment-dates">
+                                <span>Committed: March 5, 2026</span>
+                            </div>
+                            <ul class="commitment-bullets">
+                                <li><strong>What:</strong> I hold 5,778,223.76 $PISSCOIN tokens.</li>
+                                <li><strong>Commitment:</strong> I will never sell these. I will hold $PISSCOIN until the day I die and leave it in my will to my favourite grandchild.</li>
+                            </ul>
+                            <div class="commitment-onchain">
+                                <p><strong>PISSCOIN CA:</strong> <code>7qdVkvsMEGg1D8H9YCEasNKYxLgfkQDXG2uvys67pump</code></p>
+                                <p><strong>Wallet:</strong> <code>3xDeFXgK1nikzqdQUp2WdofbvqziteUoZf6MdX8CvgDu</code></p>
+                                <p><strong>Holdings:</strong> 5,778,223.76 tokens</p>
+                            </div>
+                        </div>
+                    </details>
+
                 </div>
                 <script>
                     if (window.location.hash) {
