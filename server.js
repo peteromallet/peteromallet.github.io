@@ -637,7 +637,7 @@ const server = http.createServer((req, res) => {
 
                     <details id="pisscoin-grants" class="commitment-entry">
                         <summary>
-                            <span class="commitment-title">Use $PISSCOIN fees to buy $DESLOPPIFY and fund open-source compute micro grants</span>
+                            <span class="commitment-title">Use $PISSCOIN fees to fund open-source AI compute micro grants and buy $DESLOPPIFY</span>
                             <span class="commitment-status status-in-progress">In Progress</span>
                             <button class="commitment-copy-link" title="Copy link" onclick="event.preventDefault(); navigator.clipboard.writeText(window.location.origin + '/assorted/accountability#pisscoin-grants').then(() => { this.textContent = 'Copied!'; setTimeout(() => this.textContent = '\\u{1F517}', 1500); });">&#x1F517;</button>
                         </summary>
