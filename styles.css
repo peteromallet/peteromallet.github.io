@@ -1878,7 +1878,8 @@ a.hover-trigger {
 
 .commitment-title {
     flex: 1;
-    font-weight: 500;
+    font-weight: 600;
+    font-size: 1.05rem;
     color: #333;
 }
 
