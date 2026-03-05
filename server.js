@@ -629,6 +629,22 @@ const server = http.createServer((req, res) => {
                         </div>
                     </details>
 
+                    <details id="pisscoin-silence" class="commitment-entry">
+                        <summary>
+                            <span class="commitment-title">Never tweet about $PISSCOIN again until my official death announcement</span>
+                            <span class="commitment-status status-in-progress">In Progress</span>
+                            <button class="commitment-copy-link" title="Copy link" onclick="event.preventDefault(); navigator.clipboard.writeText(window.location.origin + '/assorted/accountability#pisscoin-silence').then(() => { this.textContent = 'Copied!'; setTimeout(() => this.textContent = '\\u{1F517}', 1500); });">&#x1F517;</button>
+                        </summary>
+                        <div class="commitment-details">
+                            <div class="commitment-dates">
+                                <span>Committed: March 5, 2026</span>
+                            </div>
+                            <ul class="commitment-bullets">
+                                <li><strong>What:</strong> POM will not tweet about $PISSCOIN again until his official death announcement.</li>
+                            </ul>
+                        </div>
+                    </details>
+
                     <details id="pisscoin" class="commitment-entry">
                         <summary>
                             <span class="commitment-title">Hold $PISSCOIN until the day I die</span>
