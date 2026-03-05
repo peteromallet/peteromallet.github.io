@@ -29,7 +29,7 @@ That is The Banality of Evil.
 
 This isn't even a book, it's a short story. And I also actually read it. But let's ignore all of that because I was thinking of it lately for reasons unrelated to its actual content. 
 
-I love the poem Raglan Road by Patrick Kavanagh, and its cover by Luke Kelly and The Dubliners. 
+I love the poem [Raglan Road](https://www.youtube.com/watch?v=745CbIB_F5E) by Patrick Kavanagh, and its cover by Luke Kelly and The Dubliners.
 
 It's a love song from the perspective of a man who feels betrayed and abandoned by a woman he gave his heart to. The writer leaves you with the impression of a ghoulish woman who played him for a fool, benefiting from his affection and love before carelessly abandoning him.
 
