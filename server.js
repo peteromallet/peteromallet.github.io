@@ -642,6 +642,10 @@ const server = http.createServer((req, res) => {
                             <ul class="commitment-bullets">
                                 <li><strong>What:</strong> POM will not tweet about $PISSCOIN again until his official death announcement.</li>
                             </ul>
+                            <div class="commitment-onchain">
+                                <p><strong>PISSCOIN CA:</strong> <code>7qdVkvsMEGg1D8H9YCEasNKYxLgfkQDXG2uvys67pump</code></p>
+                                <p><strong>Twitter:</strong> <a href="https://x.com/peteromallet" target="_blank">@peteromallet</a></p>
+                            </div>
                         </div>
                     </details>
 
