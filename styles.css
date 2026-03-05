@@ -1793,6 +1793,12 @@ a.hover-trigger {
     }
 }
 
+.accountability-intro p {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 1.5rem;
+}
+
 .accountability-list {
     display: flex;
     flex-direction: column;
