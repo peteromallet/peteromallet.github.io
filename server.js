@@ -653,7 +653,8 @@ const server = http.createServer((req, res) => {
                             <div class="commitment-onchain">
                                 <p><strong>PISSCOIN CA:</strong> <code>7qdVkvsMEGg1D8H9YCEasNKYxLgfkQDXG2uvys67pump</code></p>
                                 <p><strong>Creator wallet:</strong> <code>3xDeFXgK1nikzqdQUp2WdofbvqziteUoZf6MdX8CvgDu</code></p>
-                                <p><strong>Estimated PISSCOIN fees:</strong> ~45 SOL (~34 SOL allocated to grants)</p>
+                                <p><strong>Grant fund wallet:</strong> <a href="https://solscan.io/account/FBXSuVueW9Z1U2RmgmYazAX1GGdzay75AKHD9ijJpszq" target="_blank"><code>FBXSuVueW9Z1U2RmgmYazAX1GGdzay75AKHD9ijJpszq</code></a></p>
+                                <p><strong>Starting balance:</strong> 34.0001 SOL</p>
                             </div>
                             <p class="commitment-conversions-note">Conversions as of March 5, 2026.</p>
                         </div>
