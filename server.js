@@ -660,7 +660,7 @@ const server = http.createServer((req, res) => {
                                 <span>Committed: March 5, 2026</span>
                             </div>
                             <ul class="commitment-bullets">
-                                <li><strong>What:</strong> I hold 5,778,223.76 $PISSCOIN tokens.</li>
+                                <li><strong>What:</strong> I received creator fees from a community-created coin called $PISSCOIN. From these fees, I bought 5,778,223.76 $PISSCOIN tokens.</li>
                                 <li><strong>Commitment:</strong> I will never sell these. I will hold $PISSCOIN until the day I die and leave it in my will to my favourite grandchild.</li>
                             </ul>
                             <div class="commitment-onchain">
