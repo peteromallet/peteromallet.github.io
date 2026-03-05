@@ -548,6 +548,9 @@ const server = http.createServer((req, res) => {
                 <div class="sorted-breadcrumb">
                     <a href="/assorted">Assorted</a> / Accountability
                 </div>
+                <div class="accountability-intro">
+                    <p>Below are commitments I've made. For each, I've included the motivation behind it. My goal is to never change any of these and to stick with them forever. In the rare case of a minor deviation, it will be tightly aligned with the stated motivation and I will explain why here. If anyone finds that I have deviated from them in a way that isn't stated, I promise to retweet their evidence.</p>
+                </div>
                 <div class="accountability-list">
 
                     <details id="dataclaw" class="commitment-entry">
@@ -629,6 +632,30 @@ const server = http.createServer((req, res) => {
                                 <p><strong>DESLOPPIFY #3 held:</strong> 71,200,000 tokens (~$6,644)</p>
                             </div>
                             <p class="commitment-conversions-note">Conversions as of March 2, 2026.</p>
+                        </div>
+                    </details>
+
+                    <details id="pisscoin-grants" class="commitment-entry">
+                        <summary>
+                            <span class="commitment-title">Use $PISSCOIN fees to buy $DESLOPPIFY and fund open-source compute micro grants</span>
+                            <span class="commitment-status status-in-progress">In Progress</span>
+                            <button class="commitment-copy-link" title="Copy link" onclick="event.preventDefault(); navigator.clipboard.writeText(window.location.origin + '/assorted/accountability#pisscoin-grants').then(() => { this.textContent = 'Copied!'; setTimeout(() => this.textContent = '\\u{1F517}', 1500); });">&#x1F517;</button>
+                        </summary>
+                        <div class="commitment-details">
+                            <div class="commitment-dates">
+                                <span>Committed: March 5, 2026</span>
+                            </div>
+                            <ul class="commitment-bullets">
+                                <li><strong>What:</strong> I received ~45 SOL in creator fees from $PISSCOIN trades. I bought back 5,778,223.76 $PISSCOIN tokens to hold forever and give to my grandkids as a lesson. Of the remaining ~45 SOL, I spent around a quarter (~11 SOL) buying $DESLOPPIFY \u2014 a project I actually believe in. The other three quarters (~34 SOL) will go toward starting compute micro grants \u2014 small grants to help people in the open-source ecosystem pay for compute on small projects.</li>
+                                <li><strong>Motivation:</strong> People building in the open-source ecosystem are extremely compute constrained. This coin is obviously bullshit, but I'd rather put the money to good use. So I'm using it to start compute micro grants for open-source developers.</li>
+                                <li><strong>Transparency:</strong> All transfers, grantees, and grant amounts will be publicly tracked on the grant website.</li>
+                            </ul>
+                            <div class="commitment-onchain">
+                                <p><strong>PISSCOIN CA:</strong> <code>7qdVkvsMEGg1D8H9YCEasNKYxLgfkQDXG2uvys67pump</code></p>
+                                <p><strong>Creator wallet:</strong> <code>3xDeFXgK1nikzqdQUp2WdofbvqziteUoZf6MdX8CvgDu</code></p>
+                                <p><strong>Estimated PISSCOIN fees:</strong> ~45 SOL (~34 SOL allocated to grants)</p>
+                            </div>
+                            <p class="commitment-conversions-note">Conversions as of March 5, 2026.</p>
                         </div>
                     </details>
 
