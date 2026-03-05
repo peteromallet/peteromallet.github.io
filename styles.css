@@ -1878,9 +1878,14 @@ a.hover-trigger {
 
 .commitment-title {
     flex: 1;
+    font-weight: 500;
+    color: #333;
+    transition: font-size 0.2s ease;
+}
+
+.commitment-entry[open] .commitment-title {
     font-weight: 600;
     font-size: 1.05rem;
-    color: #333;
 }
 
 .commitment-copy-link {
