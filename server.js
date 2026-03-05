@@ -564,6 +564,7 @@ const server = http.createServer((req, res) => {
                                 <li><strong>What:</strong> I created an open source project called <a href="https://github.com/peteromallet/dataclaw" target="_blank">DataClaw</a>. Random crypto people created a token around it.</li>
                                 <li><strong>Fees:</strong> I didn't own any of this token, but they gave me creator tokens \u2014 which earn a <strong>0.05% fee</strong> on every trade via Pump.fun.</li>
                                 <li><strong>Commitment:</strong> <strong>100% of $DataClaw fees</strong> will be donated to <a href="https://arcagidan.com/" target="_blank">The Arca Gidan Art Prize</a>, an art competition run by Banodoco that pushes open-source AI models to their limits.</li>
+                                <li><strong>Motivation:</strong> I woke up one morning to find that I had accumulated a bunch of fees for a project that isn't a top priority for me. Rather than pocket it, I'm directing it all to an art competition that pushes open-source AI models to their limits.</li>
                                 <li><strong>Current balance:</strong> ~752 SOL (~680 from $DataClaw, ~72 from $DESLOPPIFY tokens) across 126 fee claims.</li>
                             </ul>
                             <div class="commitment-onchain">
@@ -588,6 +589,7 @@ const server = http.createServer((req, res) => {
                             <ul class="commitment-bullets">
                                 <li><strong>What:</strong> Two community-created $DESLOPPIFY tokens based on my <a href="https://github.com/peteromallet/desloppify" target="_blank">Desloppify</a> project also generate Pump.fun creator fees to the same wallet.</li>
                                 <li><strong>Commitment:</strong> Starting at <strong>100% of $DESLOPPIFY fees</strong> going to bounties for people who discover issues with code that <a href="https://github.com/peteromallet/desloppify" target="_blank">Desloppify</a> has approved \u2014 putting the tool's own money where its mouth is. Over time, I may also spend fees on improving or augmenting the Desloppify ecosystem. Aside from getting open source projects paid for, I won't personally profit.</li>
+                                <li><strong>Motivation:</strong> Desloppify is a project that I really believe can have a huge impact. I want to fund it and help vibe coders build things that are genuinely well-engineered \u2014 so all fees go toward bounties that stress-test the tool itself.</li>
                                 <li><strong>Current balance:</strong> ~72 SOL (~28 from $DESLOPPIFY #2, ~44 from $DESLOPPIFY #3) of the wallet's 752 SOL.</li>
                                 <li><strong>Bounties:</strong> Announced via <a href="https://github.com/peteromallet/desloppify/issues" target="_blank">Desloppify GitHub Issues</a>.</li>
                             </ul>
@@ -616,6 +618,7 @@ const server = http.createServer((req, res) => {
                                 <li><strong>No sell unless:</strong> I won't sell any unless the token has stayed above a <strong>&#36;10M market cap for more than 7 days</strong>.</li>
                                 <li><strong>When I sell:</strong> Slowly, responsibly, and with <strong>pre-announcement</strong>. Used to buy LLM tokens, compute, and possibly hardware.</li>
                                 <li><strong>Who benefits:</strong> This will fund open source AI development and training. Transparently, this will first fund <em>my</em> AI development, but will be extended to others who work on open source projects if funds allow.</li>
+                                <li><strong>Motivation:</strong> I'm a big believer in open source. I want to fund the ecosystem without damaging token holders. I'll sell slowly, transparently, and in a way that makes sure the market safely absorbs it.</li>
                                 <li><strong>Goal:</strong> All data released via <a href="https://github.com/peteromallet/dataclaw" target="_blank">DataClaw</a>, all code open source, all work dedicated towards improving the open source ecosystem and tooling.</li>
                                 <li><strong>Transparency:</strong> All invoices and token sales will be published. Full ledger in the <a href="https://github.com/peteromallet/peteromallet.github.io/blob/main/random_docs/desloppify-token-fund.md" target="_blank">sales &amp; spending tracker</a> (currently empty).</li>
                             </ul>
@@ -626,26 +629,6 @@ const server = http.createServer((req, res) => {
                                 <p><strong>DESLOPPIFY #3 held:</strong> 71,200,000 tokens (~$6,644)</p>
                             </div>
                             <p class="commitment-conversions-note">Conversions as of March 2, 2026.</p>
-                        </div>
-                    </details>
-
-                    <details id="pisscoin-silence" class="commitment-entry">
-                        <summary>
-                            <span class="commitment-title">Never tweet about $PISSCOIN again until my official death announcement</span>
-                            <span class="commitment-status status-in-progress">In Progress</span>
-                            <button class="commitment-copy-link" title="Copy link" onclick="event.preventDefault(); navigator.clipboard.writeText(window.location.origin + '/assorted/accountability#pisscoin-silence').then(() => { this.textContent = 'Copied!'; setTimeout(() => this.textContent = '\\u{1F517}', 1500); });">&#x1F517;</button>
-                        </summary>
-                        <div class="commitment-details">
-                            <div class="commitment-dates">
-                                <span>Committed: March 5, 2026</span>
-                            </div>
-                            <ul class="commitment-bullets">
-                                <li><strong>What:</strong> POM will not tweet about $PISSCOIN again until his official death announcement.</li>
-                            </ul>
-                            <div class="commitment-onchain">
-                                <p><strong>PISSCOIN CA:</strong> <code>7qdVkvsMEGg1D8H9YCEasNKYxLgfkQDXG2uvys67pump</code></p>
-                                <p><strong>Twitter:</strong> <a href="https://x.com/peteromallet" target="_blank">@peteromallet</a></p>
-                            </div>
                         </div>
                     </details>
 
@@ -662,11 +645,33 @@ const server = http.createServer((req, res) => {
                             <ul class="commitment-bullets">
                                 <li><strong>What:</strong> I received creator fees from a community-created coin called $PISSCOIN. From these fees, I bought 5,778,223.76 $PISSCOIN tokens.</li>
                                 <li><strong>Commitment:</strong> I will never sell these. I will hold $PISSCOIN until the day I die and leave it in my will to my favourite grandchild.</li>
+                                <li><strong>Motivation:</strong> In the spirit of HODL \u2014 I want to follow this token wherever it goes. If it goes to zero, so be it. If it moons, my grandkids will thank me.</li>
                             </ul>
                             <div class="commitment-onchain">
                                 <p><strong>PISSCOIN CA:</strong> <code>7qdVkvsMEGg1D8H9YCEasNKYxLgfkQDXG2uvys67pump</code></p>
                                 <p><strong>Wallet:</strong> <code>3xDeFXgK1nikzqdQUp2WdofbvqziteUoZf6MdX8CvgDu</code></p>
                                 <p><strong>Holdings:</strong> 5,778,223.76 tokens</p>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details id="pisscoin-silence" class="commitment-entry">
+                        <summary>
+                            <span class="commitment-title">Never tweet about $PISSCOIN again until my official death announcement</span>
+                            <span class="commitment-status status-in-progress">In Progress</span>
+                            <button class="commitment-copy-link" title="Copy link" onclick="event.preventDefault(); navigator.clipboard.writeText(window.location.origin + '/assorted/accountability#pisscoin-silence').then(() => { this.textContent = 'Copied!'; setTimeout(() => this.textContent = '\\u{1F517}', 1500); });">&#x1F517;</button>
+                        </summary>
+                        <div class="commitment-details">
+                            <div class="commitment-dates">
+                                <span>Committed: March 5, 2026</span>
+                            </div>
+                            <ul class="commitment-bullets">
+                                <li><strong>What:</strong> POM will not tweet about $PISSCOIN again until his official death announcement.</li>
+                                <li><strong>Motivation:</strong> $PISSCOIN was created by someone else based on a joke I made \u2014 nothing to do with me personally. But in practice, I have an incentive to hype it since I hold it and receive fees from trades. I'm going to reject that incentive. Though I will hold it until the day I die and give it to my grandkids, I don't want to spend my life promoting a coin called $PISSCOIN. Whatever happens with $PISSCOIN, I hope my grandkids will learn a lesson from this.</li>
+                            </ul>
+                            <div class="commitment-onchain">
+                                <p><strong>PISSCOIN CA:</strong> <code>7qdVkvsMEGg1D8H9YCEasNKYxLgfkQDXG2uvys67pump</code></p>
+                                <p><strong>Twitter:</strong> <a href="https://x.com/peteromallet" target="_blank">@peteromallet</a></p>
                             </div>
                         </div>
                     </details>
