@@ -704,6 +704,26 @@ const server = http.createServer((req, res) => {
                         </div>
                     </details>
 
+                    <details id="no-memecoins" class="commitment-entry">
+                        <summary>
+                            <span class="commitment-title">Never engage with meme coins or meaningless crypto projects</span>
+                            <span class="commitment-status status-in-progress">In Progress</span>
+                            <button class="commitment-copy-link" title="Copy link" onclick="event.preventDefault(); navigator.clipboard.writeText(window.location.origin + '/assorted/accountability#no-memecoins').then(() => { this.textContent = 'Copied!'; setTimeout(() => this.textContent = '\\u{1F517}', 1500); });">&#x1F517;</button>
+                        </summary>
+                        <div class="commitment-details">
+                            <div class="commitment-dates">
+                                <span>Committed: March 6, 2026</span>
+                            </div>
+                            <ul class="commitment-bullets">
+                                <li><strong>What:</strong> I will never have anything to do with any crypto coin that doesn't have a clear and real purpose. I will never joke about it, never engage with it in any way. I will mute anyone who tries to promote meme coins or meaningless crypto projects to me \u2014 ideally with an AI agent so I don't have to do it manually. The only crypto I will engage with is what's directly correlated to my main projects.</li>
+                                <li><strong>Motivation:</strong> I'm choosing to dedicate my life to open-source AI \u2014 promoting it and helping the ecosystem thrive. There are a lot of ambitious projects I want to do related to that. But the crypto ecosystem has a lot of noise, and I want to filter it out completely. This commitment is about staying clear and avoiding all the bullshit that comes with crypto so I can focus on what actually matters.</li>
+                            </ul>
+                            <div class="commitment-onchain">
+                                <p><strong>Twitter:</strong> <a href="https://x.com/peteromallet" target="_blank">@peteromallet</a></p>
+                            </div>
+                        </div>
+                    </details>
+
                 </div>
                 <script>
                     if (window.location.hash) {
