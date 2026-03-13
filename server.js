@@ -660,6 +660,28 @@ const server = http.createServer((req, res) => {
                         </div>
                     </details>
 
+                    <details id="artcompute" class="commitment-entry">
+                        <summary>
+                            <span class="commitment-title">Donate 100% of $ArtCompute fees to the grant wallet to buy open-source compute</span>
+                            <span class="commitment-status status-in-progress">In Progress</span>
+                            <button class="commitment-copy-link" title="Copy link" onclick="event.preventDefault(); navigator.clipboard.writeText(window.location.origin + '/assorted/accountability#artcompute').then(() => { this.textContent = 'Copied!'; setTimeout(() => this.textContent = '\\u{1F517}', 1500); });">&#x1F517;</button>
+                        </summary>
+                        <div class="commitment-details">
+                            <div class="commitment-dates">
+                                <span>Committed: March 13, 2026</span>
+                            </div>
+                            <ul class="commitment-bullets">
+                                <li><strong>What:</strong> The degens are at it again &mdash; they created an $ArtCompute token and gave me fees. I won't profit from this in any way. 100% of fees go to the grant wallet to pay for open-source compute. I'll post the CA whenever it pays for a shipped project. They also gave my wallet 10% ownership, which I'll lock down and sell via LP very slowly only if it hits &gt;10M MC.</li>
+                                <li><strong>Motivation:</strong> Same as always &mdash; I refuse to profit from community-created tokens. The fees should go toward something useful for the open-source ecosystem.</li>
+                            </ul>
+                            <div class="commitment-onchain">
+                                <p><strong>ArtCompute CA:</strong> <code>aJyRJZZDTzFk1SoJKMTA9bXstpxv3u3GHK7mqgkpump</code></p>
+                                <p><strong>Grant fund wallet:</strong> <a href="https://solscan.io/account/FBXSuVueW9Z1U2RmgmYazAX1GGdzay75AKHD9ijJpszq" target="_blank"><code>FBXSuVueW9Z1U2RmgmYazAX1GGdzay75AKHD9ijJpszq</code></a></p>
+                                <p><strong>Grants:</strong> <a href="https://artcompute.org/grants" target="_blank">artcompute.org/grants</a></p>
+                            </div>
+                        </div>
+                    </details>
+
                     <details id="pisscoin" class="commitment-entry">
                         <summary>
                             <span class="commitment-title">Hold $PISSCOIN until the day I die</span>
@@ -706,17 +728,17 @@ const server = http.createServer((req, res) => {
 
                     <details id="no-memecoins" class="commitment-entry">
                         <summary>
-                            <span class="commitment-title">Never engage with meme coins or meaningless crypto projects</span>
+                            <span class="commitment-title">Only engage with community-created crypto assets that fund something real \u2014 and only promote what they actually achieve</span>
                             <span class="commitment-status status-in-progress">In Progress</span>
                             <button class="commitment-copy-link" title="Copy link" onclick="event.preventDefault(); navigator.clipboard.writeText(window.location.origin + '/assorted/accountability#no-memecoins').then(() => { this.textContent = 'Copied!'; setTimeout(() => this.textContent = '\\u{1F517}', 1500); });">&#x1F517;</button>
                         </summary>
                         <div class="commitment-details">
                             <div class="commitment-dates">
-                                <span>Committed: March 6, 2026</span>
+                                <span>Committed: March 6, 2026 &bull; Updated: March 13, 2026</span>
                             </div>
                             <ul class="commitment-bullets">
-                                <li><strong>What:</strong> I will never have anything to do with any crypto coin that doesn't have a clear and real purpose. I will never joke about it, never engage with it in any way. I will mute anyone who tries to promote meme coins or meaningless crypto projects to me \u2014 ideally with an AI agent so I don't have to do it manually. The only crypto I will engage with is what's directly correlated to my main projects.</li>
-                                <li><strong>Motivation:</strong> I'm choosing to dedicate my life to open-source AI \u2014 promoting it and helping the ecosystem thrive. There are a lot of ambitious projects I want to do related to that. But the crypto ecosystem has a lot of noise, and I want to filter it out completely. This commitment is about staying clear and avoiding all the bullshit that comes with crypto so I can focus on what actually matters.</li>
+                                <li><strong>What:</strong> Crypto has already paid for a few real projects \u2014 random degens creating tokens has directly funded open-source work. That's inherently valuable. If the community creates assets related to what I'm building, and they give me fees and ownership to actually use on the project, I'll spend those fees on furthering whatever the project is actually about. I will never create more than one crypto asset myself ($DESLOPPIFY). I will only ever promote community-created tokens by promoting what they actually result in \u2014 shipped projects, grants funded, compute purchased \u2014 not the tokens themselves. I will not get involved in nihilistic hype or meaningless speculation. I will mute anyone who tries to promote meaningless crypto projects to me \u2014 ideally with an AI agent so I don't have to do it manually.</li>
+                                <li><strong>Motivation:</strong> I'm choosing to dedicate my life to open-source AI. The crypto ecosystem has funded real work and I don't want to reject that \u2014 but I refuse to let it corrupt what I'm doing. The line is simple: if it funds something real, I'll engage with it by spending fees on the project and talking about what it achieves. If it's just noise, I'm out.</li>
                             </ul>
                             <div class="commitment-onchain">
                                 <p><strong>Twitter:</strong> <a href="https://x.com/peteromallet" target="_blank">@peteromallet</a></p>
