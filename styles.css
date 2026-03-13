@@ -1842,6 +1842,31 @@ a.hover-trigger {
     background: rgba(236, 72, 153, 0.04);
 }
 
+.commitment-entry:nth-child(5) {
+    border-left-color: #8b5cf6;
+    background: rgba(139, 92, 246, 0.04);
+}
+
+.commitment-entry:nth-child(6) {
+    border-left-color: #14b8a6;
+    background: rgba(20, 184, 166, 0.04);
+}
+
+.commitment-entry:nth-child(7) {
+    border-left-color: #f97316;
+    background: rgba(249, 115, 22, 0.04);
+}
+
+.commitment-entry:nth-child(8) {
+    border-left-color: #06b6d4;
+    background: rgba(6, 182, 212, 0.04);
+}
+
+.commitment-entry:nth-child(9) {
+    border-left-color: #e11d48;
+    background: rgba(225, 29, 72, 0.04);
+}
+
 .commitment-entry:last-child {
     margin-bottom: 0;
 }
