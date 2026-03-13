@@ -553,29 +553,134 @@ const server = http.createServer((req, res) => {
                 </div>
                 <div class="accountability-list">
 
-                    <details id="dataclaw" class="commitment-entry">
+                    <details id="artcompute" class="commitment-entry">
                         <summary>
-                            <span class="commitment-title">Donate all $DataClaw creator fees to The Arca Gidan Art Prize</span>
+                            <span class="commitment-title">Donate 100% of $ArtCompute fees to the grant wallet to buy open-source compute</span>
                             <span class="commitment-status status-in-progress">In Progress</span>
-                            <button class="commitment-copy-link" title="Copy link" onclick="event.preventDefault(); navigator.clipboard.writeText(window.location.origin + '/assorted/accountability#dataclaw').then(() => { this.textContent = 'Copied!'; setTimeout(() => this.textContent = '\\u{1F517}', 1500); });">&#x1F517;</button>
+                            <button class="commitment-copy-link" title="Copy link" onclick="event.preventDefault(); navigator.clipboard.writeText(window.location.origin + '/assorted/accountability#artcompute').then(() => { this.textContent = 'Copied!'; setTimeout(() => this.textContent = '\\u{1F517}', 1500); });">&#x1F517;</button>
                         </summary>
                         <div class="commitment-details">
                             <div class="commitment-dates">
-                                <span>Committed: March 2, 2026</span>
+                                <span>Committed: March 13, 2026</span>
                             </div>
                             <ul class="commitment-bullets">
-                                <li><strong>What:</strong> I created an open source project called <a href="https://github.com/peteromallet/dataclaw" target="_blank">DataClaw</a>. Random crypto people created a token around it.</li>
-                                <li><strong>Fees:</strong> I didn't own any of this token, but they gave me creator tokens \u2014 which earn a <strong>0.05% fee</strong> on every trade via Pump.fun.</li>
-                                <li><strong>Commitment:</strong> <strong>100% of $DataClaw fees</strong> will be donated to <a href="https://arcagidan.com/" target="_blank">The Arca Gidan Art Prize</a>, an art competition run by Banodoco that pushes open-source AI models to their limits.</li>
-                                <li><strong>Motivation:</strong> I woke up one morning to find that I had accumulated a bunch of fees for a project that isn't a top priority for me. Rather than pocket it, I'm directing it all to an art competition that pushes open-source AI models to their limits.</li>
-                                <li><strong>Current balance:</strong> ~752 SOL (~680 from $DataClaw, ~72 from $DESLOPPIFY tokens) across 126 fee claims.</li>
+                                <li><strong>What:</strong> The degens are at it again &mdash; they created an $ArtCompute token and gave me fees. I won't profit from this in any way. 100% of fees go to the grant wallet to pay for open-source compute. I'll post the CA whenever it pays for a shipped project. They also gave my wallet 10% ownership, which I'll lock down and sell via LP very slowly only if it hits &gt;10M MC.</li>
+                                <li><strong>Motivation:</strong> Same as always &mdash; I refuse to profit from community-created tokens. The fees should go toward something useful for the open-source ecosystem.</li>
                             </ul>
                             <div class="commitment-onchain">
-                                <p><strong>DataClaw CA:</strong> <code>Duxeg8HrG89Dq95oyiydrnFd8irZhjApGZu8PYrEpump</code></p>
-                                <p><strong>Creator wallet:</strong> <code>3xDeFXgK1nikzqdQUp2WdofbvqziteUoZf6MdX8CvgDu</code></p>
-                                <p><strong>Fee mechanism:</strong> 0.05% creator fee on every PumpSwap trade, auto-claimed to the wallet above. Full breakdown in the <a href="https://github.com/peteromallet/peteromallet.github.io/blob/main/random_docs/solana-wallet-analysis.md" target="_blank">wallet analysis</a>.</p>
+                                <p><strong>ArtCompute CA:</strong> <code>aJyRJZZDTzFk1SoJKMTA9bXstpxv3u3GHK7mqgkpump</code></p>
+                                <p><strong>Grant fund wallet:</strong> <a href="https://solscan.io/account/FBXSuVueW9Z1U2RmgmYazAX1GGdzay75AKHD9ijJpszq" target="_blank"><code>FBXSuVueW9Z1U2RmgmYazAX1GGdzay75AKHD9ijJpszq</code></a></p>
+                                <p><strong>Grants:</strong> <a href="https://artcompute.org/grants" target="_blank">artcompute.org/grants</a></p>
                             </div>
-                            <p class="commitment-conversions-note">Conversions as of March 2, 2026.</p>
+                        </div>
+                    </details>
+
+                    <details id="one-crypto" class="commitment-entry">
+                        <summary>
+                            <span class="commitment-title">Only ever personally launch one crypto asset &mdash; at least until 2031</span>
+                            <span class="commitment-status status-in-progress">In Progress</span>
+                            <button class="commitment-copy-link" title="Copy link" onclick="event.preventDefault(); navigator.clipboard.writeText(window.location.origin + '/assorted/accountability#one-crypto').then(() => { this.textContent = 'Copied!'; setTimeout(() => this.textContent = '\\u{1F517}', 1500); });">&#x1F517;</button>
+                        </summary>
+                        <div class="commitment-details">
+                            <div class="commitment-dates">
+                                <span>Committed: March 13, 2026</span>
+                            </div>
+                            <ul class="commitment-bullets">
+                                <li><strong>What:</strong> I will only ever personally launch one crypto asset ($DESLOPPIFY) &mdash; at least until 2031. Community-created tokens are a different thing &mdash; if degens create something and give me fees, I'll spend those on the project. But I will not personally create or launch another token.</li>
+                                <li><strong>Motivation:</strong> Playing with the crypto community is fun and they can fund useful things. But I don't want to become a serial token launcher. One is enough. I'd rather focus on building real things and let the community do their thing around it.</li>
+                            </ul>
+                            <div class="commitment-onchain">
+                                <p><strong>$DESLOPPIFY CA:</strong> <code>8m7MwTcasDYTjUfcU6goFPUczXqzCvbqbGRbFM1Vpump</code></p>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details id="no-memecoins" class="commitment-entry">
+                        <summary>
+                            <span class="commitment-title">Only engage with community-created crypto assets that fund something real \u2014 and only promote what they actually achieve</span>
+                            <span class="commitment-status status-in-progress">In Progress</span>
+                            <button class="commitment-copy-link" title="Copy link" onclick="event.preventDefault(); navigator.clipboard.writeText(window.location.origin + '/assorted/accountability#no-memecoins').then(() => { this.textContent = 'Copied!'; setTimeout(() => this.textContent = '\\u{1F517}', 1500); });">&#x1F517;</button>
+                        </summary>
+                        <div class="commitment-details">
+                            <div class="commitment-dates">
+                                <span>Committed: March 6, 2026 &bull; Updated: March 13, 2026</span>
+                            </div>
+                            <ul class="commitment-bullets">
+                                <li><strong>What:</strong> Crypto has already paid for a few real projects \u2014 random degens creating tokens has directly funded open-source work. That's inherently valuable. If the community creates assets related to what I'm building, and they give me fees and ownership to actually use on the project, I'll spend those fees on furthering whatever the project is actually about. I will never create more than one crypto asset myself ($DESLOPPIFY). I will only ever promote community-created tokens by promoting what they actually result in \u2014 shipped projects, grants funded, compute purchased \u2014 not the tokens themselves. I will not get involved in nihilistic hype or meaningless speculation. I will mute anyone who tries to promote meaningless crypto projects to me \u2014 ideally with an AI agent so I don't have to do it manually.</li>
+                                <li><strong>Motivation:</strong> I'm choosing to dedicate my life to open-source AI. The crypto ecosystem has funded real work and I don't want to reject that \u2014 but I refuse to let it corrupt what I'm doing. The line is simple: if it funds something real, I'll engage with it by spending fees on the project and talking about what it achieves. If it's just noise, I'm out.</li>
+                            </ul>
+                            <div class="commitment-onchain">
+                                <p><strong>Twitter:</strong> <a href="https://x.com/peteromallet" target="_blank">@peteromallet</a></p>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details id="pisscoin-grants" class="commitment-entry">
+                        <summary>
+                            <span class="commitment-title">Use $PISSCOIN fees to fund open-source AI compute micro grants and buy $DESLOPPIFY</span>
+                            <span class="commitment-status status-in-progress">In Progress</span>
+                            <button class="commitment-copy-link" title="Copy link" onclick="event.preventDefault(); navigator.clipboard.writeText(window.location.origin + '/assorted/accountability#pisscoin-grants').then(() => { this.textContent = 'Copied!'; setTimeout(() => this.textContent = '\\u{1F517}', 1500); });">&#x1F517;</button>
+                        </summary>
+                        <div class="commitment-details">
+                            <div class="commitment-dates">
+                                <span>Committed: March 5, 2026</span>
+                            </div>
+                            <ul class="commitment-bullets">
+                                <li><strong>What:</strong> I received ~45 SOL in creator fees from $PISSCOIN trades. I bought back 5,778,223.76 $PISSCOIN tokens to hold forever and give to my grandkids as a lesson. Of the remaining ~45 SOL, I spent around a quarter (~11 SOL) buying $DESLOPPIFY \u2014 a project I actually believe in. The other three quarters (~34 SOL) will go toward starting compute micro grants \u2014 small grants to help people in the open-source ecosystem pay for compute on small projects.</li>
+                                <li><strong>Motivation:</strong> People building in the open-source ecosystem are extremely compute constrained. This coin is obviously bullshit, but I'd rather put the money to good use. So I'm using it to start compute micro grants for open-source developers.</li>
+                                <li><strong>Transparency:</strong> All transfers, grantees, and grant amounts will be publicly tracked on the grant website.</li>
+                            </ul>
+                            <div class="commitment-onchain">
+                                <p><strong>PISSCOIN CA:</strong> <code>7qdVkvsMEGg1D8H9YCEasNKYxLgfkQDXG2uvys67pump</code></p>
+                                <p><strong>Creator wallet:</strong> <code>3xDeFXgK1nikzqdQUp2WdofbvqziteUoZf6MdX8CvgDu</code></p>
+                                <p><strong>Grant fund wallet:</strong> <a href="https://solscan.io/account/FBXSuVueW9Z1U2RmgmYazAX1GGdzay75AKHD9ijJpszq" target="_blank"><code>FBXSuVueW9Z1U2RmgmYazAX1GGdzay75AKHD9ijJpszq</code></a></p>
+                                <p><strong>Starting balance:</strong> 34.0001 SOL</p>
+                            </div>
+                            <p class="commitment-conversions-note">Conversions as of March 5, 2026.</p>
+                        </div>
+                    </details>
+
+                    <details id="pisscoin" class="commitment-entry">
+                        <summary>
+                            <span class="commitment-title">Hold $PISSCOIN until the day I die</span>
+                            <span class="commitment-status status-in-progress">In Progress</span>
+                            <button class="commitment-copy-link" title="Copy link" onclick="event.preventDefault(); navigator.clipboard.writeText(window.location.origin + '/assorted/accountability#pisscoin').then(() => { this.textContent = 'Copied!'; setTimeout(() => this.textContent = '\\u{1F517}', 1500); });">&#x1F517;</button>
+                        </summary>
+                        <div class="commitment-details">
+                            <div class="commitment-dates">
+                                <span>Committed: March 5, 2026</span>
+                            </div>
+                            <ul class="commitment-bullets">
+                                <li><strong>What:</strong> I received creator fees from a community-created coin called $PISSCOIN. From these fees, I bought 5,778,223.76 $PISSCOIN tokens.</li>
+                                <li><strong>Commitment:</strong> I will never sell these. I will hold $PISSCOIN until the day I die and leave it in my will to my favourite grandchild.</li>
+                                <li><strong>Motivation:</strong> In the spirit of HODL \u2014 I want to follow this token wherever it goes. If it goes to zero, so be it. If it moons, my grandkids will thank me.</li>
+                            </ul>
+                            <div class="commitment-onchain">
+                                <p><strong>PISSCOIN CA:</strong> <code>7qdVkvsMEGg1D8H9YCEasNKYxLgfkQDXG2uvys67pump</code></p>
+                                <p><strong>Wallet:</strong> <code>3xDeFXgK1nikzqdQUp2WdofbvqziteUoZf6MdX8CvgDu</code></p>
+                                <p><strong>Holdings:</strong> 5,778,223.76 tokens</p>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details id="pisscoin-silence" class="commitment-entry">
+                        <summary>
+                            <span class="commitment-title">Never tweet about $PISSCOIN again until my official death announcement</span>
+                            <span class="commitment-status status-in-progress">In Progress</span>
+                            <button class="commitment-copy-link" title="Copy link" onclick="event.preventDefault(); navigator.clipboard.writeText(window.location.origin + '/assorted/accountability#pisscoin-silence').then(() => { this.textContent = 'Copied!'; setTimeout(() => this.textContent = '\\u{1F517}', 1500); });">&#x1F517;</button>
+                        </summary>
+                        <div class="commitment-details">
+                            <div class="commitment-dates">
+                                <span>Committed: March 5, 2026</span>
+                            </div>
+                            <ul class="commitment-bullets">
+                                <li><strong>What:</strong> POM will not tweet about $PISSCOIN again until his official death announcement.</li>
+                                <li><strong>Motivation:</strong> $PISSCOIN was created by someone else based on a joke I made \u2014 nothing to do with me personally. But in practice, I have an incentive to hype it since I hold it and receive fees from trades. I'm going to reject that incentive. Though I will hold it until the day I die and give it to my grandkids, I don't want to spend my life promoting a coin called $PISSCOIN. Whatever happens with $PISSCOIN, I hope my grandkids will learn a lesson from this.</li>
+                            </ul>
+                            <div class="commitment-onchain">
+                                <p><strong>PISSCOIN CA:</strong> <code>7qdVkvsMEGg1D8H9YCEasNKYxLgfkQDXG2uvys67pump</code></p>
+                                <p><strong>Twitter:</strong> <a href="https://x.com/peteromallet" target="_blank">@peteromallet</a></p>
+                            </div>
                         </div>
                     </details>
 
@@ -635,134 +740,29 @@ const server = http.createServer((req, res) => {
                         </div>
                     </details>
 
-                    <details id="pisscoin-grants" class="commitment-entry">
+                    <details id="dataclaw" class="commitment-entry">
                         <summary>
-                            <span class="commitment-title">Use $PISSCOIN fees to fund open-source AI compute micro grants and buy $DESLOPPIFY</span>
+                            <span class="commitment-title">Donate all $DataClaw creator fees to The Arca Gidan Art Prize</span>
                             <span class="commitment-status status-in-progress">In Progress</span>
-                            <button class="commitment-copy-link" title="Copy link" onclick="event.preventDefault(); navigator.clipboard.writeText(window.location.origin + '/assorted/accountability#pisscoin-grants').then(() => { this.textContent = 'Copied!'; setTimeout(() => this.textContent = '\\u{1F517}', 1500); });">&#x1F517;</button>
+                            <button class="commitment-copy-link" title="Copy link" onclick="event.preventDefault(); navigator.clipboard.writeText(window.location.origin + '/assorted/accountability#dataclaw').then(() => { this.textContent = 'Copied!'; setTimeout(() => this.textContent = '\\u{1F517}', 1500); });">&#x1F517;</button>
                         </summary>
                         <div class="commitment-details">
                             <div class="commitment-dates">
-                                <span>Committed: March 5, 2026</span>
+                                <span>Committed: March 2, 2026</span>
                             </div>
                             <ul class="commitment-bullets">
-                                <li><strong>What:</strong> I received ~45 SOL in creator fees from $PISSCOIN trades. I bought back 5,778,223.76 $PISSCOIN tokens to hold forever and give to my grandkids as a lesson. Of the remaining ~45 SOL, I spent around a quarter (~11 SOL) buying $DESLOPPIFY \u2014 a project I actually believe in. The other three quarters (~34 SOL) will go toward starting compute micro grants \u2014 small grants to help people in the open-source ecosystem pay for compute on small projects.</li>
-                                <li><strong>Motivation:</strong> People building in the open-source ecosystem are extremely compute constrained. This coin is obviously bullshit, but I'd rather put the money to good use. So I'm using it to start compute micro grants for open-source developers.</li>
-                                <li><strong>Transparency:</strong> All transfers, grantees, and grant amounts will be publicly tracked on the grant website.</li>
+                                <li><strong>What:</strong> I created an open source project called <a href="https://github.com/peteromallet/dataclaw" target="_blank">DataClaw</a>. Random crypto people created a token around it.</li>
+                                <li><strong>Fees:</strong> I didn't own any of this token, but they gave me creator tokens \u2014 which earn a <strong>0.05% fee</strong> on every trade via Pump.fun.</li>
+                                <li><strong>Commitment:</strong> <strong>100% of $DataClaw fees</strong> will be donated to <a href="https://arcagidan.com/" target="_blank">The Arca Gidan Art Prize</a>, an art competition run by Banodoco that pushes open-source AI models to their limits.</li>
+                                <li><strong>Motivation:</strong> I woke up one morning to find that I had accumulated a bunch of fees for a project that isn't a top priority for me. Rather than pocket it, I'm directing it all to an art competition that pushes open-source AI models to their limits.</li>
+                                <li><strong>Current balance:</strong> ~752 SOL (~680 from $DataClaw, ~72 from $DESLOPPIFY tokens) across 126 fee claims.</li>
                             </ul>
                             <div class="commitment-onchain">
-                                <p><strong>PISSCOIN CA:</strong> <code>7qdVkvsMEGg1D8H9YCEasNKYxLgfkQDXG2uvys67pump</code></p>
+                                <p><strong>DataClaw CA:</strong> <code>Duxeg8HrG89Dq95oyiydrnFd8irZhjApGZu8PYrEpump</code></p>
                                 <p><strong>Creator wallet:</strong> <code>3xDeFXgK1nikzqdQUp2WdofbvqziteUoZf6MdX8CvgDu</code></p>
-                                <p><strong>Grant fund wallet:</strong> <a href="https://solscan.io/account/FBXSuVueW9Z1U2RmgmYazAX1GGdzay75AKHD9ijJpszq" target="_blank"><code>FBXSuVueW9Z1U2RmgmYazAX1GGdzay75AKHD9ijJpszq</code></a></p>
-                                <p><strong>Starting balance:</strong> 34.0001 SOL</p>
+                                <p><strong>Fee mechanism:</strong> 0.05% creator fee on every PumpSwap trade, auto-claimed to the wallet above. Full breakdown in the <a href="https://github.com/peteromallet/peteromallet.github.io/blob/main/random_docs/solana-wallet-analysis.md" target="_blank">wallet analysis</a>.</p>
                             </div>
-                            <p class="commitment-conversions-note">Conversions as of March 5, 2026.</p>
-                        </div>
-                    </details>
-
-                    <details id="artcompute" class="commitment-entry">
-                        <summary>
-                            <span class="commitment-title">Donate 100% of $ArtCompute fees to the grant wallet to buy open-source compute</span>
-                            <span class="commitment-status status-in-progress">In Progress</span>
-                            <button class="commitment-copy-link" title="Copy link" onclick="event.preventDefault(); navigator.clipboard.writeText(window.location.origin + '/assorted/accountability#artcompute').then(() => { this.textContent = 'Copied!'; setTimeout(() => this.textContent = '\\u{1F517}', 1500); });">&#x1F517;</button>
-                        </summary>
-                        <div class="commitment-details">
-                            <div class="commitment-dates">
-                                <span>Committed: March 13, 2026</span>
-                            </div>
-                            <ul class="commitment-bullets">
-                                <li><strong>What:</strong> The degens are at it again &mdash; they created an $ArtCompute token and gave me fees. I won't profit from this in any way. 100% of fees go to the grant wallet to pay for open-source compute. I'll post the CA whenever it pays for a shipped project. They also gave my wallet 10% ownership, which I'll lock down and sell via LP very slowly only if it hits &gt;10M MC.</li>
-                                <li><strong>Motivation:</strong> Same as always &mdash; I refuse to profit from community-created tokens. The fees should go toward something useful for the open-source ecosystem.</li>
-                            </ul>
-                            <div class="commitment-onchain">
-                                <p><strong>ArtCompute CA:</strong> <code>aJyRJZZDTzFk1SoJKMTA9bXstpxv3u3GHK7mqgkpump</code></p>
-                                <p><strong>Grant fund wallet:</strong> <a href="https://solscan.io/account/FBXSuVueW9Z1U2RmgmYazAX1GGdzay75AKHD9ijJpszq" target="_blank"><code>FBXSuVueW9Z1U2RmgmYazAX1GGdzay75AKHD9ijJpszq</code></a></p>
-                                <p><strong>Grants:</strong> <a href="https://artcompute.org/grants" target="_blank">artcompute.org/grants</a></p>
-                            </div>
-                        </div>
-                    </details>
-
-                    <details id="pisscoin" class="commitment-entry">
-                        <summary>
-                            <span class="commitment-title">Hold $PISSCOIN until the day I die</span>
-                            <span class="commitment-status status-in-progress">In Progress</span>
-                            <button class="commitment-copy-link" title="Copy link" onclick="event.preventDefault(); navigator.clipboard.writeText(window.location.origin + '/assorted/accountability#pisscoin').then(() => { this.textContent = 'Copied!'; setTimeout(() => this.textContent = '\\u{1F517}', 1500); });">&#x1F517;</button>
-                        </summary>
-                        <div class="commitment-details">
-                            <div class="commitment-dates">
-                                <span>Committed: March 5, 2026</span>
-                            </div>
-                            <ul class="commitment-bullets">
-                                <li><strong>What:</strong> I received creator fees from a community-created coin called $PISSCOIN. From these fees, I bought 5,778,223.76 $PISSCOIN tokens.</li>
-                                <li><strong>Commitment:</strong> I will never sell these. I will hold $PISSCOIN until the day I die and leave it in my will to my favourite grandchild.</li>
-                                <li><strong>Motivation:</strong> In the spirit of HODL \u2014 I want to follow this token wherever it goes. If it goes to zero, so be it. If it moons, my grandkids will thank me.</li>
-                            </ul>
-                            <div class="commitment-onchain">
-                                <p><strong>PISSCOIN CA:</strong> <code>7qdVkvsMEGg1D8H9YCEasNKYxLgfkQDXG2uvys67pump</code></p>
-                                <p><strong>Wallet:</strong> <code>3xDeFXgK1nikzqdQUp2WdofbvqziteUoZf6MdX8CvgDu</code></p>
-                                <p><strong>Holdings:</strong> 5,778,223.76 tokens</p>
-                            </div>
-                        </div>
-                    </details>
-
-                    <details id="pisscoin-silence" class="commitment-entry">
-                        <summary>
-                            <span class="commitment-title">Never tweet about $PISSCOIN again until my official death announcement</span>
-                            <span class="commitment-status status-in-progress">In Progress</span>
-                            <button class="commitment-copy-link" title="Copy link" onclick="event.preventDefault(); navigator.clipboard.writeText(window.location.origin + '/assorted/accountability#pisscoin-silence').then(() => { this.textContent = 'Copied!'; setTimeout(() => this.textContent = '\\u{1F517}', 1500); });">&#x1F517;</button>
-                        </summary>
-                        <div class="commitment-details">
-                            <div class="commitment-dates">
-                                <span>Committed: March 5, 2026</span>
-                            </div>
-                            <ul class="commitment-bullets">
-                                <li><strong>What:</strong> POM will not tweet about $PISSCOIN again until his official death announcement.</li>
-                                <li><strong>Motivation:</strong> $PISSCOIN was created by someone else based on a joke I made \u2014 nothing to do with me personally. But in practice, I have an incentive to hype it since I hold it and receive fees from trades. I'm going to reject that incentive. Though I will hold it until the day I die and give it to my grandkids, I don't want to spend my life promoting a coin called $PISSCOIN. Whatever happens with $PISSCOIN, I hope my grandkids will learn a lesson from this.</li>
-                            </ul>
-                            <div class="commitment-onchain">
-                                <p><strong>PISSCOIN CA:</strong> <code>7qdVkvsMEGg1D8H9YCEasNKYxLgfkQDXG2uvys67pump</code></p>
-                                <p><strong>Twitter:</strong> <a href="https://x.com/peteromallet" target="_blank">@peteromallet</a></p>
-                            </div>
-                        </div>
-                    </details>
-
-                    <details id="one-crypto" class="commitment-entry">
-                        <summary>
-                            <span class="commitment-title">Only ever personally launch one crypto asset &mdash; at least until 2031</span>
-                            <span class="commitment-status status-in-progress">In Progress</span>
-                            <button class="commitment-copy-link" title="Copy link" onclick="event.preventDefault(); navigator.clipboard.writeText(window.location.origin + '/assorted/accountability#one-crypto').then(() => { this.textContent = 'Copied!'; setTimeout(() => this.textContent = '\\u{1F517}', 1500); });">&#x1F517;</button>
-                        </summary>
-                        <div class="commitment-details">
-                            <div class="commitment-dates">
-                                <span>Committed: March 13, 2026</span>
-                            </div>
-                            <ul class="commitment-bullets">
-                                <li><strong>What:</strong> I will only ever personally launch one crypto asset ($DESLOPPIFY) &mdash; at least until 2031. Community-created tokens are a different thing &mdash; if degens create something and give me fees, I'll spend those on the project. But I will not personally create or launch another token.</li>
-                                <li><strong>Motivation:</strong> Playing with the crypto community is fun and they can fund useful things. But I don't want to become a serial token launcher. One is enough. I'd rather focus on building real things and let the community do their thing around it.</li>
-                            </ul>
-                            <div class="commitment-onchain">
-                                <p><strong>$DESLOPPIFY CA:</strong> <code>8m7MwTcasDYTjUfcU6goFPUczXqzCvbqbGRbFM1Vpump</code></p>
-                            </div>
-                        </div>
-                    </details>
-
-                    <details id="no-memecoins" class="commitment-entry">
-                        <summary>
-                            <span class="commitment-title">Only engage with community-created crypto assets that fund something real \u2014 and only promote what they actually achieve</span>
-                            <span class="commitment-status status-in-progress">In Progress</span>
-                            <button class="commitment-copy-link" title="Copy link" onclick="event.preventDefault(); navigator.clipboard.writeText(window.location.origin + '/assorted/accountability#no-memecoins').then(() => { this.textContent = 'Copied!'; setTimeout(() => this.textContent = '\\u{1F517}', 1500); });">&#x1F517;</button>
-                        </summary>
-                        <div class="commitment-details">
-                            <div class="commitment-dates">
-                                <span>Committed: March 6, 2026 &bull; Updated: March 13, 2026</span>
-                            </div>
-                            <ul class="commitment-bullets">
-                                <li><strong>What:</strong> Crypto has already paid for a few real projects \u2014 random degens creating tokens has directly funded open-source work. That's inherently valuable. If the community creates assets related to what I'm building, and they give me fees and ownership to actually use on the project, I'll spend those fees on furthering whatever the project is actually about. I will never create more than one crypto asset myself ($DESLOPPIFY). I will only ever promote community-created tokens by promoting what they actually result in \u2014 shipped projects, grants funded, compute purchased \u2014 not the tokens themselves. I will not get involved in nihilistic hype or meaningless speculation. I will mute anyone who tries to promote meaningless crypto projects to me \u2014 ideally with an AI agent so I don't have to do it manually.</li>
-                                <li><strong>Motivation:</strong> I'm choosing to dedicate my life to open-source AI. The crypto ecosystem has funded real work and I don't want to reject that \u2014 but I refuse to let it corrupt what I'm doing. The line is simple: if it funds something real, I'll engage with it by spending fees on the project and talking about what it achieves. If it's just noise, I'm out.</li>
-                            </ul>
-                            <div class="commitment-onchain">
-                                <p><strong>Twitter:</strong> <a href="https://x.com/peteromallet" target="_blank">@peteromallet</a></p>
-                            </div>
+                            <p class="commitment-conversions-note">Conversions as of March 2, 2026.</p>
                         </div>
                     </details>
 
