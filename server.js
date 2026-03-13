@@ -726,6 +726,26 @@ const server = http.createServer((req, res) => {
                         </div>
                     </details>
 
+                    <details id="one-crypto" class="commitment-entry">
+                        <summary>
+                            <span class="commitment-title">Only ever personally launch one crypto asset &mdash; at least until 2031</span>
+                            <span class="commitment-status status-in-progress">In Progress</span>
+                            <button class="commitment-copy-link" title="Copy link" onclick="event.preventDefault(); navigator.clipboard.writeText(window.location.origin + '/assorted/accountability#one-crypto').then(() => { this.textContent = 'Copied!'; setTimeout(() => this.textContent = '\\u{1F517}', 1500); });">&#x1F517;</button>
+                        </summary>
+                        <div class="commitment-details">
+                            <div class="commitment-dates">
+                                <span>Committed: March 13, 2026</span>
+                            </div>
+                            <ul class="commitment-bullets">
+                                <li><strong>What:</strong> I will only ever personally launch one crypto asset ($DESLOPPIFY) &mdash; at least until 2031. Community-created tokens are a different thing &mdash; if degens create something and give me fees, I'll spend those on the project. But I will not personally create or launch another token.</li>
+                                <li><strong>Motivation:</strong> Playing with the crypto community is fun and they can fund useful things. But I don't want to become a serial token launcher. One is enough. I'd rather focus on building real things and let the community do their thing around it.</li>
+                            </ul>
+                            <div class="commitment-onchain">
+                                <p><strong>$DESLOPPIFY CA:</strong> <code>8m7MwTcasDYTjUfcU6goFPUczXqzCvbqbGRbFM1Vpump</code></p>
+                            </div>
+                        </div>
+                    </details>
+
                     <details id="no-memecoins" class="commitment-entry">
                         <summary>
                             <span class="commitment-title">Only engage with community-created crypto assets that fund something real \u2014 and only promote what they actually achieve</span>
