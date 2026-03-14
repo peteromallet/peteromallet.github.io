@@ -610,7 +610,7 @@ const server = http.createServer((req, res) => {
                                 <li><strong>Motivation:</strong> I'm choosing to dedicate my life to open-source AI. The crypto ecosystem has funded real work and I don't want to reject that \u2014 but I refuse to let it corrupt what I'm doing. The line is simple: if it funds something real, I'll engage with it by spending fees on the project and talking about what it achieves. If it's just noise, I'm out.</li>
                             </ul>
                             <div class="commitment-onchain">
-                                <p><strong>Twitter:</strong> <a href="https://x.com/peteromallet" target="_blank">@peteromallet</a></p>
+                                <p><strong>Twitter:</strong> <a href="https://x.com/peterom" target="_blank">@peterom</a></p>
                             </div>
                         </div>
                     </details>
@@ -679,7 +679,7 @@ const server = http.createServer((req, res) => {
                             </ul>
                             <div class="commitment-onchain">
                                 <p><strong>PISSCOIN CA:</strong> <code>7qdVkvsMEGg1D8H9YCEasNKYxLgfkQDXG2uvys67pump</code></p>
-                                <p><strong>Twitter:</strong> <a href="https://x.com/peteromallet" target="_blank">@peteromallet</a></p>
+                                <p><strong>Twitter:</strong> <a href="https://x.com/peterom" target="_blank">@peterom</a></p>
                             </div>
                         </div>
                     </details>
@@ -813,7 +813,7 @@ const server = http.createServer((req, res) => {
             platform: 'X (DM)',
             context: 'Quanatee reached out to explain how single-sided liquidity pool positions work for the $DESLOP token. This conversation has been shared with Quanatee\'s knowledge and consent. A screenshot from Quanatee\'s initial outreach has been omitted at their request.',
             participants: [
-              { name: 'Peter O\'Malley', handle: '@peteromallet', url: 'https://x.com/peteromallet', avatar: null },
+              { name: 'Peter O\'Malley', handle: '@peterom', url: 'https://x.com/peterom', avatar: null },
               { name: 'Quanatee', handle: '@quanatee', url: 'https://x.com/quanatee', avatar: null },
             ],
             messages: [
