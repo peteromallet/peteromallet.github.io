@@ -586,11 +586,11 @@ const server = http.createServer((req, res) => {
                                 <span>Committed: March 13, 2026</span>
                             </div>
                             <ul class="commitment-bullets">
-                                <li><strong>What:</strong> I will only ever personally launch one crypto asset ($DESLOPPIFY) &mdash; at least until 2031. Community-created tokens are a different thing &mdash; if degens create something and give me fees, I'll spend those on the project. But I will not personally create or launch another token.</li>
+                                <li><strong>What:</strong> I will only ever personally launch one crypto asset (TBA) &mdash; at least until 2031. Community-created tokens are a different thing &mdash; if degens create something and give me fees, I'll spend those on the project. But I will not personally create or launch another token.</li>
                                 <li><strong>Motivation:</strong> Playing with the crypto community is fun and they can fund useful things. But I don't want to become a serial token launcher. One is enough. I'd rather focus on building real things and let the community do their thing around it.</li>
                             </ul>
                             <div class="commitment-onchain">
-                                <p><strong>$DESLOPPIFY CA:</strong> <code>8m7MwTcasDYTjUfcU6goFPUczXqzCvbqbGRbFM1Vpump</code></p>
+                                <p><strong>CA:</strong> TBA</p>
                             </div>
                         </div>
                     </details>
