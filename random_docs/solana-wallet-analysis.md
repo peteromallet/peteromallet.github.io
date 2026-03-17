@@ -1,71 +1,118 @@
-# DataClaw Creator Fee Wallet Analysis
+# Creator Fee Wallet — How Much Came From Each Token?
 
 **Wallet:** [`3xDeFXgK1nikzqdQUp2WdofbvqziteUoZf6MdX8CvgDu`](https://solscan.io/account/3xDeFXgK1nikzqdQUp2WdofbvqziteUoZf6MdX8CvgDu)
-**Last updated:** March 2, 2026
-**Balance:** ~752 SOL
+**Last updated:** March 17, 2026
 
-## What is this?
+## The short version
 
-This wallet collects creator fees from tokens traded on [Pump.fun](https://pump.fun) / PumpSwap. Every trade on a PumpSwap pool charges a 0.05% creator fee, which is automatically claimed to this wallet by a bot.
+This wallet collects Pump.fun creator fees from three tokens: **DataClaw**, **DESLOPPIFY #2**, and **DESLOPPIFY #3**. Every trade charges a 0.05% creator fee in SOL, which gets auto-claimed to this wallet.
 
-The wallet receives fees from three tokens: **DataClaw** and two **DESLOPPIFY** tokens. All DataClaw fees are being donated to [The Arca Gidan Art Prize](https://arcagidan.com/).
+The problem: **fees from all three tokens land in the same wallet with no label**. There's no on-chain way to tell which fee came from which token. So we estimate the split using each token's share of total trading volume.
 
-## Fee Split
+## The calculation
 
-Since individual fee claims don't identify which token they came from (they go through a shared vault), the split is estimated using the trading volume ratio between tokens.
+### Step 1: Current wallet balance (verifiable on-chain)
 
-| Token | Total Volume | Share | Est. Fees |
-|-------|-------------|-------|-----------|
-| DataClaw | $7.4M | 90.4% | ~680 SOL |
-| DESLOPPIFY #2 | $307K | 3.7% | ~28 SOL |
-| DESLOPPIFY #3 | $478K | 5.8% | ~44 SOL |
-| **Total** | **$8.2M** | **100%** | **~752 SOL** |
+| | SOL |
+|---|---|
+| Current wallet balance | ~764 |
 
-Volume data from GeckoTerminal. It understates absolute volume (~26x) but the ratio between tokens is reliable.
+Anyone can check this on [Solscan](https://solscan.io/account/3xDeFXgK1nikzqdQUp2WdofbvqziteUoZf6MdX8CvgDu).
 
-## Daily Volume History
+### Step 2: Add back any SOL that's been sent out
 
-### DataClaw
+Some SOL has already been spent from the DESLOPPIFY side (bounties, etc). To calculate the true fee split, we need to add that back.
 
-| Date | Volume |
-|------|--------|
-| Feb 25 | $5,789,847 |
-| Feb 26 | $1,236,280 |
-| Feb 27 | $220,334 |
-| Feb 28 | $77,246 |
-| Mar 1 | $56,650 |
-| Mar 2 | $33,552 |
+| Date | Amount (SOL) | Purpose | TX |
+|------|-------------|---------|-----|
+| ~Mar 2026 | TODO | $1,000 bounty to @agustif (Initiative #1) | TODO |
+| ~Mar 2026 | TODO | Transfer to other wallet (~$3K) | TODO |
+| | **TODO** | **Total sent out** | |
 
-### DESLOPPIFY #2
+*These outflows can be independently verified on [Solscan](https://solscan.io/account/3xDeFXgK1nikzqdQUp2WdofbvqziteUoZf6MdX8CvgDu) — filter for outgoing SOL transfers.*
 
-| Date | Volume |
-|------|--------|
-| Feb 25 | $274,259 |
-| Feb 26 | $17,644 |
-| Feb 27 | $8,080 |
-| Feb 28 | $6,955 |
-| Mar 1 | $31 |
-| Mar 2 | $175 |
+### Step 3: Total fees ever collected
 
-### DESLOPPIFY #3
+```
+Total fees = current balance + total sent out
+           = 764 + TODO
+           = TODO SOL
+```
 
-| Date | Volume |
-|------|--------|
-| Feb 27 | $163,117 |
-| Feb 28 | $211,865 |
-| Mar 1 | $62,244 |
-| Mar 2 | $41,208 |
+### Step 4: Volume ratio from GeckoTerminal
 
-## How Fees Work
+Each token's share of total trading volume determines its share of fees. Since all three tokens charge the same 0.05% fee rate, fees are proportional to volume.
 
-1. Someone trades on a PumpSwap pool — 0.05% goes to the token creator
-2. Fees accumulate as wrapped SOL in a per-token vault
-3. A bot periodically transfers fees from the vault to a shared Pump.fun account
-4. The bot then claims from the shared account to this wallet
+| Token | Total Volume | Share |
+|-------|-------------|-------|
+| DataClaw | $7,519,148 | 87.6% |
+| DESLOPPIFY #2 | $307,655 | 3.6% |
+| DESLOPPIFY #3 | $758,866 | 8.8% |
+| **Total** | **$8,585,669** | **100%** |
 
-Because step 4 uses a shared account, individual claims can't be traced back to a specific token — hence the volume-based estimation above.
+Volume data from [GeckoTerminal](https://www.geckoterminal.com/) daily OHLCV candles, summed across all trading days.
 
-## On-Chain References
+### Step 5: Per-token fees
+
+```
+DataClaw fees      = total_fees × 87.6%
+DESLOPPIFY #2 fees = total_fees × 3.6%
+DESLOPPIFY #3 fees = total_fees × 8.8%
+```
+
+Once the outflows in Step 2 are filled in, this gives the final per-token attribution. Since all outflows so far came from the DESLOPPIFY side, the DataClaw SOL is untouched and still sitting in the wallet.
+
+## Why this estimate is reasonable
+
+- **The wallet balance is a hard fact.** Anyone can verify it on Solscan.
+- **All three tokens charge the same 0.05% fee.** Fees should be proportional to volume.
+- **DataClaw's dominance is overwhelming.** ~88% of all volume — even if the exact percentage is slightly off, DataClaw generated the vast majority of the fees.
+- **All outflows are trackable.** Every SOL that leaves the wallet has an on-chain transaction signature.
+
+## Limitations
+
+- **Volume data comes from one source: [GeckoTerminal](https://www.geckoterminal.com/).** No other free API provides lifetime pool volume for PumpSwap tokens. GeckoTerminal understates absolute volume (by ~26x based on earlier checks), but the *ratio* between tokens should be reliable since all three trade on the same platform using the same data source.
+- **The split is an estimate, not a proof.** There's no on-chain mechanism to attribute individual fee claims to specific tokens.
+- **We assume no other tokens generate fees to this wallet.** If there are tokens we're not tracking, the split would be off. (We're not aware of any.)
+
+## Why can't we just filter by token on-chain?
+
+Here's how PumpSwap creator fees work:
+
+1. Someone trades a token on a PumpSwap pool — 0.05% goes to the token creator
+2. Fees accumulate as wrapped SOL in a **per-token vault**
+3. A bot transfers fees from the vault to a **shared Pump.fun account**
+4. The bot claims from the shared account to this wallet
+
+The per-token attribution is lost at step 3. By the time SOL arrives in the wallet, it's just SOL — there's no record of which token generated it.
+
+## Verify it yourself
+
+### 1. Check the wallet balance
+Go to [Solscan](https://solscan.io/account/3xDeFXgK1nikzqdQUp2WdofbvqziteUoZf6MdX8CvgDu) and look at the SOL balance.
+
+### 2. Check outflows
+On the same Solscan page, look at outgoing SOL transfers. These are the amounts to subtract when calculating fee attribution.
+
+### 3. Check each token's trading volume
+Look up each pool on GeckoTerminal to see its historical volume:
+
+- [DataClaw pool](https://www.geckoterminal.com/solana/pools/A9aoE41kUqsKcYGSr5hvhZ2hJF5xZCWuE9D94J8ZPbkd)
+- [DESLOPPIFY #2 pool](https://www.geckoterminal.com/solana/pools/4jnx2RJNCeoeiktf4TUjxvXJz5two7D8Dux5Bha3u6Gf)
+- [DESLOPPIFY #3 pool](https://www.geckoterminal.com/solana/pools/6e1K4qBHmXpAFdZzFCPyL3LAn2iGtPsieeopc4AjYKp6)
+
+Sum the total volume for each, then calculate each token's percentage of the combined total.
+
+### 4. Do the math
+```
+total_fees = wallet_balance + total_outflows
+dataclaw_fees = total_fees × (dataclaw_volume / total_volume)
+```
+
+### 5. Confirm these are the only tokens
+The wallet is the registered creator for these three tokens on Pump.fun. If you find additional tokens with this wallet as creator, the calculation would need to include them.
+
+## On-chain references
 
 | What | Address |
 |------|---------|
@@ -79,6 +126,6 @@ Because step 4 uses a shared account, individual claims can't be traced back to 
 | Auto-claim bot | `2sMrGNK8i36YRkF5WWCwnaUYuwDJhHe1g2xA8aPvhkjM` |
 | PumpSwap program | `pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA` |
 
-## Updating This Data
+## Updating this data
 
-Run `node scripts/fetch-fee-data.mjs` to get current wallet balance and fee split.
+Run `node scripts/fetch-fee-data.mjs` to get the current wallet balance and fee split. Note: the script doesn't account for outflows — you need to add those manually using Step 2 above.
