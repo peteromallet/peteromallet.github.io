@@ -3,7 +3,18 @@
 **Wallet:** [`3xDeFXgK1nikzqdQUp2WdofbvqziteUoZf6MdX8CvgDu`](https://solscan.io/account/3xDeFXgK1nikzqdQUp2WdofbvqziteUoZf6MdX8CvgDu)
 **Last updated:** March 17, 2026
 
-## The short version
+| Token | Est. Fees | Share | Status |
+|-------|----------|-------|--------|
+| **DataClaw** | **~688 SOL** | **87.6%** | Untouched — committed to [The Arca Gidan Art Prize](https://arcagidan.com/) |
+| DESLOPPIFY #2 | ~27 SOL | 3.6% | Spent on bounties & ecosystem |
+| DESLOPPIFY #3 | ~68 SOL | 8.8% | Spent on bounties & ecosystem |
+| **Total collected** | **~785 SOL** | | ~764 SOL remaining in wallet |
+
+*These are estimates — see below for how they're calculated, why, and how to verify them yourself.*
+
+---
+
+## How we get these numbers
 
 This wallet collects Pump.fun creator fees from three tokens: **DataClaw**, **DESLOPPIFY #2**, and **DESLOPPIFY #3**. Every trade charges a 0.05% creator fee in SOL, which gets auto-claimed to this wallet.
 
@@ -27,16 +38,16 @@ Some SOL has already been spent from the DESLOPPIFY side (bounties, etc). To cal
 |------|-------------|---------|-----|
 | ~Mar 2026 | TODO | $1,000 bounty to @agustif (Initiative #1) | TODO |
 | ~Mar 2026 | TODO | Transfer to other wallet (~$3K) | TODO |
-| | **TODO** | **Total sent out** | |
+| | **~21 SOL** | **Total sent out (estimated)** | |
 
-*These outflows can be independently verified on [Solscan](https://solscan.io/account/3xDeFXgK1nikzqdQUp2WdofbvqziteUoZf6MdX8CvgDu) — filter for outgoing SOL transfers.*
+*Estimated at ~$4K / ~$190 per SOL. These outflows can be independently verified on [Solscan](https://solscan.io/account/3xDeFXgK1nikzqdQUp2WdofbvqziteUoZf6MdX8CvgDu) — filter for outgoing SOL transfers. Fill in the exact SOL amounts and TX signatures once confirmed.*
 
 ### Step 3: Total fees ever collected
 
 ```
 Total fees = current balance + total sent out
-           = 764 + TODO
-           = TODO SOL
+           = 764 + ~21
+           = ~785 SOL
 ```
 
 ### Step 4: Volume ratio from GeckoTerminal
@@ -55,12 +66,12 @@ Volume data from [GeckoTerminal](https://www.geckoterminal.com/) daily OHLCV can
 ### Step 5: Per-token fees
 
 ```
-DataClaw fees      = total_fees × 87.6%
-DESLOPPIFY #2 fees = total_fees × 3.6%
-DESLOPPIFY #3 fees = total_fees × 8.8%
+DataClaw fees      = ~785 × 87.6% = ~688 SOL
+DESLOPPIFY #2 fees = ~785 × 3.6%  = ~28 SOL
+DESLOPPIFY #3 fees = ~785 × 8.8%  = ~69 SOL
 ```
 
-Once the outflows in Step 2 are filled in, this gives the final per-token attribution. Since all outflows so far came from the DESLOPPIFY side, the DataClaw SOL is untouched and still sitting in the wallet.
+All outflows so far came from the DESLOPPIFY side — the ~688 SOL attributed to DataClaw is untouched and still sitting in the wallet.
 
 ## Why this estimate is reasonable
 
