@@ -419,6 +419,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Sort cards based on data-position attribute
     function sortCardsByPosition() {
         const dashboard = document.querySelector('.dashboard');
+        if (!dashboard) return;
         const cards = Array.from(dashboard.querySelectorAll('.card'));
         
         // Sort cards by their data-position attribute
