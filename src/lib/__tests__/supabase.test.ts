@@ -146,7 +146,7 @@ describe('supabaseServiceRequest', () => {
     const mockFetch = vi.fn().mockResolvedValue({
       ok: true,
       status: 200,
-      json: async () => [],
+      text: async () => '[]',
     });
     vi.stubGlobal('fetch', mockFetch);
 

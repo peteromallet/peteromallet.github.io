@@ -122,6 +122,32 @@ async function createApp() {
     res.json({ tweeted: true });
   });
 
+  app.get('/api/posts', async (_req, res) => {
+    try {
+      res.json(await getPosts());
+    } catch (error) {
+      console.warn('Failed to load posts:', error);
+      res.status(500).json({ error: 'Failed to load posts.' });
+    }
+  });
+
+  app.get('/api/posts/:slug', async (req, res) => {
+    const slug = typeof req.params.slug === 'string' ? req.params.slug : '';
+
+    try {
+      const postPage = await getPostPage(slug);
+      if (!postPage.post) {
+        res.status(404).json({ error: 'Post not found.' });
+        return;
+      }
+
+      res.json(postPage);
+    } catch (error) {
+      console.warn(`Failed to load post ${slug}:`, error);
+      res.status(500).json({ error: 'Failed to load post.' });
+    }
+  });
+
   app.post('/api/feedback/enrich', async (req, res) => {
     const providerToken = typeof req.body?.provider_token === 'string' ? req.body.provider_token : '';
     const emptyProfile = {
