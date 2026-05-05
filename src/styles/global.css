@@ -197,6 +197,51 @@ button {
   transform: translateY(10px);
 }
 
+.image-shell {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  background: rgba(156, 163, 175, 0.16);
+}
+
+.image-shell > img {
+  transition: opacity 0.25s ease, transform 0.35s ease, filter 0.35s ease;
+}
+
+.image-shell > img[data-loaded='false'] {
+  opacity: 0;
+}
+
+.image-shell > img[data-loaded='true'] {
+  opacity: 1;
+}
+
+.image-skeleton {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: rgba(255, 255, 255, 0.16);
+  pointer-events: none;
+}
+
+.image-skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.26),
+    transparent
+  );
+  animation: skeleton-shimmer 1.4s ease-in-out infinite;
+}
+
+.image-shell-loaded .image-skeleton {
+  opacity: 0;
+}
+
 @media (max-width: 768px) {
   body {
     padding: 0.25rem 1rem 1rem;
@@ -528,6 +573,11 @@ button {
   padding-bottom: 56%;
 }
 
+.video-thumbnail-shell {
+  position: absolute;
+  inset: 0;
+}
+
 .video-thumbnail {
   position: absolute;
   inset: 0;
@@ -666,6 +716,15 @@ button {
 .square-image-container.has-video,
 .square-image-container.has-video .square-image-media {
   cursor: pointer;
+}
+
+.square-image-shell {
+  width: 100%;
+  height: 100%;
+}
+
+.square-image-hidden {
+  display: none;
 }
 
 .square-image-mobile-active {
@@ -2697,6 +2756,11 @@ button {
   transition: transform 0.35s ease, filter 0.35s ease, opacity 0.35s ease;
 }
 
+.card-image-container .image-shell {
+  position: absolute;
+  inset: 0;
+}
+
 .card.expanded .card-image-container {
   padding-bottom: 65%;
 }
@@ -2874,6 +2938,23 @@ button {
   height: auto;
 }
 
+.meme-image .image-shell {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.feedback-attachment-shell {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 16px;
+}
+
+.feedback-attachment-shell > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 .meme-card.expanded .meme-image {
   opacity: 1;
   transform: translateY(0);
@@ -2962,12 +3043,24 @@ button {
   flex-shrink: 0;
 }
 
+.recommendation-summary .image-shell {
+  width: 44px;
+  height: 44px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.recommendation-summary .image-shell > img {
+  display: block;
+}
+
 .recommendation-summary-text {
   flex: 1;
   min-width: 0;
 }
 
-.recommendation-card[open] .recommendation-thumb {
+.recommendation-card[open] .recommendation-thumb,
+.recommendation-card[open] .recommendation-summary .image-shell {
   display: none;
 }
 
@@ -3024,6 +3117,19 @@ button {
   margin: 0 0 0.75rem 1rem;
   border-radius: 8px;
   object-fit: cover;
+}
+
+.recommendation-body > .image-shell {
+  float: right;
+  width: 140px;
+  height: 140px;
+  margin: 0 0 0.75rem 1rem;
+  border-radius: 8px;
+}
+
+.recommendation-body > .image-shell .recommendation-image {
+  float: none;
+  margin: 0;
 }
 
 .media {
@@ -3102,8 +3208,16 @@ video.media {
   display: block;
 }
 
+.media-frame .image-shell {
+  display: block;
+  width: 100%;
+  border-radius: 8px;
+}
+
 .media-frame > img,
 .media-frame .media-link > img,
+.media-frame .image-shell > img,
+.media-frame .media-link .image-shell > img,
 .media-video-frame > .media-video {
   display: block;
   width: 100%;

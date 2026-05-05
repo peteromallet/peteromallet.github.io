@@ -9,6 +9,7 @@ import type {
   VideoCardData,
 } from '../../data/home-cards';
 import { useVideosReady } from '../../hooks/useVideosReady';
+import { LoadingImage } from '../LoadingImage';
 import { VideoPlayer } from '../VideoPlayer';
 import { WeightsChart } from '../WeightsChart';
 
@@ -49,7 +50,7 @@ export function StoryCard({ card }: { card: StoryCardData }) {
   return (
     <>
       <div className="card-image-container">
-        <img src={card.imageSrc} alt={card.imageAlt} loading="lazy" />
+        <LoadingImage src={card.imageSrc} alt={card.imageAlt} loading="lazy" />
       </div>
       <h3>{card.title}</h3>
       <div className="card-text-content">
@@ -81,7 +82,7 @@ export function ProjectCard({ card }: { card: ProjectCardData }) {
   return (
     <>
       <div className="card-image-container">
-        <img src={card.imageSrc} alt={card.imageAlt} loading="lazy" />
+        <LoadingImage src={card.imageSrc} alt={card.imageAlt} loading="lazy" />
         {card.hoverGifSrc && videosReady ? (
           <div className="card-hover-gif">
             <video src={card.hoverGifSrc} autoPlay loop muted playsInline preload="none" className="ignore-load" />
@@ -145,7 +146,7 @@ export function MemeCard({
   return (
     <>
       <div className="card-image-container">
-        <img src={card.imageSrc} alt={card.imageAlt} className="card-main-image" loading="lazy" />
+        <LoadingImage src={card.imageSrc} alt={card.imageAlt} className="card-main-image" loading="lazy" />
       </div>
       <h3>{card.title}</h3>
       <div className="card-text-content">
@@ -162,7 +163,7 @@ export function MemeCard({
             className="meme-image"
             style={expanded ? { transitionDelay: `${0.1 * (index + 1)}s` } : undefined}
           >
-            <img src={image.src} alt={image.alt} loading="lazy" />
+            <LoadingImage src={image.src} alt={image.alt} loading="lazy" />
           </div>
         ))}
       </div>

@@ -1,5 +1,6 @@
 import { startTransition, useCallback, useEffect, useRef, useState, type ChangeEvent, type CSSProperties, type FormEvent } from 'react';
 import { Header } from '../components/Header';
+import { LoadingImage } from '../components/LoadingImage';
 import { useAuth } from '../hooks/useAuth';
 import { getPublicImageUrl } from '../lib/feedback';
 import { getSupabaseBrowserClient, type BrowserSupabaseClient } from '../lib/supabase-client';
@@ -439,10 +440,11 @@ export function FeedbackPage({ feedback }: FeedbackPageProps) {
                   <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                     <div className="flex items-center gap-3">
                       {xProfile?.avatar_url ? (
-                        <img
+                        <LoadingImage
                           src={xProfile.avatar_url}
                           alt={xProfile.username ? `@${xProfile.username}` : 'X avatar'}
                           className="h-12 w-12 rounded-full border border-[rgba(145,118,90,0.2)] object-cover"
+                          wrapperClassName="inline-block h-12 w-12 rounded-full"
                         />
                       ) : (
                         <div className="flex h-12 w-12 items-center justify-center rounded-full border border-[rgba(145,118,90,0.2)] bg-[rgba(255,247,236,0.85)] font-display text-[#7a5b44]">
@@ -577,10 +579,11 @@ export function FeedbackPage({ feedback }: FeedbackPageProps) {
                             ?
                           </div>
                         ) : entry.x_avatar_url ? (
-                          <img
+                          <LoadingImage
                             src={entry.x_avatar_url}
                             alt={entry.x_username ? `@${entry.x_username}` : 'Feedback avatar'}
                             className="h-11 w-11 rounded-full border border-[rgba(145,118,90,0.18)] object-cover"
+                            wrapperClassName="inline-block h-11 w-11 rounded-full"
                           />
                         ) : (
                           <div className="flex h-11 w-11 items-center justify-center rounded-full border border-[rgba(145,118,90,0.18)] bg-[rgba(255,247,236,0.85)] font-display text-[#7a5b44]">
@@ -643,11 +646,12 @@ export function FeedbackPage({ feedback }: FeedbackPageProps) {
                       {expanded && entry.image_paths.length > 0 ? (
                         <div className="grid gap-3 sm:grid-cols-2">
                           {entry.image_paths.map((imagePath) => (
-                            <img
+                            <LoadingImage
                               key={imagePath}
                               src={getPublicImageUrl(imagePath)}
                               alt="Attached feedback evidence"
                               className="w-full rounded-[16px] border border-[rgba(145,118,90,0.14)] bg-[rgba(255,250,244,0.85)] object-cover"
+                              wrapperClassName="block feedback-attachment-shell"
                               loading="lazy"
                             />
                           ))}

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import type { SquareImageData } from '../../data/home-cards';
 import { useImageHover } from '../../hooks/useImageHover';
 import { useSetVideosReady } from '../../hooks/useVideosReady';
+import { LoadingImage } from '../LoadingImage';
 
 interface SquareImagesProps {
   images: SquareImageData[];
@@ -58,11 +59,11 @@ export function SquareImages({ images }: SquareImagesProps) {
               onMouseEnter={() => onEnter(index)}
               onMouseLeave={() => onLeave()}
             >
-              <img
+              <LoadingImage
                 src={image.imageSrc}
                 alt={image.alt}
                 className="square-image-media"
-                style={isPlaying ? { display: 'none' } : undefined}
+                wrapperClassName={`square-image-shell${isPlaying ? ' square-image-hidden' : ''}`}
                 onClick={() => {
                   const video = videoRefs.current[index];
                   if (!video) return;

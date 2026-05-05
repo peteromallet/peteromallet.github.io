@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { marked } from 'marked';
 import { Header } from '../components/Header';
+import { LoadingImage } from '../components/LoadingImage';
 import type { RecommendationEntry } from '../types';
 
 export type MediaWidth = 'full' | 'half' | 'third';
@@ -501,9 +502,7 @@ export function MediaImage({
 }) {
   const { revealed, reveal } = useTapReveal();
   const className = `${mediaClassName(width, wrap)} media-frame${revealed ? ' media-revealed' : ''}`;
-  const image = (
-    <img src={item.src} alt={item.alt ?? ''} />
-  );
+  const image = <LoadingImage src={item.src} alt={item.alt ?? ''} loading="lazy" />;
 
   return (
     <div className={className} onClick={reveal}>
@@ -673,10 +672,11 @@ export function RecommendationsBody({
   return (
     <div className="recommendation-body text-[0.82rem] leading-[1.7] text-[#666]">
       {image && (
-        <img
+        <LoadingImage
           src={image.src}
           alt={image.alt}
           className="recommendation-image"
+          loading="lazy"
         />
       )}
       {renderBody(markdown).map((segment, index) => {
@@ -723,10 +723,11 @@ function RecommendationCard({ rec }: { rec: RecommendationEntry }) {
       <summary className="recommendation-summary">
         <div className="recommendation-summary-content">
           {rec.image_url && (
-            <img
+            <LoadingImage
               src={rec.image_url}
               alt={rec.name}
               className="recommendation-thumb"
+              loading="lazy"
             />
           )}
           <div className="recommendation-summary-text">

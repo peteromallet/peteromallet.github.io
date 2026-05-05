@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Icon } from './icons';
+import { LoadingImage } from './LoadingImage';
 
 interface VideoPlayerProps {
   className?: string;
@@ -42,10 +43,11 @@ export function VideoPlayer({
         }
       }}
     >
-      <img
+      <LoadingImage
         src={thumbnailSrc}
         alt={thumbnailAlt}
         className="video-thumbnail"
+        wrapperClassName="video-thumbnail-shell"
       />
       <button
         type="button"
