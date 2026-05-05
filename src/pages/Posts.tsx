@@ -21,13 +21,33 @@ const COLOR_VARIANTS = [
 
 let cachedPosts: PostSummary[] | null = null;
 
+function PostsSkeleton() {
+  return (
+    <>
+      {Array.from({ length: 4 }, (_, index) => (
+        <div
+          key={index}
+          className={`posts-card posts-card-skeleton ${COLOR_VARIANTS[index % COLOR_VARIANTS.length]}`}
+          aria-hidden="true"
+        >
+          <div className="skeleton-line skeleton-title"></div>
+          <div className="skeleton-line skeleton-date"></div>
+          <div className="skeleton-line skeleton-excerpt"></div>
+          <div className="skeleton-line skeleton-excerpt skeleton-excerpt-short"></div>
+        </div>
+      ))}
+    </>
+  );
+}
+
 export function PostsPage({ posts: initialPosts }: PostsPageProps) {
-  const hasCached = !initialPosts?.length && cachedPosts !== null;
+  const hasInitialPosts = initialPosts !== undefined;
+  const hasCached = !hasInitialPosts && cachedPosts !== null;
   const [posts, setPosts] = useState<PostSummary[]>(initialPosts ?? cachedPosts ?? []);
-  const [loading, setLoading] = useState(!initialPosts?.length && !hasCached);
+  const [loading, setLoading] = useState(!hasInitialPosts && !hasCached);
 
   useEffect(() => {
-    if (initialPosts?.length) return;
+    if (hasInitialPosts) return;
     if (cachedPosts !== null) {
       setPosts(cachedPosts);
       setLoading(false);
@@ -45,7 +65,7 @@ export function PostsPage({ posts: initialPosts }: PostsPageProps) {
         setPosts([]);
       })
       .finally(() => setLoading(false));
-  }, [initialPosts]);
+  }, [hasInitialPosts]);
 
   return (
     <div className="container">
@@ -53,7 +73,9 @@ export function PostsPage({ posts: initialPosts }: PostsPageProps) {
       <div id="posts-section" className="content-section">
         <div className="posts-section-content mx-auto mt-8 max-w-[1200px] px-4 pb-16">
           <div className="posts-list loading-element flex flex-col gap-8">
-            {posts.length === 0 && !loading ? (
+            {loading && posts.length === 0 ? (
+              <PostsSkeleton />
+            ) : posts.length === 0 ? (
               <div className="p-8 text-center italic text-[#9ca3af]"><p>No posts yet.</p></div>
             ) : (
               posts.map((post, index) => (

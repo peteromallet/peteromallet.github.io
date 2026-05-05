@@ -8,12 +8,33 @@ interface PostPageProps {
   data?: PostPageData;
 }
 
+function PostSkeleton() {
+  return (
+    <article className="post-article post-article-skeleton loading-element mx-auto max-w-[800px] px-4" aria-hidden="true">
+      <header className="post-header">
+        <div className="skeleton-line post-skeleton-title"></div>
+        <div className="skeleton-line post-skeleton-date"></div>
+      </header>
+
+      <div className="post-content post-skeleton-content">
+        <div className="skeleton-line"></div>
+        <div className="skeleton-line"></div>
+        <div className="skeleton-line skeleton-line-short"></div>
+        <div className="skeleton-line"></div>
+        <div className="skeleton-line"></div>
+        <div className="skeleton-line skeleton-line-medium"></div>
+      </div>
+    </article>
+  );
+}
+
 export function PostPage({ data: initialData }: PostPageProps) {
   const { slug } = useParams<{ slug: string }>();
   const [data, setData] = useState<PostPageData | null>(initialData?.post ? initialData : null);
-  const [loading, setLoading] = useState(!initialData?.post);
+  const [loading, setLoading] = useState(initialData === undefined);
 
   useEffect(() => {
+    if (initialData && !initialData.post) return;
     if (initialData?.post?.slug === slug) return;
     if (!slug) return;
 
@@ -30,7 +51,18 @@ export function PostPage({ data: initialData }: PostPageProps) {
       .finally(() => setLoading(false));
   }, [slug, initialData]);
 
-  if (loading || !data?.post) {
+  if (loading) {
+    return (
+      <div className="container">
+        <Header activeTab="posts" />
+        <div id="posts-post-section" className="content-section">
+          <PostSkeleton />
+        </div>
+      </div>
+    );
+  }
+
+  if (!data?.post) {
     return (
       <div className="container">
         <Header activeTab="posts" />
