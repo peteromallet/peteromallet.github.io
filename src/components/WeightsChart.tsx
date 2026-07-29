@@ -1,9 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-
-interface MeasurementRow {
-  withings_timestamp: string;
-  weight_kg: number | string;
-}
+import type { PublishedWeightMeasurement } from '../lib/weights';
 
 interface Point {
   x: Date;
@@ -18,43 +14,15 @@ function useMeasurements() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const config = (window as any).__APP_CONFIG__;
-    if (!config?.supabaseUrl || !config?.supabaseAnonKey) {
-      setLoading(false);
-      setError('Missing Supabase configuration');
-      return;
-    }
-
     const controller = new AbortController();
 
-    async function fetchAll() {
-      const allRows: MeasurementRow[] = [];
-      let page = 0;
-      const pageSize = 1000;
-
-      while (true) {
-        const response = await fetch(
-          `${config.supabaseUrl}/rest/v1/measurements?select=withings_timestamp,weight_kg&order=withings_timestamp.desc&offset=${page * pageSize}&limit=${pageSize}`,
-          {
-            headers: {
-              apikey: config.supabaseAnonKey,
-              Authorization: `Bearer ${config.supabaseAnonKey}`,
-            },
-            signal: controller.signal,
-          },
-        );
-
-        if (!response.ok) throw new Error(`Supabase request failed (${response.status})`);
-        const rows = (await response.json()) as MeasurementRow[];
-        allRows.push(...rows);
-        if (rows.length < pageSize) break;
-        page += 1;
-      }
-
-      return allRows;
+    async function fetchMeasurements() {
+      const response = await fetch('/api/weights', { signal: controller.signal });
+      if (!response.ok) throw new Error(`Weight request failed (${response.status})`);
+      return response.json() as Promise<PublishedWeightMeasurement[]>;
     }
 
-    fetchAll()
+    fetchMeasurements()
       .then((rows) => {
         setData(
           rows
@@ -62,7 +30,7 @@ function useMeasurements() {
               x: new Date(row.withings_timestamp),
               y: Number(row.weight_kg),
             }))
-            .filter((row) => Number.isFinite(row.y))
+            .filter((row) => Number.isFinite(row.y) && !Number.isNaN(row.x.getTime()))
             .sort((a, b) => a.x.getTime() - b.x.getTime()),
         );
       })
