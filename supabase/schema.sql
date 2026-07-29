@@ -19,12 +19,9 @@ create policy "Public read published posts"
 
 alter table measurements enable row level security;
 
-grant select on table measurements to anon, authenticated;
+revoke select on table measurements from anon, authenticated;
 
-create policy "Public read measurements"
-  on measurements
-  for select
-  using (true);
+drop policy if exists "Public read measurements" on measurements;
 
 create or replace function public.get_published_weight_measurements()
 returns jsonb

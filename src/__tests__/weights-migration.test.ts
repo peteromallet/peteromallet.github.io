@@ -9,6 +9,13 @@ const migration = fs.readFileSync(
   ),
   'utf8',
 ).toLowerCase();
+const cleanupMigration = fs.readFileSync(
+  path.resolve(
+    process.cwd(),
+    'supabase/migrations/20260729000003_retire_legacy_measurements_read.sql',
+  ),
+  'utf8',
+).toLowerCase();
 
 describe('published weights migration', () => {
   it('keeps the canonical health table private behind a fixed-user projection', () => {
@@ -32,6 +39,15 @@ describe('published weights migration', () => {
     );
     expect(migration).toContain(
       'grant execute on function public.get_published_weight_measurements() to service_role',
+    );
+  });
+
+  it('retires anonymous access to the stale legacy table', () => {
+    expect(cleanupMigration).toContain(
+      'revoke select on table public.measurements from anon, authenticated',
+    );
+    expect(cleanupMigration).toContain(
+      'drop policy if exists "public read measurements" on public.measurements',
     );
   });
 });
