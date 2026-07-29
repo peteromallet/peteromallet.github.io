@@ -8,6 +8,7 @@ import { getPostPage, getPosts } from './lib/posts';
 import { getRecommendationsList } from './lib/recommendations';
 import { getPublicSupabaseConfig, supabaseServiceRequest } from './lib/supabase';
 import { tweetFeedbackLink } from './lib/twitter';
+import { getPublishedWeightMeasurements } from './lib/weights';
 import type { InitialData } from './types';
 
 const root = process.cwd();
@@ -145,6 +146,18 @@ async function createApp() {
     } catch (error) {
       console.warn(`Failed to load post ${slug}:`, error);
       res.status(500).json({ error: 'Failed to load post.' });
+    }
+  });
+
+  app.get('/api/weights', async (_req, res) => {
+    try {
+      const measurements = await getPublishedWeightMeasurements();
+      res
+        .set('Cache-Control', 'public, max-age=300, stale-while-revalidate=900')
+        .json(measurements);
+    } catch (error) {
+      console.warn('Failed to load published weights:', error);
+      res.status(500).json({ error: 'Failed to load weight data.' });
     }
   });
 
