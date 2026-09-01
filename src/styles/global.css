@@ -2231,6 +2231,85 @@ button {
   text-transform: uppercase;
 }
 
+.accountability-status--fulfilled {
+  background: rgba(34, 197, 94, 0.14);
+  border-color: rgba(34, 197, 94, 0.35);
+  color: #166534;
+}
+
+.accountability-status--not-fulfilled {
+  background: rgba(239, 68, 68, 0.14);
+  border-color: rgba(239, 68, 68, 0.35);
+  color: #991b1b;
+}
+
+.accountability-outcome {
+  margin-bottom: 0.9rem;
+  border: 1px solid;
+  border-left-width: 4px;
+  border-radius: 6px;
+  padding: 0.85rem 1rem;
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
+.accountability-outcome--fulfilled {
+  background: rgba(34, 197, 94, 0.08);
+  border-color: rgba(34, 197, 94, 0.22);
+  border-left-color: #22c55e;
+}
+
+.accountability-outcome--not-fulfilled {
+  background: rgba(239, 68, 68, 0.07);
+  border-color: rgba(239, 68, 68, 0.2);
+  border-left-color: #ef4444;
+}
+
+.accountability-outcome-title {
+  font-weight: 700;
+  font-size: 0.82rem;
+  margin-bottom: 0.25rem;
+  letter-spacing: 0.01em;
+}
+
+.accountability-outcome--fulfilled .accountability-outcome-title {
+  color: #166534;
+}
+
+.accountability-outcome--not-fulfilled .accountability-outcome-title {
+  color: #991b1b;
+}
+
+.accountability-outcome-text {
+  color: #444;
+  margin: 0;
+}
+
+.accountability-outcome-link {
+  display: inline-block;
+  margin-top: 0.45rem;
+  font-weight: 600;
+  font-size: 0.78rem;
+  border-bottom: 1.5px solid currentColor;
+  text-decoration: none;
+}
+
+.accountability-outcome--fulfilled .accountability-outcome-link {
+  color: #15803d;
+}
+
+.accountability-outcome--fulfilled .accountability-outcome-link:hover {
+  color: #166534;
+}
+
+.accountability-outcome--not-fulfilled .accountability-outcome-link {
+  color: #b91c1c;
+}
+
+.accountability-outcome--not-fulfilled .accountability-outcome-link:hover {
+  color: #991b1b;
+}
+
 .accountability-copy-link {
   min-width: 1.5em;
   margin-left: 0.5rem;

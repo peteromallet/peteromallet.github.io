@@ -5,6 +5,14 @@ export interface DirectoryItem {
   comingSoon?: boolean;
 }
 
+export interface CommitmentOutcome {
+  variant: 'fulfilled' | 'not-fulfilled';
+  title: string;
+  text: string;
+  href?: string;
+  hrefLabel?: string;
+}
+
 export interface Commitment {
   id: string;
   title: string;
@@ -13,6 +21,7 @@ export interface Commitment {
   bullets: Array<{ label: string; text: string }>;
   onchain: Array<{ label: string; text: string; href?: string; code?: boolean }>;
   note?: string;
+  outcome?: CommitmentOutcome;
 }
 
 export interface ProjectEntry {
@@ -220,7 +229,7 @@ export const ACCOUNTABILITY_COMMITMENTS: Commitment[] = [
   {
     id: 'desloppify',
     title: 'Donate all $DESLOPPIFY creator fees to code quality bounties',
-    status: 'In Progress',
+    status: 'Not Fulfilled',
     dates: 'Committed: March 3, 2026',
     bullets: [
       { label: 'What', text: 'Two community-created $DESLOPPIFY tokens based on my Desloppify project also generate Pump.fun creator fees to the same wallet.' },
@@ -236,6 +245,13 @@ export const ACCOUNTABILITY_COMMITMENTS: Commitment[] = [
       { label: 'Fee mechanism', text: 'Same 0.05% creator fee as $DataClaw, same wallet. Full breakdown in the wallet analysis.', href: 'https://github.com/peteromallet/peteromallet.github.io/blob/main/random_docs/solana-wallet-analysis.md' },
     ],
     note: 'Conversions as of March 2, 2026.',
+    outcome: {
+      variant: 'not-fulfilled',
+      title: 'Not Fulfilled — pivoted to Arnold',
+      text: 'I decided not to continue with Desloppify as it was the wrong primitive for building a generalised platform for building pipelines. Fees will instead fund Arnold — a generalised pipeline platform — with receipts shared publicly.',
+      href: 'https://github.com/peteromallet/Arnold',
+      hrefLabel: 'github.com/peteromallet/Arnold',
+    },
   },
   {
     id: 'tokens',
@@ -261,7 +277,7 @@ export const ACCOUNTABILITY_COMMITMENTS: Commitment[] = [
   {
     id: 'dataclaw',
     title: 'Donate all $DataClaw creator fees to The Arca Gidan Art Prize',
-    status: 'In Progress',
+    status: 'Fulfilled',
     dates: 'Committed: March 2, 2026',
     bullets: [
       { label: 'What', text: 'I created an open source project called DataClaw. Random crypto people created a token around it.' },
@@ -276,6 +292,13 @@ export const ACCOUNTABILITY_COMMITMENTS: Commitment[] = [
       { label: 'Fee mechanism', text: '0.05% creator fee on every PumpSwap trade, auto-claimed to the wallet above. Full breakdown in the wallet analysis.', href: 'https://github.com/peteromallet/peteromallet.github.io/blob/main/random_docs/solana-wallet-analysis.md' },
     ],
     note: 'Conversions as of March 2, 2026.',
+    outcome: {
+      variant: 'fulfilled',
+      title: 'Fulfilled — all funds paid out',
+      text: 'All funds were paid out to Arca Gidan winners.',
+      href: 'https://arcagidan.com/retrospective',
+      hrefLabel: 'arcagidan.com/retrospective',
+    },
   },
 ];
 
